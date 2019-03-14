@@ -182,11 +182,33 @@
 </li>
 </ul>
 </blockquote>
+<p>[TOC]</p>
 <hr>
 <h2 id="随笔"><a href="#随笔" class="headerlink" title="随笔"></a>随笔</h2><p>学习第二周，第一次搭建博客，第一次写markdown，希望能够坚持下去，记录一些学到的东西</p>
 <hr>
-<h2 id="使用GitHub搭建个人博客"><a href="#使用GitHub搭建个人博客" class="headerlink" title="使用GitHub搭建个人博客"></a>使用GitHub搭建个人博客</h2><p>[TOC]</p>
-<h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><h4 id="创建仓库"><a href="#创建仓库" class="headerlink" title="创建仓库"></a>创建仓库</h4><h4 id="配置SSH-key"><a href="#配置SSH-key" class="headerlink" title="配置SSH key"></a>配置SSH key</h4><h4 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h4><h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><h4 id="上传到GitHub"><a href="#上传到GitHub" class="headerlink" title="上传到GitHub"></a>上传到GitHub</h4><h4 id="常用hexo命令"><a href="#常用hexo命令" class="headerlink" title="常用hexo命令"></a>常用hexo命令</h4>
+<h2 id="使用GitHub搭建个人博客"><a href="#使用GitHub搭建个人博客" class="headerlink" title="使用GitHub搭建个人博客"></a>使用GitHub搭建个人博客</h2><h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><blockquote>
+<p>需要的软件</p>
+<p>node.js(<a href="http://nodejs.cn/" target="_blank" rel="noopener">http://nodejs.cn/</a>)</p>
+<p>git(<a href="https://git-scm.com/" target="_blank" rel="noopener">https://git-scm.com/</a>)</p>
+<p>hexo(<a href="https://hexo.io/zh-cn/" target="_blank" rel="noopener">https://hexo.io/zh-cn/</a>)</p>
+</blockquote>
+<h4 id="创建仓库"><a href="#创建仓库" class="headerlink" title="创建仓库"></a>创建仓库</h4><p>新建一个名为<code>你的用户名.github.io</code>的仓库，生成后的访问地址是 <code>https://你的用户名.github.io</code> ,貌似必须是自己的用户名，否则无法访问，不过我自己并没有试过。</p>
+<p>如果自己有域名的话可以绑定自己的域名，不过不绑定也没有什么关系。</p>
+<h4 id="配置SSH-key"><a href="#配置SSH-key" class="headerlink" title="配置SSH key"></a>配置SSH key</h4><p>使用ssh key来进行本地和服务器间的链接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cd ~/. ssh	#检查是否存在ssh密钥</span><br></pre></td></tr></table></figure>
+<p>如果提示：No such file or directory 说明你是第一次使用git。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;邮箱地址&quot;</span><br></pre></td></tr></table></figure>
+<p>然后连续3次回车，最终会生成一个文件在用户目录下，打开用户目录，找到<code>.ssh\id_rsa.pub</code>文件，记事本打开并复制里面的内容，打开你的github主页，进入个人设置 -&gt; SSH and GPG keys -&gt; New SSH key：</p>
+<p><img src="D:\github_blog\source\_posts\SSH.png" alt></p>
+<p>保存之后测试一下是否成功</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -T git@github.com #这里的邮箱地址不用修改</span><br></pre></td></tr></table></figure>
+<p>如果看到提示<code>Are you sure you want to continue connecting (yes/no)?</code> ，输入yes，然后就会看到</p>
+<blockquote>
+<p>Hi CJJKKK! You’ve successfully authenticated, but GitHub does not provide shell access.</p>
+</blockquote>
+<p>说明配置已经成功了，接下来继续配置用户名和邮箱</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name &quot;用户名&quot;	#你的用户名</span><br><span class="line">$ git config --global user.email &quot;邮箱&quot;	#你的注册邮箱</span><br></pre></td></tr></table></figure>
+<h4 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h4><h6 id="1-关于hexo"><a href="#1-关于hexo" class="headerlink" title="1.关于hexo"></a>1.关于hexo</h6><h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><h4 id="上传到GitHub"><a href="#上传到GitHub" class="headerlink" title="上传到GitHub"></a>上传到GitHub</h4><h4 id="常用hexo命令"><a href="#常用hexo命令" class="headerlink" title="常用hexo命令"></a>常用hexo命令</h4>
       
 
       
