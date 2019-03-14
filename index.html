@@ -199,7 +199,7 @@
 <p>如果提示：No such file or directory 说明你是第一次使用git。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;邮箱地址&quot;</span><br></pre></td></tr></table></figure>
 <p>然后连续3次回车，最终会生成一个文件在用户目录下，打开用户目录，找到<code>.ssh\id_rsa.pub</code>文件，记事本打开并复制里面的内容，打开你的github主页，进入个人设置 -&gt; SSH and GPG keys -&gt; New SSH key：</p>
-<p><img src="D:\github_blog\source\_posts\SSH.png" alt></p>
+<p><img src="https://github.com/CJJKKK/CJJKKK.github.io/blob/master/img/SSH.png?raw=true" alt></p>
 <p>保存之后测试一下是否成功</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -T git@github.com #这里的邮箱地址不用修改</span><br></pre></td></tr></table></figure>
 <p>如果看到提示<code>Are you sure you want to continue connecting (yes/no)?</code> ，输入yes，然后就会看到</p>
