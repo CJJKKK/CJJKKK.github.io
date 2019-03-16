@@ -88,7 +88,7 @@
 <meta property="og:description" content="随笔  博客搭建过程  其他的一些东西">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://cjjkkk.github.io/image/1/ssh.png">
-<meta property="og:updated_time" content="2019-03-16T06:33:07.108Z">
+<meta property="og:updated_time" content="2019-03-16T07:36:10.920Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用GitHub+hexo搭建个人博客">
 <meta name="twitter:description" content="随笔  博客搭建过程  其他的一些东西">
@@ -401,6 +401,8 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">	type: git</span><br><span class="line">	repository: git@github.com:用户名/用户名.github.io.git</span><br><span class="line">	branch: master</span><br></pre></td></tr></table></figure>
 <p>注意一定要用git bash来输入</p>
 <p>接下来输入<code>hexo d -g</code>就会提交代码了</p>
+<p>如果显示<code>error deployer not found:github</code>，可以使用如下命令来完成</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install --save hexo-deployer-git</span><br></pre></td></tr></table></figure>
 <p>还有一些关于保留CNAME、README.md等文件的东西，一些非md文件可以把他们放到source文件夹下，这里的所有文件都会原样复制（除了md文件）到public目录的。由于hexo默认会把所有md文件都转换成html，包括README.md，所有需要每次生成之后、上传之前，手动将README.md复制到public目录，并删除README.html。</p>
 <h3 id="常用hexo命令"><a href="#常用hexo命令" class="headerlink" title="常用hexo命令"></a>常用hexo命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">hexo new &quot;postName&quot; #新建文章</span><br><span class="line">hexo new page &quot;pageName&quot; #新建页面</span><br><span class="line">hexo generate #生成静态页面至public目录</span><br><span class="line">hexo server #开启预览访问端口（默认端口4000，&apos;ctrl + c&apos;关闭server）</span><br><span class="line">hexo deploy #部署到GitHub</span><br><span class="line">hexo help  # 查看帮助</span><br><span class="line">hexo version  #查看Hexo的版本</span><br></pre></td></tr></table></figure>
 <p>组合命令</p>
