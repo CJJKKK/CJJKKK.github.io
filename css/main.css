@@ -1823,7 +1823,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #beffc4;
+  background: #792813;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2990,4 +2990,12 @@ pre .javascript .function {
   .post-body {
     text-align: justify;
   }
+}
+@font-face {
+  font-family: Zitiming;
+  src: url("/fonts/English111 Presto BT.ttf");
+}
+.site-title {
+  font-size: 40px !important;
+  font-family: 'Zitiming' !important;
 }
