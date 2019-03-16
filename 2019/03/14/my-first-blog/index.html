@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="随笔,">
+  <meta name="keywords" content="随笔,博客搭建,">
 
 
 
@@ -79,20 +79,20 @@
 
 
 
-<meta name="description" content="随笔  博客搭建过程  markdown书写">
-<meta name="keywords" content="随笔">
+<meta name="description" content="随笔  博客搭建过程  其他的一些东西">
+<meta name="keywords" content="随笔,博客搭建">
 <meta property="og:type" content="article">
-<meta property="og:title" content="开始步入网络安全行业的第一步">
+<meta property="og:title" content="使用GitHub+hexo搭建个人博客">
 <meta property="og:url" content="https://cjjkkk.github.io/2019/03/14/my-first-blog/index.html">
 <meta property="og:site_name" content="Jacky Cheng">
-<meta property="og:description" content="随笔  博客搭建过程  markdown书写">
+<meta property="og:description" content="随笔  博客搭建过程  其他的一些东西">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://image.liuxianan.com/201608/20160818_143914_495_9084.png">
-<meta property="og:updated_time" content="2019-03-15T12:14:26.529Z">
+<meta property="og:image" content="https://cjjkkk.github.io/image/1/ssh.png">
+<meta property="og:updated_time" content="2019-03-16T06:33:07.108Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="开始步入网络安全行业的第一步">
-<meta name="twitter:description" content="随笔  博客搭建过程  markdown书写">
-<meta name="twitter:image" content="http://image.liuxianan.com/201608/20160818_143914_495_9084.png">
+<meta name="twitter:title" content="使用GitHub+hexo搭建个人博客">
+<meta name="twitter:description" content="随笔  博客搭建过程  其他的一些东西">
+<meta name="twitter:image" content="https://cjjkkk.github.io/image/1/ssh.png">
 
 
 
@@ -128,7 +128,7 @@
 
 
 
-  <title>开始步入网络安全行业的第一步 | Jacky Cheng</title>
+  <title>使用GitHub+hexo搭建个人博客 | Jacky Cheng</title>
   
 
 
@@ -272,7 +272,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">开始步入网络安全行业的第一步</h1>
+          <h1 class="post-title" itemprop="name headline">使用GitHub+hexo搭建个人博客</h1>
         
 
         <div class="post-meta">
@@ -307,8 +307,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/默认分类/" itemprop="url" rel="index">
-                    <span itemprop="name">默认分类</span>
+                  <a href="/categories/博客搭建/" itemprop="url" rel="index">
+                    <span itemprop="name">博客搭建</span>
                   </a>
                 </span>
 
@@ -350,7 +350,7 @@
 </li>
 <li><p>博客搭建过程</p>
 </li>
-<li><p>markdown书写</p>
+<li><p>其他的一些东西</p>
 </li>
 </ul>
 </blockquote>
@@ -372,7 +372,7 @@
 <p>如果提示：No such file or directory 说明你是第一次使用git。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;邮箱地址&quot;</span><br></pre></td></tr></table></figure>
 <p>然后连续3次回车，最终会生成一个文件在用户目录下，打开用户目录，找到<code>.ssh\id_rsa.pub</code>文件，记事本打开并复制里面的内容，打开你的github主页，进入个人设置 -&gt; SSH and GPG keys -&gt; New SSH key：</p>
-<p><img src="http://image.liuxianan.com/201608/20160818_143914_495_9084.png" alt="img"></p>
+<p><img src="/image/1/ssh.png" alt="img"></p>
 <p>保存之后测试一下是否成功</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -T git@github.com #这里的邮箱地址不用修改</span><br></pre></td></tr></table></figure>
 <p>如果看到提示<code>Are you sure you want to continue connecting (yes/no)?</code> ，输入yes，然后就会看到</p>
@@ -394,14 +394,13 @@
 <p>hexo会自动下载一些文件到这个目录</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g #生成</span><br><span class="line">$ hexo s #启动</span><br></pre></td></tr></table></figure>
 <p>执行这些命令后，hexo就会在public文件夹生成相关html文件，这些文件将来都是要提交到github去的</p>
-<p><code>hexo s</code>是开启本地预览服务，打开浏览器访问 <a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a> 即可看到内容，如果打不开可能是端口被占用了，可以换个端口解决。</p>
+<p><code>hexo s</code>是开启本地预览服务，打开浏览器访问 <a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a> 即可看到内容，如果打不开可能是端口被占用了，可以换个端口解决。记得本地预览完之后用<code>ctrl+c</code>关闭本地预览服务</p>
 <p>hexo是支持修改主题的，具体如何修改可能下一篇文章会讲hhh</p>
 <h3 id="上传到GitHub"><a href="#上传到GitHub" class="headerlink" title="上传到GitHub"></a>上传到GitHub</h3><p>完成了上面的操作后，就要上传到GitHub了</p>
-<p>首先要配置<code>ssh key</code></p>
-<p>其次要配置<code>_config.yml</code>中的有关<code>deploy</code>部分</p>
+<p>在配置完<code>ssh key</code>之后，要配置<code>_config.yml</code>中的有关<code>deploy</code>部分</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">	type: git</span><br><span class="line">	repository: git@github.com:用户名/用户名.github.io.git</span><br><span class="line">	branch: master</span><br></pre></td></tr></table></figure>
 <p>注意一定要用git bash来输入</p>
-<p>接下来输入<code>hexo d</code>就会提交代码了</p>
+<p>接下来输入<code>hexo d -g</code>就会提交代码了</p>
 <p>还有一些关于保留CNAME、README.md等文件的东西，一些非md文件可以把他们放到source文件夹下，这里的所有文件都会原样复制（除了md文件）到public目录的。由于hexo默认会把所有md文件都转换成html，包括README.md，所有需要每次生成之后、上传之前，手动将README.md复制到public目录，并删除README.html。</p>
 <h3 id="常用hexo命令"><a href="#常用hexo命令" class="headerlink" title="常用hexo命令"></a>常用hexo命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">hexo new &quot;postName&quot; #新建文章</span><br><span class="line">hexo new page &quot;pageName&quot; #新建页面</span><br><span class="line">hexo generate #生成静态页面至public目录</span><br><span class="line">hexo server #开启预览访问端口（默认端口4000，&apos;ctrl + c&apos;关闭server）</span><br><span class="line">hexo deploy #部署到GitHub</span><br><span class="line">hexo help  # 查看帮助</span><br><span class="line">hexo version  #查看Hexo的版本</span><br></pre></td></tr></table></figure>
 <p>组合命令</p>
@@ -414,7 +413,7 @@
 <p>关于写博客的工具，我用的是<code>Typora</code> (<a href="https://www.typora.io/" target="_blank" rel="noopener">https://www.typora.io/</a>) ，或者有其他的写markdown的工具也可以，反正我是刚开始用，用的也不好。</p>
 <p>让博客不显示全文的方法</p>
 <p>在合适的位置上加入<code>&lt;!--more--&gt;</code>即可。</p>
-<h3 id="还有些其他的"><a href="#还有些其他的" class="headerlink" title="还有些其他的"></a>还有些其他的</h3><p>到此位置使用GitHub搭建博客应该就完成了，这个时候可以去查看一下自己的博客是什么样子的了。</p>
+<h2 id="还有些其他的"><a href="#还有些其他的" class="headerlink" title="还有些其他的"></a>还有些其他的</h2><p>到此位置使用GitHub搭建博客应该就完成了，这个时候可以去查看一下自己的博客是什么样子的了。</p>
 <p>我本人实在是不大会写markdown，就先写这么多，可能最后有一些问题，比如目录显示不出来之类的，学会了继续改。</p>
 <p>最后是一些参考资料。</p>
 <blockquote>
@@ -441,6 +440,8 @@
           
             <a href="/tags/随笔/" rel="tag"># 随笔</a>
           
+            <a href="/tags/博客搭建/" rel="tag"># 博客搭建</a>
+          
         </div>
       
 
@@ -448,6 +449,22 @@
       
       
 
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/15/next_live2d/" rel="prev" title="在hexo中添加主题和live2d看板娘">
+                在hexo中添加主题和live2d看板娘 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
       
 
       
@@ -521,7 +538,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -543,7 +560,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>
@@ -592,7 +609,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#随笔"><span class="nav-number">1.</span> <span class="nav-text">随笔</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用GitHub搭建个人博客"><span class="nav-number">2.</span> <span class="nav-text">使用GitHub搭建个人博客</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备工作"><span class="nav-number">2.1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建仓库"><span class="nav-number">2.2.</span> <span class="nav-text">创建仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置SSH-key"><span class="nav-number">2.3.</span> <span class="nav-text">配置SSH key</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装hexo"><span class="nav-number">2.4.</span> <span class="nav-text">安装hexo</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关于hexo"><span class="nav-number">2.4.1.</span> <span class="nav-text">关于hexo</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装"><span class="nav-number">2.4.2.</span> <span class="nav-text">安装</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化"><span class="nav-number">2.5.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#上传到GitHub"><span class="nav-number">2.6.</span> <span class="nav-text">上传到GitHub</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用hexo命令"><span class="nav-number">2.7.</span> <span class="nav-text">常用hexo命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何写博客"><span class="nav-number">2.8.</span> <span class="nav-text">如何写博客</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#还有些其他的"><span class="nav-number">2.9.</span> <span class="nav-text">还有些其他的</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#随笔"><span class="nav-number">1.</span> <span class="nav-text">随笔</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用GitHub搭建个人博客"><span class="nav-number">2.</span> <span class="nav-text">使用GitHub搭建个人博客</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备工作"><span class="nav-number">2.1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建仓库"><span class="nav-number">2.2.</span> <span class="nav-text">创建仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置SSH-key"><span class="nav-number">2.3.</span> <span class="nav-text">配置SSH key</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装hexo"><span class="nav-number">2.4.</span> <span class="nav-text">安装hexo</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关于hexo"><span class="nav-number">2.4.1.</span> <span class="nav-text">关于hexo</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装"><span class="nav-number">2.4.2.</span> <span class="nav-text">安装</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化"><span class="nav-number">2.5.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#上传到GitHub"><span class="nav-number">2.6.</span> <span class="nav-text">上传到GitHub</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用hexo命令"><span class="nav-number">2.7.</span> <span class="nav-text">常用hexo命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何写博客"><span class="nav-number">2.8.</span> <span class="nav-text">如何写博客</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#还有些其他的"><span class="nav-number">3.</span> <span class="nav-text">还有些其他的</span></a></li></ol></div>
             
 
           </div>
@@ -811,5 +828,5 @@
 
   
 
-<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false}});</script></body>
 </html>
