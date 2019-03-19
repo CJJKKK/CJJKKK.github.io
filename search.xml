@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[gittalk]]></title>
+    <title><![CDATA[使用gittalk实现hexo博客评论功能]]></title>
     <url>%2Fgitalk%2F</url>
-    <content type="text"><![CDATA[https://asdfv1929.github.io/2018/01/20/gitalk/]]></content>
+    <content type="text"><![CDATA[关于gitalk 使用gitalk实现hexo博客评论功能 其他 关于gitalkGitalk 是一个基于 GitHub Issue 和 Preact 开发的评论插件。 特性 使用GitHub登录 支持多语言 [en, zh-CN, zh-TW, es-ES, fr, ru] 支持个人或组织 无干扰模式（设置 distractionFreeMode 为 true 开启） 快捷键提交评论 （cmd|ctrl + enter） gitalk实现hexo博客评论功能Register Application在GitHub上注册新应用，链接：https://github.com/settings/applications/new 参数说明： Application name： # 应用名称，随意 Homepage URL： # 网站URL Application description # 描述，随意 Authorization callback URL：# 网站URL 点击注册后，页面跳转如下，其中Client ID和Client Secret在后面的配置中需要用到，到时复制粘贴即可： 新建gitalk.swig在主题文件夹下新建/layout/_third-party/comments/gitalk.swig文件，并添加内容： 1234567891011121314151617&#123;% if page.comments &amp;&amp; theme.gitalk.enable %&#125; &lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/gitalk/dist/gitalk.css&quot;&gt; &lt;script src=&quot;https://unpkg.com/gitalk/dist/gitalk.min.js&quot;&gt;&lt;/script&gt; &lt;script type=&quot;text/javascript&quot;&gt; var gitalk = new Gitalk(&#123; clientID: &apos;&#123;&#123; theme.gitalk.ClientID &#125;&#125;&apos;, clientSecret: &apos;&#123;&#123; theme.gitalk.ClientSecret &#125;&#125;&apos;, repo: &apos;&#123;&#123; theme.gitalk.repo &#125;&#125;&apos;, owner: &apos;&#123;&#123; theme.gitalk.githubID &#125;&#125;&apos;, admin: [&apos;&#123;&#123; theme.gitalk.adminUser &#125;&#125;&apos;], id: location.pathname, distractionFreeMode: &apos;&#123;&#123; theme.gitalk.distractionFreeMode &#125;&#125;&apos; &#125;) gitalk.render(&apos;gitalk-container&apos;) &lt;/script&gt;&#123;% endif %&#125; 修改comments.swig修改主题文件夹内/layout/_partials/comments.swig，添加内容如下，与前面的elseif同一级别上： 12&#123;% elseif theme.gitalk.enable %&#125; &lt;div id=&quot;gitalk-container&quot;&gt;&lt;/div&gt; 修改index.swig修改layout/_third-party/comments/index.swig，在最后一行添加内容： 1&#123;% include &apos;gitalk.swig&apos; %&#125; 新建gitalk.styl新建/source/css/_common/components/third-party/gitalk.styl文件，添加内容： 1234.gt-header a, .gt-comments a, .gt-popup a border-bottom: none;.gt-container .gt-popup .gt-action.is--active:before top: 0.7em; 修改third-party.styl修改/source/css/_common/components/third-party/third-party.styl，在最后一行上添加内容，引入样式： 1@import &quot;gitalk&quot;; 修改_config.yml在主题配置文件next/_config.yml中添加如下内容： 12345678gitalk: enable: true githubID: github帐号 repo: 仓库名称 ClientID: Client ID ClientSecret: Client Secret adminUser: github帐号 #指定可初始化评论账户 distractionFreeMode: true 其他以上就是NexT中添加gitalk评论的配置，博客上传到GitHub上后，打开页面进入某一博客内容下，就可看到评论处。 参考文章 https://asdfv1929.github.io/2018/01/20/gitalk/ https://liujunzhou.top/2018/8/10/gitalk-error/]]></content>
       <categories>
         <category>博客搭建</category>
       </categories>
       <tags>
         <tag>博客搭建</tag>
+        <tag>Hexo</tag>
         <tag>gitalk</tag>
       </tags>
   </entry>
@@ -50,8 +51,10 @@
       </categories>
       <tags>
         <tag>博客搭建</tag>
+        <tag>Hexo</tag>
         <tag>美化</tag>
         <tag>live2d</tag>
+        <tag>Next</tag>
       </tags>
   </entry>
   <entry>
@@ -63,7 +66,9 @@
       </categories>
       <tags>
         <tag>博客搭建</tag>
+        <tag>Hexo</tag>
         <tag>随笔</tag>
+        <tag>GitHub</tag>
       </tags>
   </entry>
 </search>

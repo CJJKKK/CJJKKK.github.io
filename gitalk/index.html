@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="博客搭建,gitalk,">
+  <meta name="keywords" content="博客搭建,Hexo,gitalk,">
 
 
 
@@ -79,18 +79,21 @@
 
 
 
-<meta name="description" content="https://asdfv1929.github.io/2018/01/20/gitalk/">
-<meta name="keywords" content="博客搭建,gitalk">
+<meta name="description" content="关于gitalk 使用gitalk实现hexo博客评论功能 其他    关于gitalkGitalk 是一个基于 GitHub Issue 和 Preact 开发的评论插件。 特性 使用GitHub登录 支持多语言 [en, zh-CN, zh-TW, es-ES, fr, ru] 支持个人或组织 无干扰模式（设置 distractionFreeMode 为 true 开启） 快捷键提交评论">
+<meta name="keywords" content="博客搭建,Hexo,gitalk">
 <meta property="og:type" content="article">
-<meta property="og:title" content="gittalk">
+<meta property="og:title" content="使用gittalk实现hexo博客评论功能">
 <meta property="og:url" content="https://cjjkkk.github.io/gitalk/index.html">
 <meta property="og:site_name" content="Jacky Cheng">
-<meta property="og:description" content="https://asdfv1929.github.io/2018/01/20/gitalk/">
+<meta property="og:description" content="关于gitalk 使用gitalk实现hexo博客评论功能 其他    关于gitalkGitalk 是一个基于 GitHub Issue 和 Preact 开发的评论插件。 特性 使用GitHub登录 支持多语言 [en, zh-CN, zh-TW, es-ES, fr, ru] 支持个人或组织 无干扰模式（设置 distractionFreeMode 为 true 开启） 快捷键提交评论">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-18T13:52:19.506Z">
+<meta property="og:image" content="https://cjjkkk.github.io/image/gitalk/1.png">
+<meta property="og:image" content="https://cjjkkk.github.io/image/gitalk/2.jpg">
+<meta property="og:updated_time" content="2019-03-19T03:17:32.881Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="gittalk">
-<meta name="twitter:description" content="https://asdfv1929.github.io/2018/01/20/gitalk/">
+<meta name="twitter:title" content="使用gittalk实现hexo博客评论功能">
+<meta name="twitter:description" content="关于gitalk 使用gitalk实现hexo博客评论功能 其他    关于gitalkGitalk 是一个基于 GitHub Issue 和 Preact 开发的评论插件。 特性 使用GitHub登录 支持多语言 [en, zh-CN, zh-TW, es-ES, fr, ru] 支持个人或组织 无干扰模式（设置 distractionFreeMode 为 true 开启） 快捷键提交评论">
+<meta name="twitter:image" content="https://cjjkkk.github.io/image/gitalk/1.png">
 
 
 
@@ -126,7 +129,7 @@
 
 
 
-  <title>gittalk | Jacky Cheng</title>
+  <title>使用gittalk实现hexo博客评论功能 | Jacky Cheng</title>
   
 
 
@@ -302,7 +305,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">gittalk</h1>
+          <h1 class="post-title" itemprop="name headline">使用gittalk实现hexo博客评论功能</h1>
         
 
         <div class="post-meta">
@@ -368,7 +371,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  8
+                  610
                 </span>
               
 
@@ -393,7 +396,50 @@
       
 
       
-        <p><a href="https://asdfv1929.github.io/2018/01/20/gitalk/" target="_blank" rel="noopener">https://asdfv1929.github.io/2018/01/20/gitalk/</a></p>
+        <blockquote>
+<ul>
+<li>关于gitalk</li>
+<li>使用gitalk实现hexo博客评论功能</li>
+<li>其他</li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="关于gitalk"><a href="#关于gitalk" class="headerlink" title="关于gitalk"></a>关于gitalk</h2><p><a href="https://github.com/gitalk/gitalk" target="_blank" rel="noopener">Gitalk</a> 是一个基于 GitHub Issue 和 Preact 开发的评论插件。</p>
+<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><ul>
+<li>使用GitHub登录</li>
+<li>支持多语言 [en, zh-CN, zh-TW, es-ES, fr, ru]</li>
+<li>支持个人或组织</li>
+<li>无干扰模式（设置 distractionFreeMode 为 true 开启）</li>
+<li>快捷键提交评论 （cmd|ctrl + enter）</li>
+</ul>
+<p><br></p>
+<a id="more"></a>
+<h2 id="gitalk实现hexo博客评论功能"><a href="#gitalk实现hexo博客评论功能" class="headerlink" title="gitalk实现hexo博客评论功能"></a>gitalk实现hexo博客评论功能</h2><h3 id="Register-Application"><a href="#Register-Application" class="headerlink" title="Register Application"></a>Register Application</h3><p>在GitHub上注册新应用，链接：<a href="https://github.com/settings/applications/new" target="_blank" rel="noopener">https://github.com/settings/applications/new</a></p>
+<p><img src="\image\gitalk\1.png" alt="1"></p>
+<p>参数说明：</p>
+<p>Application name： # 应用名称，随意</p>
+<p>Homepage URL： # 网站URL</p>
+<p>Application description # 描述，随意</p>
+<p>Authorization callback URL：# 网站URL</p>
+<p>点击注册后，页面跳转如下，其中Client ID和Client Secret在后面的配置中需要用到，到时复制粘贴即可：</p>
+<p><img src="\image\gitalk\2.jpg" alt="2"></p>
+<h3 id="新建gitalk-swig"><a href="#新建gitalk-swig" class="headerlink" title="新建gitalk.swig"></a>新建<code>gitalk.swig</code></h3><p>在主题文件夹下新建<code>/layout/_third-party/comments/gitalk.swig</code>文件，并添加内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% if page.comments &amp;&amp; theme.gitalk.enable %&#125;</span><br><span class="line">  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/gitalk/dist/gitalk.css&quot;&gt;</span><br><span class="line"></span><br><span class="line">  &lt;script src=&quot;https://unpkg.com/gitalk/dist/gitalk.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">   &lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">        var gitalk = new Gitalk(&#123;</span><br><span class="line">          clientID: &apos;&#123;&#123; theme.gitalk.ClientID &#125;&#125;&apos;,</span><br><span class="line">          clientSecret: &apos;&#123;&#123; theme.gitalk.ClientSecret &#125;&#125;&apos;,</span><br><span class="line">          repo: &apos;&#123;&#123; theme.gitalk.repo &#125;&#125;&apos;,</span><br><span class="line">          owner: &apos;&#123;&#123; theme.gitalk.githubID &#125;&#125;&apos;,</span><br><span class="line">          admin: [&apos;&#123;&#123; theme.gitalk.adminUser &#125;&#125;&apos;],</span><br><span class="line">          id: location.pathname,</span><br><span class="line">          distractionFreeMode: &apos;&#123;&#123; theme.gitalk.distractionFreeMode &#125;&#125;&apos;</span><br><span class="line">        &#125;)</span><br><span class="line">        gitalk.render(&apos;gitalk-container&apos;)           </span><br><span class="line">       &lt;/script&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="修改comments-swig"><a href="#修改comments-swig" class="headerlink" title="修改comments.swig"></a>修改<code>comments.swig</code></h3><p>修改主题文件夹内<code>/layout/_partials/comments.swig</code>，添加内容如下，与前面的<code>elseif</code>同一级别上：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;% elseif theme.gitalk.enable %&#125;</span><br><span class="line"> &lt;div id=&quot;gitalk-container&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="修改index-swig"><a href="#修改index-swig" class="headerlink" title="修改index.swig"></a>修改<code>index.swig</code></h3><p>修改<code>layout/_third-party/comments/index.swig</code>，在最后一行添加内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% include &apos;gitalk.swig&apos; %&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="新建gitalk-styl"><a href="#新建gitalk-styl" class="headerlink" title="新建gitalk.styl"></a>新建<code>gitalk.styl</code></h3><p>新建<code>/source/css/_common/components/third-party/gitalk.styl</code>文件，添加内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.gt-header a, .gt-comments a, .gt-popup a</span><br><span class="line">  border-bottom: none;</span><br><span class="line">.gt-container .gt-popup .gt-action.is--active:before</span><br><span class="line">  top: 0.7em;</span><br></pre></td></tr></table></figure>
+<h3 id="修改third-party-styl"><a href="#修改third-party-styl" class="headerlink" title="修改third-party.styl"></a>修改<code>third-party.styl</code></h3><p>修改<code>/source/css/_common/components/third-party/third-party.styl</code>，在最后一行上添加内容，引入样式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@import &quot;gitalk&quot;;</span><br></pre></td></tr></table></figure>
+<h3 id="修改-config-yml"><a href="#修改-config-yml" class="headerlink" title="修改_config.yml"></a>修改<code>_config.yml</code></h3><p>在主题配置文件<code>next/_config.yml</code>中添加如下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">gitalk:</span><br><span class="line">  enable: true</span><br><span class="line">  githubID: github帐号</span><br><span class="line">  repo: 仓库名称</span><br><span class="line">  ClientID: Client ID</span><br><span class="line">  ClientSecret: Client Secret</span><br><span class="line">  adminUser: github帐号 #指定可初始化评论账户</span><br><span class="line">  distractionFreeMode: true</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>以上就是NexT中添加gitalk评论的配置，博客上传到GitHub上后，打开页面进入某一博客内容下，就可看到评论处。</p>
+<p>参考文章</p>
+<p><a href="https://asdfv1929.github.io/2018/01/20/gitalk/" target="_blank" rel="noopener">https://asdfv1929.github.io/2018/01/20/gitalk/</a></p>
+<p><a href="https://liujunzhou.top/2018/8/10/gitalk-error/" target="_blank" rel="noopener">https://liujunzhou.top/2018/8/10/gitalk-error/</a></p>
 
       
     </div>
@@ -412,6 +458,8 @@
         <div class="post-tags">
           
             <a href="/tags/博客搭建/" rel="tag"># 博客搭建</a>
+          
+            <a href="/tags/Hexo/" rel="tag"># Hexo</a>
           
             <a href="/tags/gitalk/" rel="tag"># gitalk</a>
           
@@ -489,8 +537,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -527,7 +584,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -584,6 +641,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于gitalk"><span class="nav-text">关于gitalk</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特性"><span class="nav-text">特性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gitalk实现hexo博客评论功能"><span class="nav-text">gitalk实现hexo博客评论功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Register-Application"><span class="nav-text">Register Application</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新建gitalk-swig"><span class="nav-text">新建gitalk.swig</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改comments-swig"><span class="nav-text">修改comments.swig</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改index-swig"><span class="nav-text">修改index.swig</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新建gitalk-styl"><span class="nav-text">新建gitalk.styl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改third-party-styl"><span class="nav-text">修改third-party.styl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改-config-yml"><span class="nav-text">修改_config.yml</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-text">其他</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
