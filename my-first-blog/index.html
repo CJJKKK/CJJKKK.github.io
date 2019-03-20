@@ -88,7 +88,7 @@
 <meta property="og:description" content="随笔  博客搭建过程  其他的一些东西">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://cjjkkk.github.io/image/1/ssh.png">
-<meta property="og:updated_time" content="2019-03-19T03:14:56.087Z">
+<meta property="og:updated_time" content="2019-03-20T11:50:41.905Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用GitHub+hexo搭建个人博客">
 <meta name="twitter:description" content="随笔  博客搭建过程  其他的一些东西">
@@ -450,7 +450,6 @@
 <h3 id="6-上传到GitHub"><a href="#6-上传到GitHub" class="headerlink" title="6.上传到GitHub"></a>6.上传到GitHub</h3><p>完成了上面的操作后，就要上传到GitHub了</p>
 <p>在配置完<code>ssh key</code>之后，要配置<code>_config.yml</code>中的有关<code>deploy</code>部分</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">	<span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">	<span class="attr">repository:</span> <span class="string">git@github.com:用户名/用户名.github.io.git</span></span><br><span class="line">	<span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
-<p>注意一定要用git bash来输入</p>
 <p>接下来输入<code>hexo d -g</code>就会提交代码了</p>
 <p>如果显示<code>error deployer not found:github</code>，可以使用如下命令来完成</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install --save hexo-deployer-git</span><br></pre></td></tr></table></figure>
