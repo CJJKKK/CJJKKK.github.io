@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[使用Ettercap实现DNS欺骗的简单测试]]></title>
+    <url>%2Fettercap-DNS%E6%AC%BA%E9%AA%97%2F</url>
+    <content type="text"><![CDATA[前言 攻击过程 其他 一. 前言1. 什么是中间人攻击中间人攻击（Man-in-the-middle attack，缩写：MITM）是指攻击者与通讯的两端分别建立独立的联系，并交换其所收到的数据，使通讯的两端认为他们正在通过一个私密的连接与对方直接对话，但事实上整个会话都被攻击者完全控制。在中间人攻击中，攻击者可以拦截通讯双方的通话并插入新的内容。在许多情况下这是很简单的（例如，在一个未加密的Wi-Fi 无线接入点的接受范围内的中间人攻击者，可以将自己作为一个中间人插入这个网络）。 一个中间人攻击能成功的前提条件是攻击者能将自己伪装成每一个参与会话的终端，并且不被其他终端识破。中间人攻击是一个（缺乏）相互认证的攻击。大多数的加密协议都专门加入了一些特殊的认证方法以阻止中间人攻击。例如，SSL协议可以验证参与通讯的一方或双方使用的证书是否是由权威的受信任的数字证书认证机构颁发，并且能执行双向身份认证。 2. DNS欺骗DNS欺骗攻击是一种非常危险的中间人攻击，它容易被攻击者利用并且窃取用户的机密信息。虽然这篇文章可以提供一些新的见解，但重要的是DNS欺骗是一个一般概念，有无数种方法可以实现一个DNS欺骗攻击。在一个DNS欺骗攻击中，攻击者可以利用一个漏洞来伪造网络流量。因此，要理解DNS欺骗攻击，必须理解DNS是怎样工作的。 DNS(域名系统)在互联网中是一个非常重要的协议。它属于TCP/IP，是一个分层结构的分布式模块，它包含域名的相关信息。它负责在网络上映射域名到他们各自的IP上。DNS定位主机/服务器通过查看友好域名，使用域名系统，DNS将域名和IP地址相互映射 。这些设备（路由器、服务器等）连接到你的电脑不能理解一些友好的名称 （infosecinstitute.com）,他们只了解一个IP地址，而DNS负责翻译它。 让我们来看看下面这个图来理解主机和本地DNS服务器的正常通信。 DNS服务器包含着一个主数据库，其中包括信息的IP地址，因为这涉及到相应的域名。所以在这些正常的通信中，一个主机发送请求到服务器，之后服务器响应正确的信息。如果DNS没有信息传入的请求，它将发送请求到外部DNS服务器来获取正确的响应。那么攻击者如何使用中间人攻击来实施DNS欺骗呢？下图说明了答案： 使用DNS欺骗中间人攻击，攻击者将截取会话，然后转移到一个假网站的会话。假如：用户希望访问google.com，并且谷歌的IP地址为173.194.35.37，攻击者就可以使用DNS欺骗技术拦截会话，并将用户重定向到假冒的网站，假网站IP可以为任意IP。 3. Ettercap介绍Ettercap是一个综合套件，适合中间人攻击。它具有实时连接嗅探、动态内容过滤等功能，支持对许多协议的主动和被动解析，并包含许多用于网络和主机分析的功能。 二. 攻击过程1. 攻击环境 攻击机：kali linux 2019.1 IP：192.168.28.136 靶机：Windows7 ultimate sp1 IP：192.168.28.138 2. 攻击步骤2.1 开启本地web服务器在kali Linux系统中开启Apache服务 12root@kali:~# service apache2 start #开启apache服务root@kali:~# service apache2 status #查看apache状态 在web服务器中添加页面 123root@kali:~# cd /var/www/html/root@kali:/var/www/html# mv index.html index.html.bak root@kali:/var/www/html# vi index.html 在文件中输入如下内容 123456789101112&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt; &lt;title&gt;This is a test page&lt;/title&gt; &lt;meta charset=&quot;utf-8&quot;&gt;&lt;/head&gt;&lt;body&gt; &lt;div&gt; 这是一个测试页面 &lt;/div&gt;&lt;/body&gt;&lt;/html&gt; 2.2 修改etter.dns1root@kali:~# vi /etc/ettercap/etter.dns 在文件中添加 12www.*.com A 192.168.28.136www.*.com PTR 192.168.28.136 2.3 设置Etterap使用命令ettercap -G来进入ettercap的图形界面。 选择网卡Unfied sniffing 网卡选择eth0（根据自己的计算机网卡而定） 2.4 扫描主机扫描网关下的所以在线的计算机主机，来到hosts选项下的scan for hosts 点击Hosts list列出扫到的主机 2.5 选择攻击目标在列表里选择网关进行添加，我这里的网关是192.168.28.2。选中之后点击Add to target 1 选中IP为192.168.28.138的靶机，点击Add to target 2 2.6 进行攻击配置好后在继续点击mitm&gt;arp poisoning 勾选Sniff remote connections 选择插件plugins&gt;mangge the plugins 我们要进行的是DNS欺骗，双击dns_spoof可以看见下边的提示 最后点击strat&gt;start sniffing开始DNS欺骗 2.7 查看攻击效果在靶机上使用浏览器，输入http://www.baidu.com，会显示到我们设置的页面 三. 其他以上就是使用Ettercap实现DNS欺骗的简单测试 DNS欺骗是一种非常危险的攻击，因为攻击者可以利用ettercap的dns_spoof插件和其他工具执行攻击。最终，攻击者可以使用一个社会工程工具包来执行攻击去控制受害者的电脑。想象一下这是多少容易，通过社会工程工具包和DNS欺骗技术你所需要做得就是配置你的社会工程工具包和你的IP清单，制作像谷歌一样的网站欺骗域名到你的IP地址上。当受害者打开google，你的攻击将使它访问你的IP，之后建立一个远程的会话。 参考：https://www.freebuf.com/articles/system/5265.html]]></content>
+      <categories>
+        <category>攻击测试</category>
+      </categories>
+      <tags>
+        <tag>Ettercap</tag>
+        <tag>中间人攻击</tag>
+        <tag>DNS欺骗</tag>
+        <tag>kali Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[DVWA-master渗透测试平台搭建]]></title>
     <url>%2Finstall-DVWA-master%2F</url>
     <content type="text"><![CDATA[关于DVWA 在Windows系统中搭建DVWA 在Linux系统中搭建DVWA 其他 一. 关于DVWADVWA(Damn Vulnerable Web Application)是一个用来进行安全脆弱性鉴定的PHP/MySQL Web应用，旨在为安全专业人员测试自己的专业技能和工具提供合法的环境，帮助web开发者更好的理解web应用安全防范的过程。 DVWA的目标是通过简单直接的界面练习一些最常见的Web漏洞，具有各种难度。请注意，此软件存在记录和未记录的漏洞。 DVWA共有十个模块，分别是: Brute Force（暴力（破解） Command Injection（命令行注入） CSRF（跨站请求伪造） File Inclusion（文件包含） File Upload（文件上传） Insecure CAPTCHA （不安全的验证码） SQL Injection（SQL注入） SQL Injection（Blind）（SQL盲注） XSS（Reflected）（反射型跨站脚本） XSS（Stored）（存储型跨站脚本） 同时每个模块的代码都有4种安全等级：Low、Medium、High、Impossible。通过从低难度到高难度的测试并参考代码变化可帮助学习者更快的理解漏洞的原理。 二. 在Windows系统中搭建DVWA1.下载DVWA从https://github.com/ethicalhack3r/DVWA下载zip包或使用git命令直接下载 2. 将DVWA放入本地站点目录中本人的Windows系统中使用phpstudy搭建web服务器 将解压出来的文件放入phpStudy\PHPTutorial\WWW目录下 3. 安装DVWA3.1 修改配置文件打开\DVWA-master\config目录下的config.inc.php文件 修改以下字段 12345$_DVWA = array();$_DVWA[ 'db_server' ] = '127.0.0.1';$_DVWA[ 'db_database' ] = 'dvwa';$_DVWA[ 'db_user' ] = 'root';$_DVWA[ 'db_password' ] = 'root用户密码'; 3.2 安装DVWA打开浏览器，输入http://127.0.0.1/DVWA-master/index.php进入，选择左侧的Setup/Reset DB选项，在最下方点击Create/Reset Database，如果提示Setup successful!即安装成功 3.3 登录DVWA使用浏览器访问http://127.0.0.1/DVWA-master/，输入用户名admin，密码password即可登录 三. 在Linux系统中搭建DVWA在Linux系统中搭建DVWA的过程和Windows系统中基本一致 1.下载DVWA12root@ubuntu:~# cd /var/www/htmlroot@ubuntu:/var/www/html# git clone https://github.com/ethicalhack3r/DVWA 2.修改配置文件123root@ubuntu:/var/www/html# cd DVWA/config/root@ubuntu:/var/www/html/DVWA/config# mv config.inc.php.dist config.inc.phproot@ubuntu:/var/www/html/DVWA/config# vi config.inc.php 修改config.inc.php文件的内容，同Windows系统 3. 安装DVWA在浏览器内输入127.0.0.1/DVWA，进入DVWA安装页面，拉到最下面，点击Create/Reset Database，如果提示Setup successful!即完成安装 此时会跳转到登录页面，输入账号密码即可登录 四. 其他以上便是DVWA在两种操作系统上部署的全过程，仅供参考和学习]]></content>
@@ -76,9 +90,9 @@
       </categories>
       <tags>
         <tag>博客搭建</tag>
-        <tag>Hexo</tag>
         <tag>美化</tag>
         <tag>live2d</tag>
+        <tag>Hexo</tag>
         <tag>Next</tag>
       </tags>
   </entry>
