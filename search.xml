@@ -8,9 +8,9 @@
         <category>环境搭建</category>
       </categories>
       <tags>
-        <tag>kali Linux</tag>
         <tag>环境搭建</tag>
         <tag>Shellinabox</tag>
+        <tag>kali Linux</tag>
         <tag>Ngrok</tag>
       </tags>
   </entry>
@@ -22,10 +22,10 @@
         <category>攻击测试</category>
       </categories>
       <tags>
+        <tag>kali Linux</tag>
         <tag>Ettercap</tag>
         <tag>中间人攻击</tag>
         <tag>DNS欺骗</tag>
-        <tag>kali Linux</tag>
       </tags>
   </entry>
   <entry>
