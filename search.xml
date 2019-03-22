@@ -8,9 +8,9 @@
         <category>环境搭建</category>
       </categories>
       <tags>
+        <tag>kali Linux</tag>
         <tag>环境搭建</tag>
         <tag>Shellinabox</tag>
-        <tag>kali Linux</tag>
         <tag>Ngrok</tag>
       </tags>
   </entry>
@@ -22,15 +22,15 @@
         <category>攻击测试</category>
       </categories>
       <tags>
-        <tag>kali Linux</tag>
         <tag>Ettercap</tag>
         <tag>中间人攻击</tag>
         <tag>DNS欺骗</tag>
+        <tag>kali Linux</tag>
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[DVWA-master渗透测试平台搭建]]></title>
-    <url>%2Finstall-DVWA-master%2F</url>
+    <title><![CDATA[DVWA渗透测试平台搭建]]></title>
+    <url>%2Finstall-DVWA%2F</url>
     <content type="text"><![CDATA[关于DVWA 在Windows系统中搭建DVWA 在Linux系统中搭建DVWA 其他 一. 关于DVWADVWA(Damn Vulnerable Web Application)是一个用来进行安全脆弱性鉴定的PHP/MySQL Web应用，旨在为安全专业人员测试自己的专业技能和工具提供合法的环境，帮助web开发者更好的理解web应用安全防范的过程。 DVWA的目标是通过简单直接的界面练习一些最常见的Web漏洞，具有各种难度。请注意，此软件存在记录和未记录的漏洞。 DVWA共有十个模块，分别是: Brute Force（暴力（破解） Command Injection（命令行注入） CSRF（跨站请求伪造） File Inclusion（文件包含） File Upload（文件上传） Insecure CAPTCHA （不安全的验证码） SQL Injection（SQL注入） SQL Injection（Blind）（SQL盲注） XSS（Reflected）（反射型跨站脚本） XSS（Stored）（存储型跨站脚本） 同时每个模块的代码都有4种安全等级：Low、Medium、High、Impossible。通过从低难度到高难度的测试并参考代码变化可帮助学习者更快的理解漏洞的原理。 二. 在Windows系统中搭建DVWA1.下载DVWA从https://github.com/ethicalhack3r/DVWA下载zip包或使用git命令直接下载 2. 将DVWA放入本地站点目录中本人的Windows系统中使用phpstudy搭建web服务器 将解压出来的文件放入phpStudy\PHPTutorial\WWW目录下 3. 安装DVWA3.1 修改配置文件打开\DVWA-master\config目录下的config.inc.php文件 修改以下字段 12345$_DVWA = array();$_DVWA[ 'db_server' ] = '127.0.0.1';$_DVWA[ 'db_database' ] = 'dvwa';$_DVWA[ 'db_user' ] = 'root';$_DVWA[ 'db_password' ] = 'root用户密码'; 3.2 安装DVWA打开浏览器，输入http://127.0.0.1/DVWA-master/index.php进入，选择左侧的Setup/Reset DB选项，在最下方点击Create/Reset Database，如果提示Setup successful!即安装成功 3.3 登录DVWA使用浏览器访问http://127.0.0.1/DVWA-master/，输入用户名admin，密码password即可登录 三. 在Linux系统中搭建DVWA在Linux系统中搭建DVWA的过程和Windows系统中基本一致 1.下载DVWA12root@ubuntu:~# cd /var/www/htmlroot@ubuntu:/var/www/html# git clone https://github.com/ethicalhack3r/DVWA 2.修改配置文件123root@ubuntu:/var/www/html# cd DVWA/config/root@ubuntu:/var/www/html/DVWA/config# mv config.inc.php.dist config.inc.phproot@ubuntu:/var/www/html/DVWA/config# vi config.inc.php 修改config.inc.php文件的内容，同Windows系统 3. 安装DVWA在浏览器内输入127.0.0.1/DVWA，进入DVWA安装页面，拉到最下面，点击Create/Reset Database，如果提示Setup successful!即完成安装 此时会跳转到登录页面，输入账号密码即可登录 四. 其他以上便是DVWA在两种操作系统上部署的全过程，仅供参考和学习]]></content>
       <categories>
         <category>环境搭建</category>
