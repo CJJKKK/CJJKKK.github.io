@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="攻击测试,Cobalt Strike,木马攻击,">
 
 
 
@@ -86,13 +86,25 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Jacky Cheng">
-<meta property="og:url" content="https://cjjkkk.github.io/tags/中间人攻击/index.html">
+<meta name="description" content="前言 攻击过程 后记    一. 前言1. 关于Cobalt StrikeCobalt Strike 一款以metasploit为基础的GUI的框架式渗透测试工具，集成了端口转发、服务扫描，自动化溢出，多模式端口监听，win exe木马生成，win dll木马生成，java木马生成，office宏病毒生成，木马捆绑；钓鱼攻击包括：站点克隆，目标信息获取，java执行，浏览器自动攻击等等。而Co">
+<meta name="keywords" content="攻击测试,Cobalt Strike,木马攻击">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Cobalt Strike生成Windows木马并攻击靶机的简单测试">
+<meta property="og:url" content="https://cjjkkk.github.io/cobalt-strike/index.html">
 <meta property="og:site_name" content="Jacky Cheng">
+<meta property="og:description" content="前言 攻击过程 后记    一. 前言1. 关于Cobalt StrikeCobalt Strike 一款以metasploit为基础的GUI的框架式渗透测试工具，集成了端口转发、服务扫描，自动化溢出，多模式端口监听，win exe木马生成，win dll木马生成，java木马生成，office宏病毒生成，木马捆绑；钓鱼攻击包括：站点克隆，目标信息获取，java执行，浏览器自动攻击等等。而Co">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="d:/github_blog/source/image/cobaltstrike/1.jpg">
+<meta property="og:image" content="https://cjjkkk.github.io/image/cobaltstrike/2.jpg">
+<meta property="og:image" content="https://cjjkkk.github.io/image/cobaltstrike/3.jpg">
+<meta property="og:image" content="https://cjjkkk.github.io/image/cobaltstrike/4.jpg">
+<meta property="og:image" content="https://cjjkkk.github.io/image/cobaltstrike/5.jpg">
+<meta property="og:image" content="https://cjjkkk.github.io/image/cobaltstrike/6.jpg">
+<meta property="og:updated_time" content="2019-03-28T13:05:54.712Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Jacky Cheng">
+<meta name="twitter:title" content="使用Cobalt Strike生成Windows木马并攻击靶机的简单测试">
+<meta name="twitter:description" content="前言 攻击过程 后记    一. 前言1. 关于Cobalt StrikeCobalt Strike 一款以metasploit为基础的GUI的框架式渗透测试工具，集成了端口转发、服务扫描，自动化溢出，多模式端口监听，win exe木马生成，win dll木马生成，java木马生成，office宏病毒生成，木马捆绑；钓鱼攻击包括：站点克隆，目标信息获取，java执行，浏览器自动攻击等等。而Co">
+<meta name="twitter:image" content="d:/github_blog/source/image/cobaltstrike/1.jpg">
 
 
 
@@ -122,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="https://cjjkkk.github.io/tags/中间人攻击/">
+  <link rel="canonical" href="https://cjjkkk.github.io/cobalt-strike/">
 
 
 
 
 
-  <title>标签: 中间人攻击 | Jacky Cheng</title>
+  <title>使用Cobalt Strike生成Windows木马并攻击靶机的简单测试 | Jacky Cheng</title>
   
 
 
@@ -147,7 +159,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -273,52 +285,299 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>中间人攻击<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://cjjkkk.github.io/cobalt-strike/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jacky Cheng">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/image/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jacky Cheng">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/ettercap-DNS欺骗/" itemprop="url">
-              
-                <span itemprop="name">使用Ettercap实现DNS欺骗的简单测试</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">使用Cobalt Strike生成Windows木马并攻击靶机的简单测试</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-21T17:09:40+08:00" content="2019-03-21">
-          03-21
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-28T14:27:06+08:00">
+                2019-03-28
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/攻击测试/" itemprop="url" rel="index">
+                    <span itemprop="name">攻击测试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  498
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<ul>
+<li>前言</li>
+<li>攻击过程</li>
+<li>后记</li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="一-前言"><a href="#一-前言" class="headerlink" title="一. 前言"></a>一. 前言</h2><h3 id="1-关于Cobalt-Strike"><a href="#1-关于Cobalt-Strike" class="headerlink" title="1. 关于Cobalt Strike"></a>1. 关于Cobalt Strike</h3><p>Cobalt Strike 一款以metasploit为基础的GUI的框架式渗透测试工具，集成了端口转发、服务扫描，自动化溢出，多模式端口监听，win exe木马生成，win dll木马生成，java木马生成，office宏病毒生成，木马捆绑；钓鱼攻击包括：站点克隆，目标信息获取，java执行，浏览器自动攻击等等。而Cobalt Strike 3.0已经不再使用Metasploit框架而作为一个独立的平台使用，当然可以结合Armitage进行使用。</p>
+<a id="more"></a>
+<p><br></p>
+<h2 id="二-攻击过程"><a href="#二-攻击过程" class="headerlink" title="二. 攻击过程"></a>二. 攻击过程</h2><h3 id="1-攻击环境"><a href="#1-攻击环境" class="headerlink" title="1. 攻击环境"></a>1. 攻击环境</h3><ul>
+<li>攻击机：Windows7 ultimate sp1 IP：192.168.28.128</li>
+<li>靶机：Windows7 ultimate sp1 IP：192.168.28.138</li>
+</ul>
+<h3 id="2-攻击步骤"><a href="#2-攻击步骤" class="headerlink" title="2. 攻击步骤"></a>2. 攻击步骤</h3><h4 id="2-1-开启TeamServer服务"><a href="#2-1-开启TeamServer服务" class="headerlink" title="2.1 开启TeamServer服务"></a>2.1 开启<code>TeamServer</code>服务</h4><p>使用cmd命令行进入<code>Cobalt Strike</code>所在文件夹，使用如下命令开启TeamServer</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">teamserver 本机IP 连接密码 #密码可以随意设置</span><br></pre></td></tr></table></figure>
+<p>接下来会提示服务已经建立服务，同时还会显示所使用的端口</p>
+<p><img src="D:\github_blog\source\image\cobaltstrike\1.jpg" alt></p>
+<h4 id="2-2-使用客户端连接"><a href="#2-2-使用客户端连接" class="headerlink" title="2.2 使用客户端连接"></a>2.2 使用客户端连接</h4><p>启动<code>Cobalt Strike</code>，填写相关信息，点击connect连接，进入主界面</p>
+<p><img src="\image\cobaltstrike\2.jpg" alt></p>
+<p><img src="\image\cobaltstrike\3.jpg" alt></p>
+<h4 id="2-3-生成病毒文件"><a href="#2-3-生成病毒文件" class="headerlink" title="2.3 生成病毒文件"></a>2.3 生成病毒文件</h4><p>选择<code>Attacks-&gt;Packages-&gt;Windows Executable</code></p>
+<p><img src="\image\cobaltstrike\4.jpg" alt></p>
+<p>设置listener和输出的病毒文件格式</p>
+<p><img src="\image\cobaltstrike\5.jpg" alt></p>
+<p>点击<code>Generate</code>生成，选择保存的位置</p>
+<h4 id="2-4-投放病毒"><a href="#2-4-投放病毒" class="headerlink" title="2.4 投放病毒"></a>2.4 投放病毒</h4><p>把病毒放入靶机，并运行。我们可以通过Cobalt Strike发现靶机已经上线，同时可以进行多种操作</p>
+<p><img src="\image\cobaltstrike\6.jpg" alt></p>
+<p><br></p>
+<h2 id="三-后记"><a href="#三-后记" class="headerlink" title="三. 后记"></a>三. 后记</h2><p>以上就是使用Cobalt Strike进行简单攻击模拟的全过程。可以看到，关于工具本身使用非常简单,纯图形化操作,稍微有点儿基础,很快就能上手,而且它直接支持图标灵活拖拽很方便对指定肉鸡进行集中批量操作,非常友好。当然，在实际运用过程肯定在测试环境中要复杂的多，但毫无疑问作为一款工具，Cobalt Strike足够优秀。</p>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+    	<br>
+    	<br>
+        <div style="text-align:center;color: #000000;font-size:14px;">-------------本文结束<i class="fa fa-gift"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/cobalt-strike/">使用Cobalt Strike生成Windows木马并攻击靶机的简单测试</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Jacky Cheng 的个人博客">Jacky Cheng</a></p>
+  <p><span>发布时间:</span>2019年03月28日 - 14:03</p>
+  <p><span>最后更新:</span>2019年03月28日 - 21:03</p>
+  <p><span>原始链接:</span><a href="/cobalt-strike/" title="使用Cobalt Strike生成Windows木马并攻击靶机的简单测试">https://cjjkkk.github.io/cobalt-strike/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://cjjkkk.github.io/cobalt-strike/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+	  $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+	    });
+    });  
+</script>
+<br>
 
       
     </div>
 
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>想喝快乐水</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/image/wechatpay.jpg" alt="Jacky Cheng 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/image/alipay.jpg" alt="Jacky Cheng 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/攻击测试/" rel="tag"><i class="fa fa-tag"></i> 攻击测试</a>
+          
+            <a href="/tags/Cobalt-Strike/" rel="tag"><i class="fa fa-tag"></i> Cobalt Strike</a>
+          
+            <a href="/tags/木马攻击/" rel="tag"><i class="fa fa-tag"></i> 木马攻击</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Shellinabox/" rel="next" title="使用Shellinabox在浏览器进行ssh登录">
+                <i class="fa fa-chevron-left"></i> 使用Shellinabox在浏览器进行ssh登录
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -326,6 +585,13 @@
 
 
           
+
+  
+    <div id="gitalk-container">
+  </div>
+  
+
+
 
         </div>
         
@@ -346,8 +612,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -443,6 +718,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-前言"><span class="nav-text">一. 前言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-关于Cobalt-Strike"><span class="nav-text">1. 关于Cobalt Strike</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-攻击过程"><span class="nav-text">二. 攻击过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-攻击环境"><span class="nav-text">1. 攻击环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-攻击步骤"><span class="nav-text">2. 攻击步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-开启TeamServer服务"><span class="nav-text">2.1 开启TeamServer服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-使用客户端连接"><span class="nav-text">2.2 使用客户端连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-生成病毒文件"><span class="nav-text">2.3 生成病毒文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-投放病毒"><span class="nav-text">2.4 投放病毒</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-后记"><span class="nav-text">三. 后记</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -594,6 +885,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -634,6 +929,22 @@
 
 
 
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'ee53cc5de9d57711e0cb',
+          clientSecret: '46a58ced62224ebedbadafff96c5860f097e9d66',
+          repo: 'CJJKKK.github.io',
+          owner: 'CJJKKK',
+          admin: ['CJJKKK'],
+          id: location.pathname,
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')           
+       </script>
 
   
 
