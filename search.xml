@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[使用Social-Engineer-Toolkit生成钓鱼网站]]></title>
+    <url>%2FSocial-engineer-toolkit%2F</url>
+    <content type="text"><![CDATA[前言 工具使用 其他 一. 前言1. 钓鱼网站钓鱼网站通常指伪装成目标网站，窃取用户提交的帐号、密码等私密信息的网站。“钓鱼”是一种网络欺诈行为，指不法分子利用各种手段，仿冒真实网站的URL地址以及页面内容，或利用真实网站服务器程序上的漏洞在站点的某些网页中插入危险的HTML代码，以此来骗取用户银行或信用卡账号、密码等私人资料。 2. 社会工程学社会工程学（Social Engineering）在上世纪60年代左右作为正式的学科出现，广义社会工程学的定义是：建立理论并通过利用自然的、社会的和制度上的途径来逐步地解决各种复杂的社会问题。很多企业、公司在信息安全上投入大量的资金，最终导致数据泄露的原因，往往却是发生在人本身。你们可能永远都想象不到，对于黑客们来说，通过一个用户名、一串数字、一串英文代码，社会工程师就可以通过这么几条的线索，通过社工攻击手段，加以筛选、整理，就能把你的所有个人情况信息、家庭状况、兴趣爱好、婚姻状况、你在网上留下的一切痕迹等个人信息全部掌握得一清二楚。虽然这个可能是最不起眼，而且还是最麻烦的方法。一种无需依托任何黑客软件，更注重研究人性弱点的黑客手法正在兴起，这就是社会工程学黑客技术。 3. Social-Engineering-ToolkitSocial Engineer Toolkit(SET)工具在一个接口囊括了许多有用的社会工程学攻击。SET的主要目的是自动化并改进社会工程学攻击。它能够自动生成隐藏了EXP的 网页或电子邮件消息，同时还能使用Metasploit的payload，例如网页一旦被打开便会连接shell。 二. 工具使用1. 生成钓鱼页面在kali Linux中，选择应用程序-Social Engineering Tools-Social-Engineering-Toolkit，打开程序 1) Social-Engineering Attacks(社工工程学攻击) 2) Penetration Testing (Fast-Track)（快速追踪测试） 3) Third Party Modules（第三模块） 4) Update the Social-Engineer Toolkit（升级） 5) Update SET configuration（升级配置） 6) Help, Credits, and About（帮助） 选择1)Social-Engineering Attacks，进入下一级菜单 1) Spear-Phishing Attack Vectors(鱼叉式网络钓鱼攻击) 2) Website Attack Vectors（网页攻击） 3) Infectious Media Generator（传染媒介产生器—木马） 4) Create a Payload and Listener（建立pay和监听器） 5) Mass Mailer Attack（邮件群发攻击） 6) Arduino-Based Attack Vector（基于Arduino攻击方式） 7) Wireless Access Point Attack Vector（无线接入攻击） 8) QRCode Generator Attack Vector（二维码攻击） 9) Powershell Attack Vectors（powershell攻击） 10) SMS Spoofing Attack Vector（SMS欺骗攻击） 11) Third Party Modules（第三模块） 选择2)Website Attack Vectors，进入下一级菜单 1) Java Applet Attack Method （java applet小程序攻击） 2) Metasploit Browser Exploit Method（MSF 浏览器攻击） 3) Credential Harvester Attack Method（钓鱼网站攻击） 4) Tabnabbing Attack Method（标签钓鱼攻击） 5) Web Jacking Attack Method（网站Jacking 攻击） 6) Multi-Attack Web Method（多站点攻击） 7) Full Screen Attack Method（全屏幕攻击） 8) HTA Attack Method（HTA攻击） 选择3) Credential Harvester Attack Method，进入下一级菜单 1) Web Templates (网站模板) 2) Site Cloner （网站克隆） 3) Custom Import （自定义） 选择1) Web Templates，进入下一级菜单 输入本机IP，进入下一级 选择2) Google，生成谷歌登录页面 按下回车，便开始监听 2. 测试钓鱼页面Social-Engineering-Toolkit生成完成钓鱼页面并开始监听后，我们从靶机访问钓鱼页面。 在输入完用户名密码后登录，Social-Engineering-Toolkit会显示收到的用户名和密码 三. 其他以上便是使用Social-Engineering-Toolkit生成钓鱼页面并获取用户信息的全过程。除了使用内置的网站模板外，还可以复制其他网站进行钓鱼。除此之外，我们可以配合Ettercap进行DNS欺骗，增加钓鱼网站的真实性。 本次实验为简单的测试，在实际使用中还需要考虑使用HTTPS协议、跨域访问等种种问题。 Social-Engineering-Toolkit还有许多更为强大的功能，需要慢慢学习。]]></content>
+      <categories>
+        <category>工具使用</category>
+      </categories>
+      <tags>
+        <tag>Social-Engineer-Toolkit</tag>
+        <tag>钓鱼网站</tag>
+        <tag>社工</tag>
+        <tag>kali Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[使用Cobalt Strike生成Windows木马并攻击靶机的简单测试]]></title>
     <url>%2Fcobalt-strike%2F</url>
     <content type="text"><![CDATA[前言 攻击过程 后记 一. 前言1. 关于Cobalt StrikeCobalt Strike 一款以metasploit为基础的GUI的框架式渗透测试工具，集成了端口转发、服务扫描，自动化溢出，多模式端口监听，win exe木马生成，win dll木马生成，java木马生成，office宏病毒生成，木马捆绑；钓鱼攻击包括：站点克隆，目标信息获取，java执行，浏览器自动攻击等等。而Cobalt Strike 3.0已经不再使用Metasploit框架而作为一个独立的平台使用，当然可以结合Armitage进行使用。 二. 攻击过程1. 攻击环境 攻击机：Windows7 ultimate sp1 IP：192.168.28.128 靶机：Windows7 ultimate sp1 IP：192.168.28.138 2. 攻击步骤2.1 开启TeamServer服务使用cmd命令行进入Cobalt Strike所在文件夹，使用如下命令开启TeamServer 1teamserver 本机IP 连接密码 #密码可以随意设置 接下来会提示服务已经建立服务，同时还会显示所使用的端口 2.2 使用客户端连接启动Cobalt Strike，填写相关信息，点击connect连接，进入主界面 2.3 生成病毒文件选择Attacks-&gt;Packages-&gt;Windows Executable 设置listener和输出的病毒文件格式 点击Generate生成，选择保存的位置 2.4 投放病毒把病毒放入靶机，并运行。我们可以通过Cobalt Strike发现靶机已经上线，同时可以进行多种操作 三. 后记以上就是使用Cobalt Strike进行简单攻击模拟的全过程。可以看到，关于工具本身使用非常简单,纯图形化操作,稍微有点儿基础,很快就能上手,而且它直接支持图标灵活拖拽很方便对指定肉鸡进行集中批量操作,非常友好。当然，在实际运用过程肯定在测试环境中要复杂的多，但毫无疑问作为一款工具，Cobalt Strike足够优秀。]]></content>
@@ -21,9 +35,9 @@
         <category>环境搭建</category>
       </categories>
       <tags>
+        <tag>kali Linux</tag>
         <tag>环境搭建</tag>
         <tag>Shellinabox</tag>
-        <tag>kali Linux</tag>
         <tag>Ngrok</tag>
       </tags>
   </entry>
@@ -88,10 +102,10 @@
         <category>漏洞复现</category>
       </categories>
       <tags>
-        <tag>CVE-2018-20250</tag>
         <tag>Metasploit</tag>
-        <tag>WinRAR目录穿越漏洞</tag>
         <tag>漏洞复现</tag>
+        <tag>CVE-2018-20250</tag>
+        <tag>WinRAR目录穿越漏洞</tag>
       </tags>
   </entry>
   <entry>
@@ -102,11 +116,11 @@
         <category>漏洞复现</category>
       </categories>
       <tags>
-        <tag>Metasploit</tag>
-        <tag>漏洞复现</tag>
         <tag>Nmap</tag>
+        <tag>Metasploit</tag>
         <tag>ms17-010</tag>
         <tag>永恒之蓝</tag>
+        <tag>漏洞复现</tag>
       </tags>
   </entry>
   <entry>
@@ -132,9 +146,9 @@
         <category>博客搭建</category>
       </categories>
       <tags>
-        <tag>随笔</tag>
         <tag>博客搭建</tag>
         <tag>Hexo</tag>
+        <tag>随笔</tag>
         <tag>GitHub</tag>
       </tags>
   </entry>
