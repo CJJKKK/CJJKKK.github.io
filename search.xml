@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[在Windows server 2008 R2 上搭建VPN服务器]]></title>
+    <url>%2FwinServer08R2-vpn%2F</url>
+    <content type="text"><![CDATA[前言 搭建过程 一. 前言1. 什么是VPN虚拟专用网络(VPN)的功能是：在公用网络上建立专用网络，进行加密通讯。在企业网络中有广泛应用。VPN网关通过对数据包的加密和数据包目标地址的转换实现远程访问。VPN有多种分类方式，主要是按协议进行分类。VPN可通过服务器、硬件、软件等多种方式实现。 二. 搭建过程1. Windows Server 搭建VPN服务器winserver- 打开服务器管理器，右击角色-添加角色 点击下一步，选择网络策略和访问服务 下一步，选择网络策略服务器和路由和远程访问服务 一路下一步完成安装 右击路由和远程访问，选择配置并启用路由和远程访问 下一步，选择自定义配置 下一步，选择VPN访问、NAT、LAN路由 下一步到最后，启动服务 进入路由和远程访问-IPv4，右击NAT，选择新增接口 选择本地连接 设置属性，勾选公用接口连接到Internet，并选择在此接口上启用NAT 接下来建立VPN访问用户，由于本机使用的是域环境，所以在Active Directory 域服务-Active Directory 用户和计算机-域名-User中创建用户，如果没有域环境在本机用户中创建即可 在中间空白处右击创建用户 创建完用户后记得更改用户属性 在属性中找到拨入选项卡，将网络访问权限改为允许访问 至此，Windows Server上的VPN服务器已经搭建完成，接下来去测试服务器是否能够正常连接 2. 使用Windows7连接测试在网络和共享中心里选择设置新的连接或网络 选择连接到工作区 选择使用我的Internet连接(VPN) 在Internet地址中输入VPN服务器的IP地址 输入刚才新建的用户 完成连接 从网络设置中可以看到，DNS服务器的地址是VPN服务器地址]]></content>
+      <categories>
+        <category>环境搭建</category>
+      </categories>
+      <tags>
+        <tag>Windows server</tag>
+        <tag>VPN</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[使用Social-Engineer-Toolkit生成钓鱼网站]]></title>
     <url>%2FSocial-engineer-toolkit%2F</url>
     <content type="text"><![CDATA[前言 工具使用 其他 一. 前言1. 钓鱼网站钓鱼网站通常指伪装成目标网站，窃取用户提交的帐号、密码等私密信息的网站。“钓鱼”是一种网络欺诈行为，指不法分子利用各种手段，仿冒真实网站的URL地址以及页面内容，或利用真实网站服务器程序上的漏洞在站点的某些网页中插入危险的HTML代码，以此来骗取用户银行或信用卡账号、密码等私人资料。 2. 社会工程学社会工程学（Social Engineering）在上世纪60年代左右作为正式的学科出现，广义社会工程学的定义是：建立理论并通过利用自然的、社会的和制度上的途径来逐步地解决各种复杂的社会问题。很多企业、公司在信息安全上投入大量的资金，最终导致数据泄露的原因，往往却是发生在人本身。你们可能永远都想象不到，对于黑客们来说，通过一个用户名、一串数字、一串英文代码，社会工程师就可以通过这么几条的线索，通过社工攻击手段，加以筛选、整理，就能把你的所有个人情况信息、家庭状况、兴趣爱好、婚姻状况、你在网上留下的一切痕迹等个人信息全部掌握得一清二楚。虽然这个可能是最不起眼，而且还是最麻烦的方法。一种无需依托任何黑客软件，更注重研究人性弱点的黑客手法正在兴起，这就是社会工程学黑客技术。 3. Social-Engineering-ToolkitSocial Engineer Toolkit(SET)工具在一个接口囊括了许多有用的社会工程学攻击。SET的主要目的是自动化并改进社会工程学攻击。它能够自动生成隐藏了EXP的 网页或电子邮件消息，同时还能使用Metasploit的payload，例如网页一旦被打开便会连接shell。 二. 工具使用1. 生成钓鱼页面在kali Linux中，选择应用程序-Social Engineering Tools-Social-Engineering-Toolkit，打开程序 1) Social-Engineering Attacks(社工工程学攻击) 2) Penetration Testing (Fast-Track)（快速追踪测试） 3) Third Party Modules（第三模块） 4) Update the Social-Engineer Toolkit（升级） 5) Update SET configuration（升级配置） 6) Help, Credits, and About（帮助） 选择1)Social-Engineering Attacks，进入下一级菜单 1) Spear-Phishing Attack Vectors(鱼叉式网络钓鱼攻击) 2) Website Attack Vectors（网页攻击） 3) Infectious Media Generator（传染媒介产生器—木马） 4) Create a Payload and Listener（建立pay和监听器） 5) Mass Mailer Attack（邮件群发攻击） 6) Arduino-Based Attack Vector（基于Arduino攻击方式） 7) Wireless Access Point Attack Vector（无线接入攻击） 8) QRCode Generator Attack Vector（二维码攻击） 9) Powershell Attack Vectors（powershell攻击） 10) SMS Spoofing Attack Vector（SMS欺骗攻击） 11) Third Party Modules（第三模块） 选择2)Website Attack Vectors，进入下一级菜单 1) Java Applet Attack Method （java applet小程序攻击） 2) Metasploit Browser Exploit Method（MSF 浏览器攻击） 3) Credential Harvester Attack Method（钓鱼网站攻击） 4) Tabnabbing Attack Method（标签钓鱼攻击） 5) Web Jacking Attack Method（网站Jacking 攻击） 6) Multi-Attack Web Method（多站点攻击） 7) Full Screen Attack Method（全屏幕攻击） 8) HTA Attack Method（HTA攻击） 选择3) Credential Harvester Attack Method，进入下一级菜单 1) Web Templates (网站模板) 2) Site Cloner （网站克隆） 3) Custom Import （自定义） 选择1) Web Templates，进入下一级菜单 输入本机IP，进入下一级 选择2) Google，生成谷歌登录页面 按下回车，便开始监听 2. 测试钓鱼页面Social-Engineering-Toolkit生成完成钓鱼页面并开始监听后，我们从靶机访问钓鱼页面。 在输入完用户名密码后登录，Social-Engineering-Toolkit会显示收到的用户名和密码 三. 其他以上便是使用Social-Engineering-Toolkit生成钓鱼页面并获取用户信息的全过程。除了使用内置的网站模板外，还可以复制其他网站进行钓鱼。除此之外，我们可以配合Ettercap进行DNS欺骗，增加钓鱼网站的真实性。 本次实验为简单的测试，在实际使用中还需要考虑使用HTTPS协议、跨域访问等种种问题。 Social-Engineering-Toolkit还有许多更为强大的功能，需要慢慢学习。]]></content>
@@ -8,10 +20,10 @@
         <category>工具使用</category>
       </categories>
       <tags>
-        <tag>kali Linux</tag>
         <tag>Social-Engineer-Toolkit</tag>
         <tag>钓鱼网站</tag>
         <tag>社工</tag>
+        <tag>kali Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -35,9 +47,9 @@
         <category>环境搭建</category>
       </categories>
       <tags>
+        <tag>kali Linux</tag>
         <tag>环境搭建</tag>
         <tag>Shellinabox</tag>
-        <tag>kali Linux</tag>
         <tag>Ngrok</tag>
       </tags>
   </entry>
