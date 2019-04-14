@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[ubuntu16.04安装python3.7和docker]]></title>
+    <url>%2Fubuntu16-04-python3-7-docker%2F</url>
+    <content type="text"><![CDATA[什么是docker 安装python3.7 搭建docker环境 一. 什么是dockerDocker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的Linux机器上，也可以实现虚拟化，容器是完全使用沙箱机制，相互之间不会有任何接口。 一个完整的Docker有以下几个部分组成： DockerClient客户端 Docker Daemon守护进程 Docker Image镜像 DockerContainer容器 二. 安装python3.7本次python3.7使用源码安装 1. 安装环境123sudo apt-get install zlib1g-dev libbz2-dev libssl-dev libncurses5-dev libsqlite3-dev libreadline-dev tk-dev libgdbm-dev libdb-dev libpcap-dev xz-utils libexpat1-dev liblzma-dev libffi-dev libc6-dev 2. 源码安装2.1下载源码包从官网下载最新版本源码包并解压 2.2 建立安装目录1sudo mkdir -p /usr/local/python3.7 2.3 编译安装进入源码包目录下，使用如下命令 123./configure --prefix=/usr/local/python3.7 --enable-optimizationsmakesudo make install 如果编译过程中出现如下问题 123ModuleNotFoundError: No module named &apos;_ctypes&apos;Makefile:1130: recipe for target &apos;install&apos; failedmake: *** [install] Error 可以使用如下方法解决 12345678sudo apt-get updatesudo apt-get upgradesudo apt-get dist-upgradesudo apt-get install build-essential python-dev python-setuptools python-pip python-smbussudo apt-get install build-essential libncursesw5-dev libgdbm-dev libc6-devsudo apt-get install zlib1g-dev libsqlite3-dev tk-devsudo apt-get install libssl-dev opensslsudo apt-get install libffi-dev 3 添加软连接1234#添加python3的软链接ln -s /usr/local/python3/bin/python3.7 /usr/bin/python3.7#添加 pip3 的软链接ln -s /usr/local/python3/bin/pip3.7 /usr/bin/pip3.7 4 检测版本12python3.7 -Vpip3.7 -V 二. 搭建docker环境1.安装docker1.1 安装1sudo curl -s https://get.docker.com/ | sh 如果提示没有curl，可以按照提示安装curl不使用apt install方式安装docker是因为，如果源上的docker不是最新的，无法安装最新版本的docker。 1.2 几个遇到的问题1) 123E: Failed to fetch https://download.docker.com/linux/ubuntu/dists/xenial/pool/stable/amd64/containerd.io_1.2.5-1_amd64.deb Operation too slow. Less than 10 bytes/sec transferred the last 120 secondsE: Unable to fetch some archives, maybe run apt-get update or try with --fix-missing? 这是网络问题，挂个梯子就行了 2) 1E: Sub-process /usr/bin/dpkg returned an error code (1) 使用如下命令解决 12sudo apt-get update --fix-missingsudo apt-get autoremove &amp;&amp; sudo apt-get clean &amp;&amp; sudo apt-get install -f 2. 安装docker-compose2.1 安装使用刚刚安装的python3.7自带的pip3安装 1pip3 install docker-compose --user 2.2 添加软连接安装完成后使用如下命令查看安装位置 1pip3 show docker-compose 显示如下结果 12345678910Name: docker-composeVersion: 1.24.0Summary: Multi-container orchestration for DockerHome-page: https://www.docker.com/Author: Docker, Inc.Author-email: NoneLicense: Apache License 2.0Location: /home/cheng/.local/lib/python3.7/site-packagesRequires: docopt, dockerpty, PyYAML, jsonschema, requests, docker, texttable, websocket-client, cached-property, sixRequired-by: Location一项即是docker-compose的安装路径，使用如下命令为docker-compose创建软连接 1sudo ln -s /home/cheng/.local/bin/docker-compose /usr/bin/]]></content>
+      <categories>
+        <category>环境搭建</category>
+      </categories>
+      <tags>
+        <tag>环境搭建</tag>
+        <tag>ubuntu</tag>
+        <tag>python3.7</tag>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[TCP协议三次握手和四次挥手]]></title>
     <url>%2Fthree-way-handshake%2F</url>
     <content type="text"><![CDATA[三次握手 四次挥手 TCP状态转换 一. 三次挥手 SYN是标志位，SYN=1表示请求连接 第一次第一次握手：建立连接时，客户端发送SYN包（syn=j）到服务器，并进入SYN_SENT状态，等待服务器确认；SYN：同步序列编号（Synchronize Sequence Numbers）。 第二次第二次握手：服务器收到syn包，必须确认客户的SYN（ack=j+1），同时自己也发送一个SYN包（syn=k），即SYN+ACK包，此时服务器进入SYN_RECV状态； 第三次第三次握手：客户端收到服务器的SYN+ACK包，向服务器发送确认包ACK(ack=k+1），此包发送完毕，客户端和服务器进入ESTABLISHED（TCP连接成功）状态，完成三次握手。 二. 四次挥手 由于TCP连接是全双工的，因此每个方向都必须单独进行关闭。这原则是当一方完成它的数据发送任务后就能发送一个FIN来终止这个方向的连接。收到一个 FIN只意味着这一方向上没有数据流动，一个TCP连接在收到一个FIN后仍能发送数据。首先进行关闭的一方将执行主动关闭，而另一方执行被动关闭。 第一次挥手 主动关闭方发送一个FIN，用来关闭主动方到被动关闭方的数据传送，也就是主动关闭方告诉被动关闭方：我已经不会再给你发数据了(当然，在fin包之前发送出去的数据，如果没有收到对应的ack确认报文，主动关闭方依然会重发这些数据)，但是，此时主动关闭方还可以接受数据。 第二次挥手 被动关闭方收到FIN包后，发送一个ACK给对方，确认序号为收到序号+1（与SYN相同，一个FIN占用一个序号， SYN 和 FIN 都有seq序号）。 第三次挥手 被动关闭方发送一个FIN，用来关闭被动关闭方到主动关闭方的数据传送，也就是告诉主动关闭方，我的数据也发送完了，不会再给你发数据了。 第四次挥手 主动关闭方收到FIN后，发送一个ACK给被动关闭方，确认序号为收到序号+1，至此，完成四次挥手。 三. TCP状态转换 状态说明： CLOSED: 这个表示初始状态。 LISTEN（服务器）: 这个也是非常容易理解的一个状态，表示服务器端的某个SOCKET处于监听状态，可以接受连接了。 SYN_RCVD（服务器）: 这个状态表示接受到了SYN报文，在正常情况下，这个状态是服务器端的SOCKET在建立TCP连接时的三次握手会话过程中的一个中间状态，很短暂，基本上用netstat你是很难看到这种状态的，除非你特意写了一个客户端测试程序，故意将三次TCP握手过程中最后一个ACK报文不予发送。因此这种状态时，当收到客户端的ACK报文后，它会进入到ESTABLISHED状态。 SYN_SENT: 这个状态与SYN_RCVD呼应，当客户端SOCKET执行CONNECT连接时，它首先发送SYN报文，因此也随即它会进入到了SYN_SENT状态，并等待服务端的发送三次握手中的第2个报文。SYN_SENT状态表示客户端已发送SYN报文。 ESTABLISHED：这个容易理解了，表示连接已经建立了。 FIN_WAIT_1: 这个状态要好好解释一下，其实FIN_WAIT_1和FIN_WAIT_2状态的真正含义都是表示等待对方的FIN报文。而这两种状态的区别是：FIN_WAIT_1状态实际上是当SOCKET在ESTABLISHED状态时，它想主动关闭连接，向对方发送了FIN报文，此时该SOCKET即进入到FIN_WAIT_1状态。而当对方回应ACK报文后，则进入到FIN_WAIT_2状态，当然在实际的正常情况下，无论对方何种情况下，都应该马上回应ACK报文，所以FIN_WAIT_1状态一般是比较难见到的，而FIN_WAIT_2状态还有时常常可以用netstat看到。 FIN_WAIT_2：上面已经详细解释了这种状态，实际上FIN_WAIT_2状态下的SOCKET，表示半连接，也即有一方要求close连接，但另外还告诉对方，我暂时还有点数据需要传送给你，稍后再关闭连接。 TIME_WAIT: 表示收到了对方的FIN报文，并发送出了ACK报文，就等2MSL后即可回到CLOSED可用状态了。如果FIN_WAIT_1状态下，收到了对方同时带FIN标志和ACK标志的报文时，可以直接进入到TIME_WAIT状态，而无须经过FIN_WAIT_2状态。 注:MSL(最大分段生存期)指明TCP报文在Internet上最长生存时间,每个具体的TCP实现都必须选择一个确定的MSL值.RFC 1122建议是2分钟,但BSD传统实现采用了30秒.TIME_WAIT 状态最大保持时间是2 * MSL,也就是1-4分钟 结论：在TIME_WAIT下等待2MSL，只是为了尽最大努力保证四次握手正常关闭。确保老的报文段在网络中消失，不会影响新建立的连接. CLOSING: 这种状态比较特殊，实际情况中应该是很少见，属于一种比较罕见的例外状态。正常情况下，当你发送FIN报文后，按理来说是应该先收到（或同时收到）对方的ACK报文，再收到对方的FIN报文。但是CLOSING状态表示你发送FIN报文后，并没有收到对方的ACK报文，反而却也收到了对方的FIN报文。什么情况下会出现此种情况呢？其实细想一下，也不难得出结论：那就是如果双方几乎在同时close一个SOCKET的话，那么就出现了双方同时发送FIN报文的情况，也即会出现CLOSING状态，表示双方都正在关闭SOCKET连接。 CLOSE_WAIT: 这种状态的含义其实是表示在等待关闭。怎么理解呢？当对方close一个SOCKET后发送FIN报文给自己，你系统毫无疑问地会回应一个ACK报文给对方，此时则进入到CLOSE_WAIT状态。接下来呢，实际上你真正需要考虑的事情是察看你是否还有数据发送给对方，如果没有的话，那么你也就可以close这个SOCKET，发送FIN报文给对方，也即关闭连接。所以你在CLOSE_WAIT状态下，需要完成的事情是等待你去关闭连接。 LAST_ACK: 这个状态还是比较容易好理解的，它是被动关闭一方在发送FIN报文后，最后等待对方的ACK报文。当收到ACK报文后，也即可以进入到CLOSED可用状态了。]]></content>
@@ -24,8 +38,8 @@
       <tags>
         <tag>kali Linux</tag>
         <tag>攻击测试</tag>
-        <tag>Ettercap</tag>
         <tag>Metasploit</tag>
+        <tag>Ettercap</tag>
         <tag>browser_autopwn2</tag>
       </tags>
   </entry>
@@ -76,10 +90,10 @@
         <category>工具使用</category>
       </categories>
       <tags>
-        <tag>kali Linux</tag>
         <tag>Social-Engineer-Toolkit</tag>
         <tag>钓鱼网站</tag>
         <tag>社工</tag>
+        <tag>kali Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -103,9 +117,9 @@
         <category>环境搭建</category>
       </categories>
       <tags>
+        <tag>kali Linux</tag>
         <tag>环境搭建</tag>
         <tag>Shellinabox</tag>
-        <tag>kali Linux</tag>
         <tag>Ngrok</tag>
       </tags>
   </entry>
