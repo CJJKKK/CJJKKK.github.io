@@ -94,7 +94,7 @@
 <meta property="og:site_name" content="Jacky Cheng">
 <meta property="og:description" content="函数介绍 两条常用的语句 参考    在SQL注入过程中，通常需要将select后的数据进行回显。如果有多个数据需要输出时，需要使用到字符串连接函数。在MySQL中，可以使用concat()、group_concat()、concat_ws()三个函数进行字符串连接。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-02T11:51:05.682Z">
+<meta property="og:updated_time" content="2019-05-02T13:35:30.922Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SQL注入中常用的三个字符串连接函数">
 <meta name="twitter:description" content="函数介绍 两条常用的语句 参考    在SQL注入过程中，通常需要将select后的数据进行回显。如果有多个数据需要输出时，需要使用到字符串连接函数。在MySQL中，可以使用concat()、group_concat()、concat_ws()三个函数进行字符串连接。">
@@ -375,7 +375,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  839
+                  888
                 </span>
               
 
@@ -426,10 +426,14 @@
 <p>语句<code>SELECT locus,GROUP_CONCAT(distinct id ORDER BY id DESC SEPARATOR &#39;_&#39;) FROM info WHERE locus IN(&#39;AB086827&#39;,&#39;AF040764&#39;) GROUP BY locus;</code>的返回结果为<br>      +———-+———————————————————-+<br>      | locus    | GROUP_CONCAT(distinct id ORDER BY id DESC SEPARATOR ‘_’) |<br>      +———-+———————————————————-+<br>     | AB086827 | 2_1                                                      |<br>     | AF040764 | 24_23                                                    |<br>     +———-+———————————————————-+</p>
 <p>语句<code>SELECT locus,GROUP_CONCAT(concat_ws(&#39;, &#39;,id,journal) ORDER BY id DESC SEPARATOR &#39;. &#39;) FROM info WHERE locus IN(&#39;AB086827&#39;,&#39;AF040764&#39;) GROUP BY locus;</code>的返回结果为<br>     +———-+————————————————————————–+<br>     | locus    | GROUP_CONCAT(concat_ws(‘, ‘,id,journal) ORDER BY id DESC SEPARATOR ‘. ‘) |<br>    +———-+————————————————————————–+<br>     | AB086827 | 2, Submitted (20-JUN-2002). 1, Unpublished                               |<br>     | AF040764 | 24, Submitted (31-DEC-1997) . 23, Unpublished                            |<br>    +———-+————————————————————————–+</p>
 <p><br></p>
-<h2 id="二-两条常用的语句"><a href="#二-两条常用的语句" class="headerlink" title="二. 两条常用的语句"></a>二. 两条常用的语句</h2><p>列出所有的数据库</p>
+<h2 id="二-几条常用的语句"><a href="#二-几条常用的语句" class="headerlink" title="二. 几条常用的语句"></a>二. 几条常用的语句</h2><p>列出所有的数据库</p>
 <p><code>select group_concat(schema_name) from information_schema.schemata</code></p>
 <p>列出某个库当中所有的表 </p>
-<p><code>select group_concat(table_name) from information_schema.tables where table_schema=&#39;xxxxx&#39;</code></p>
+<p><code>select group_concat(table_name) from information_schema.tables where table_schema=&#39;库名&#39;</code></p>
+<p>列出某个表中的所有列</p>
+<p><code>select group_concat(column_name) from information_schema.columns where table_schema=&#39;库名&#39; and table_name=&#39;表名&#39;</code></p>
+<p>列出某个列中的所有数据</p>
+<p><code>select group_concat(列名) from 库名.表名</code></p>
 <p><br></p>
 <h2 id="三-参考"><a href="#三-参考" class="headerlink" title="三. 参考"></a>三. 参考</h2><p>[1] <a href="https://www.cnblogs.com/lcamry/p/5715634.html" target="_blank" rel="noopener">Sql注入中连接字符串常用函数</a></p>
 
@@ -463,7 +467,7 @@
   <p><span>本文标题:</span><a href="/concat-in-sql-injection/">SQL注入中常用的三个字符串连接函数</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Jacky Cheng 的个人博客">Jacky Cheng</a></p>
   <p><span>发布时间:</span>2019年05月02日 - 19:05</p>
-  <p><span>最后更新:</span>2019年05月02日 - 19:05</p>
+  <p><span>最后更新:</span>2019年05月02日 - 21:05</p>
   <p><span>原始链接:</span><a href="/concat-in-sql-injection/" title="SQL注入中常用的三个字符串连接函数">https://cjjkkk.github.io/concat-in-sql-injection/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://cjjkkk.github.io/concat-in-sql-injection/" aria-label="复制成功！"></i></span>
   </p>
@@ -720,7 +724,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-函数介绍"><span class="nav-text">一. 函数介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-concat-str1-str2-——没有分隔符地连接字符串"><span class="nav-text">1. concat(str1,str2,...)——没有分隔符地连接字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-concat-ws-separator-str1-str2-——含有分隔符地连接字符串"><span class="nav-text">2. concat_ws(separator,str1,str2,...)——含有分隔符地连接字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-group-concat-str1-str2-——连接一个组的所有字符串，并以逗号分隔每一条数据"><span class="nav-text">3. group_concat(str1,str2,...)——连接一个组的所有字符串，并以逗号分隔每一条数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-两条常用的语句"><span class="nav-text">二. 两条常用的语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-参考"><span class="nav-text">三. 参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-函数介绍"><span class="nav-text">一. 函数介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-concat-str1-str2-——没有分隔符地连接字符串"><span class="nav-text">1. concat(str1,str2,...)——没有分隔符地连接字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-concat-ws-separator-str1-str2-——含有分隔符地连接字符串"><span class="nav-text">2. concat_ws(separator,str1,str2,...)——含有分隔符地连接字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-group-concat-str1-str2-——连接一个组的所有字符串，并以逗号分隔每一条数据"><span class="nav-text">3. group_concat(str1,str2,...)——连接一个组的所有字符串，并以逗号分隔每一条数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-几条常用的语句"><span class="nav-text">二. 几条常用的语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-参考"><span class="nav-text">三. 参考</span></a></li></ol></div>
             
 
           </div>
