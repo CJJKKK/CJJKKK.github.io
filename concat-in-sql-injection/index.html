@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="SQL注入,MySQL,">
 
 
 
@@ -86,13 +86,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Jacky Cheng">
-<meta property="og:url" content="https://cjjkkk.github.io/tags/Cobalt-Strike/index.html">
+<meta name="description" content="函数介绍 两条常用的语句 参考    在SQL注入过程中，通常需要将select后的数据进行回显。如果有多个数据需要输出时，需要使用到字符串连接函数。在MySQL中，可以使用concat()、group_concat()、concat_ws()三个函数进行字符串连接。">
+<meta name="keywords" content="SQL注入,MySQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQL注入中常用的三个字符串连接函数">
+<meta property="og:url" content="https://cjjkkk.github.io/concat-in-sql-injection/index.html">
 <meta property="og:site_name" content="Jacky Cheng">
+<meta property="og:description" content="函数介绍 两条常用的语句 参考    在SQL注入过程中，通常需要将select后的数据进行回显。如果有多个数据需要输出时，需要使用到字符串连接函数。在MySQL中，可以使用concat()、group_concat()、concat_ws()三个函数进行字符串连接。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-02T11:51:05.682Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Jacky Cheng">
+<meta name="twitter:title" content="SQL注入中常用的三个字符串连接函数">
+<meta name="twitter:description" content="函数介绍 两条常用的语句 参考    在SQL注入过程中，通常需要将select后的数据进行回显。如果有多个数据需要输出时，需要使用到字符串连接函数。在MySQL中，可以使用concat()、group_concat()、concat_ws()三个函数进行字符串连接。">
 
 
 
@@ -122,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="https://cjjkkk.github.io/tags/Cobalt-Strike/">
+  <link rel="canonical" href="https://cjjkkk.github.io/concat-in-sql-injection/">
 
 
 
 
 
-  <title>标签: Cobalt Strike | Jacky Cheng</title>
+  <title>SQL注入中常用的三个字符串连接函数 | Jacky Cheng</title>
   
 
 
@@ -147,7 +152,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -273,52 +278,298 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>Cobalt Strike<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://cjjkkk.github.io/concat-in-sql-injection/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jacky Cheng">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/image/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jacky Cheng">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/cobalt-strike/" itemprop="url">
-              
-                <span itemprop="name">使用Cobalt Strike生成Windows木马并攻击靶机的简单测试</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">SQL注入中常用的三个字符串连接函数</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-28T14:27:06+08:00" content="2019-03-28">
-          03-28
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-02T19:16:51+08:00">
+                2019-05-02
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SQL注入/" itemprop="url" rel="index">
+                    <span itemprop="name">SQL注入</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  839
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<ul>
+<li>函数介绍</li>
+<li>两条常用的语句</li>
+<li>参考</li>
+</ul>
+</blockquote>
+<hr>
+<p>在SQL注入过程中，通常需要将select后的数据进行回显。如果有多个数据需要输出时，需要使用到字符串连接函数。在MySQL中，可以使用<code>concat()</code>、<code>group_concat()</code>、<code>concat_ws()</code>三个函数进行字符串连接。</p>
+<a id="more"></a>
+<p><br></p>
+<h2 id="一-函数介绍"><a href="#一-函数介绍" class="headerlink" title="一. 函数介绍"></a>一. 函数介绍</h2><h3 id="1-concat-str1-str2-——没有分隔符地连接字符串"><a href="#1-concat-str1-str2-——没有分隔符地连接字符串" class="headerlink" title="1. concat(str1,str2,...)——没有分隔符地连接字符串"></a>1. <code>concat(str1,str2,...)</code>——没有分隔符地连接字符串</h3><p><strong>不使用字符串连接函数时</strong><br><code>SELECT id,name FROM info LIMIT 1;</code>的返回结果为<br>+—-+——–+<br>| id | name   |<br>+—-+——–+<br>|  1 | BioCyc |<br>+—-+——–+ </p>
+<p><strong>使用字符串连接函数时</strong><br><code>SELECT CONCAT(id, &#39;，&#39;, name) AS con FROM info LIMIT 1;</code>返回结果为</p>
+<p>+———-+<br>| con        |<br>+———-+<br>| 1,BioCyc |<br>+———-+ </p>
+<p><code>SELECT CONCAT(&#39;My&#39;, NULL, &#39;QL&#39;);</code>返回结果为<br>+————————–+<br>| CONCAT(‘My’, NULL, ‘QL’) |<br>+————————–+<br>| NULL                     |<br>+————————–+ </p>
+<h3 id="2-concat-ws-separator-str1-str2-——含有分隔符地连接字符串"><a href="#2-concat-ws-separator-str1-str2-——含有分隔符地连接字符串" class="headerlink" title="2. concat_ws(separator,str1,str2,...)——含有分隔符地连接字符串"></a>2. <code>concat_ws(separator,str1,str2,...)</code>——含有分隔符地连接字符串</h3><p><code>CONCAT_WS()</code>代表<em>CONCAT With Separator</em>，是<code>CONCAT()</code>的特殊形式。第一个参数是其它参数的分隔符。分隔符的位置放在要连接的两个字符串之间。分隔符可以是一个字符串，也可以是其它参数。如果分隔符为NULL，则结果为NULL。函数会忽略任何分隔符参数后的NULL值。但是<code>CONCAT_WS()</code>不会忽略任何空字符串 (然而会忽略所有的NULL）。</p>
+<p><code>SELECT CONCAT_WS(&#39;_&#39; , id , name) AS con_ws FROM info LIMIT 1;</code>返回结果为<br>+———-+<br>| con_ws   |<br>+———-+<br>| 1_BioCyc |<br>+———-+ </p>
+<p><code>SELECT CONCAT_WS(&#39;,&#39;  , &#39;First name&#39;  , NULL , &#39;Last Name&#39;);</code>返回结果为<br>+———————————————-+<br>| CONCAT_WS(‘,’,’First name’,NULL,’Last Name’) |<br>+———————————————-+<br>| First name,Last Name                         |<br>+———————————————-+ </p>
+<h3 id="3-group-concat-str1-str2-——连接一个组的所有字符串，并以逗号分隔每一条数据"><a href="#3-group-concat-str1-str2-——连接一个组的所有字符串，并以逗号分隔每一条数据" class="headerlink" title="3. group_concat(str1,str2,...)——连接一个组的所有字符串，并以逗号分隔每一条数据"></a>3. <code>group_concat(str1,str2,...)</code>——连接一个组的所有字符串，并以逗号分隔每一条数据</h3><p>使用表info作为示例，语句<code>SELECT locus,id,journal FROM info WHERE locus IN(&#39;AB086827&#39;,&#39;AF040764&#39;);</code>的返回结果为<br>                   +———-+—-+————————–+<br>                    | locus    | id | journal                  |<br>                    +———-+—-+————————–+<br>                    | AB086827 |  1 | Unpublished              |<br>                    | AB086827 |  2 | Submitted (20-JUN-2002)  |<br>                    | AF040764 | 23 | Unpublished              |<br>                    | AF040764 | 24 | Submitted (31-DEC-1997)  |<br>                    +———-+—-+————————–+</p>
+<p>使用语法及特点：<br><code>GROUP_CONCAT([DISTINCT] expr [,expr ...] [ORDER BY {unsigned_integer | col_name | formula} [ASC | DESC] [,col ...]] [SEPARATOR str_val])</code><br>在 MySQL 中，你可以得到表达式结合体的连结值。</p>
+<p>通过使用 DISTINCT 可以排除重复值。<br>如果希望对结果中的值进行排序，可以使用 ORDER BY 子句。<br>SEPARATOR 是一个字符串值，它被用于插入到结果值中。缺省为一个逗号(“,”)，可以通过指定 SEPARATOR “” 完全地移除这个分隔符。</p>
+<p>可以通过变量 group_concat_max_len 设置一个最大的长度。在运行时执行的句法如下： SET [SESSION | GLOBAL] group_concat_max_len = unsigned_integer;<br>如果最大长度被设置，结果值被剪切到这个最大长度。如果分组的字符过长，可以对系统参数进行设置：SET @@global.group_concat_max_len=40000;</p>
+<p>使用示例：<br>语句<code>SELECT locus,GROUP_CONCAT(id) FROM info WHERE locus IN(&#39;AB086827&#39;,&#39;AF040764&#39;) GROUP BY locus;</code>的返回结果为<br>       +———-+——————+<br>       | locus    | GROUP_CONCAT(id) |<br>      +———-+——————+<br>       | AB086827 | 1,2              |<br>       | AF040764 | 23,24            |<br>      +———-+——————+</p>
+<p>语句<code>SELECT locus,GROUP_CONCAT(distinct id ORDER BY id DESC SEPARATOR &#39;_&#39;) FROM info WHERE locus IN(&#39;AB086827&#39;,&#39;AF040764&#39;) GROUP BY locus;</code>的返回结果为<br>      +———-+———————————————————-+<br>      | locus    | GROUP_CONCAT(distinct id ORDER BY id DESC SEPARATOR ‘_’) |<br>      +———-+———————————————————-+<br>     | AB086827 | 2_1                                                      |<br>     | AF040764 | 24_23                                                    |<br>     +———-+———————————————————-+</p>
+<p>语句<code>SELECT locus,GROUP_CONCAT(concat_ws(&#39;, &#39;,id,journal) ORDER BY id DESC SEPARATOR &#39;. &#39;) FROM info WHERE locus IN(&#39;AB086827&#39;,&#39;AF040764&#39;) GROUP BY locus;</code>的返回结果为<br>     +———-+————————————————————————–+<br>     | locus    | GROUP_CONCAT(concat_ws(‘, ‘,id,journal) ORDER BY id DESC SEPARATOR ‘. ‘) |<br>    +———-+————————————————————————–+<br>     | AB086827 | 2, Submitted (20-JUN-2002). 1, Unpublished                               |<br>     | AF040764 | 24, Submitted (31-DEC-1997) . 23, Unpublished                            |<br>    +———-+————————————————————————–+</p>
+<p><br></p>
+<h2 id="二-两条常用的语句"><a href="#二-两条常用的语句" class="headerlink" title="二. 两条常用的语句"></a>二. 两条常用的语句</h2><p>列出所有的数据库</p>
+<p><code>select group_concat(schema_name) from information_schema.schemata</code></p>
+<p>列出某个库当中所有的表 </p>
+<p><code>select group_concat(table_name) from information_schema.tables where table_schema=&#39;xxxxx&#39;</code></p>
+<p><br></p>
+<h2 id="三-参考"><a href="#三-参考" class="headerlink" title="三. 参考"></a>三. 参考</h2><p>[1] <a href="https://www.cnblogs.com/lcamry/p/5715634.html" target="_blank" rel="noopener">Sql注入中连接字符串常用函数</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+    	<br>
+    	<br>
+        <div style="text-align:center;color: #000000;font-size:14px;">-------------本文结束<i class="fa fa-gift"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/concat-in-sql-injection/">SQL注入中常用的三个字符串连接函数</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Jacky Cheng 的个人博客">Jacky Cheng</a></p>
+  <p><span>发布时间:</span>2019年05月02日 - 19:05</p>
+  <p><span>最后更新:</span>2019年05月02日 - 19:05</p>
+  <p><span>原始链接:</span><a href="/concat-in-sql-injection/" title="SQL注入中常用的三个字符串连接函数">https://cjjkkk.github.io/concat-in-sql-injection/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://cjjkkk.github.io/concat-in-sql-injection/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+	  $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+	    });
+    });  
+</script>
+<br>
 
       
     </div>
 
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>想喝快乐水</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/image/wechatpay.jpg" alt="Jacky Cheng 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/image/alipay.jpg" alt="Jacky Cheng 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SQL注入/" rel="tag"><i class="fa fa-tag"></i> SQL注入</a>
+          
+            <a href="/tags/MySQL/" rel="tag"><i class="fa fa-tag"></i> MySQL</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/sqlmap-guidebook/" rel="next" title="SQLmap入门">
+                <i class="fa fa-chevron-left"></i> SQLmap入门
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -326,6 +577,13 @@
 
 
           
+
+  
+    <div id="gitalk-container">
+  </div>
+  
+
+
 
         </div>
         
@@ -346,8 +604,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -443,6 +710,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-函数介绍"><span class="nav-text">一. 函数介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-concat-str1-str2-——没有分隔符地连接字符串"><span class="nav-text">1. concat(str1,str2,...)——没有分隔符地连接字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-concat-ws-separator-str1-str2-——含有分隔符地连接字符串"><span class="nav-text">2. concat_ws(separator,str1,str2,...)——含有分隔符地连接字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-group-concat-str1-str2-——连接一个组的所有字符串，并以逗号分隔每一条数据"><span class="nav-text">3. group_concat(str1,str2,...)——连接一个组的所有字符串，并以逗号分隔每一条数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-两条常用的语句"><span class="nav-text">二. 两条常用的语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-参考"><span class="nav-text">三. 参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -594,6 +877,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -634,6 +921,22 @@
 
 
 
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'ee53cc5de9d57711e0cb',
+          clientSecret: '46a58ced62224ebedbadafff96c5860f097e9d66',
+          repo: 'CJJKKK.github.io',
+          owner: 'CJJKKK',
+          admin: ['CJJKKK'],
+          id: location.pathname,
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')           
+       </script>
 
   
 
