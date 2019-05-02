@@ -1978,7 +1978,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #3e4288;
+  background: #ffed2f;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3169,7 +3169,7 @@ pre .javascript .function {
   font-family: 'Zitiming' !important;
 }
 body {
-  background: url("http://ppdfs8ipn.bkt.clouddn.com/background.jpg?e=1554282820&token=RE6ntvyYAB-x6fGKaUcbeUISRnJdbNLB0HXZVNru:dqsBW7fHBlvHKJKxT0xI-N-naRM");
+  background: url("/image/background.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
