@@ -73,8 +73,8 @@
         <category>攻击测试</category>
       </categories>
       <tags>
-        <tag>攻击测试</tag>
         <tag>kali Linux</tag>
+        <tag>攻击测试</tag>
         <tag>Ettercap</tag>
         <tag>Metasploit</tag>
         <tag>browser_autopwn2</tag>
@@ -102,8 +102,8 @@
         <category>环境搭建</category>
       </categories>
       <tags>
-        <tag>SQL注入</tag>
         <tag>环境搭建</tag>
+        <tag>SQL注入</tag>
         <tag>SQLi-Labs</tag>
       </tags>
   </entry>
@@ -127,10 +127,10 @@
         <category>工具使用</category>
       </categories>
       <tags>
+        <tag>kali Linux</tag>
         <tag>Social-Engineer-Toolkit</tag>
         <tag>钓鱼网站</tag>
         <tag>社工</tag>
-        <tag>kali Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -154,9 +154,9 @@
         <category>环境搭建</category>
       </categories>
       <tags>
-        <tag>kali Linux</tag>
         <tag>环境搭建</tag>
         <tag>Shellinabox</tag>
+        <tag>kali Linux</tag>
         <tag>Ngrok</tag>
       </tags>
   </entry>
@@ -168,8 +168,8 @@
         <category>攻击测试</category>
       </categories>
       <tags>
-        <tag>攻击测试</tag>
         <tag>kali Linux</tag>
+        <tag>攻击测试</tag>
         <tag>Ettercap</tag>
         <tag>中间人攻击</tag>
         <tag>DNS欺骗</tag>
@@ -235,8 +235,8 @@
         <category>漏洞复现</category>
       </categories>
       <tags>
-        <tag>Nmap</tag>
         <tag>Metasploit</tag>
+        <tag>Nmap</tag>
         <tag>ms17-010</tag>
         <tag>永恒之蓝</tag>
         <tag>漏洞复现</tag>
