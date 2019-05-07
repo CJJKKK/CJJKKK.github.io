@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[如何使用aria2]]></title>
+    <url>%2Faria2-install%2F</url>
+    <content type="text"><![CDATA[aria2是一个非常好用的下载工具，但是对于多数人来说并不太容易去使用。这里简单说一下怎么安装，也免得自己忘了。 从GitHub上下载源码https://github.com/aria2/aria2/releases。下载完后，找个地方解压。其实这个时候，就已经可以使用了，网上说的需要在文件中添加配置文件之类的其实并不需要，只不过只能使用命令行，非常的不方便，所以我们需要搭建一个图形化的界面。 从GitHub上下载webui-aria2https://github.com/ziahamza/webui-aria2。同样，下载完成后解压，然后打开`docs`文件夹下的*index.html*，注意是使用web浏览器打开，就能够进入到webui管理界面了。 但是这个时候aria2并没有启动，我们需要手动启动他。在存放aria2的文件夹中打开cmd命令行，输入如下命令 1aria2c --enable-rpc --rpc-listen-all 这时，看到命令行中显示如下命令，说明服务已经启动了 123[NOTICE] IPv4 RPC: listening on TCP port 6800[NOTICE] IPv6 RPC: listening on TCP port 6800 回到web页面，点击添加就可以开始下载了。 在使用完成后，在命令行窗口使用组合键ctrl+c来关闭程序。]]></content>
+      <categories>
+        <category>软件分享</category>
+      </categories>
+      <tags>
+        <tag>aria2</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[SQL注入中常用的三个字符串连接函数]]></title>
     <url>%2Fconcat-in-sql-injection%2F</url>
     <content type="text"><![CDATA[函数介绍 两条常用的语句 参考 在SQL注入过程中，通常需要将select后的数据进行回显。如果有多个数据需要输出时，需要使用到字符串连接函数。在MySQL中，可以使用concat()、group_concat()、concat_ws()三个函数进行字符串连接。 一. 函数介绍1. concat(str1,str2,...)——没有分隔符地连接字符串不使用字符串连接函数时SELECT id,name FROM info LIMIT 1;的返回结果为+—-+——–+| id | name |+—-+——–+| 1 | BioCyc |+—-+——–+ 使用字符串连接函数时SELECT CONCAT(id, &#39;，&#39;, name) AS con FROM info LIMIT 1;返回结果为 +———-+| con |+———-+| 1,BioCyc |+———-+ SELECT CONCAT(&#39;My&#39;, NULL, &#39;QL&#39;);返回结果为+————————–+| CONCAT(‘My’, NULL, ‘QL’) |+————————–+| NULL |+————————–+ 2. concat_ws(separator,str1,str2,...)——含有分隔符地连接字符串CONCAT_WS()代表CONCAT With Separator，是CONCAT()的特殊形式。第一个参数是其它参数的分隔符。分隔符的位置放在要连接的两个字符串之间。分隔符可以是一个字符串，也可以是其它参数。如果分隔符为NULL，则结果为NULL。函数会忽略任何分隔符参数后的NULL值。但是CONCAT_WS()不会忽略任何空字符串 (然而会忽略所有的NULL）。 SELECT CONCAT_WS(&#39;_&#39; , id , name) AS con_ws FROM info LIMIT 1;返回结果为+———-+| con_ws |+———-+| 1_BioCyc |+———-+ SELECT CONCAT_WS(&#39;,&#39; , &#39;First name&#39; , NULL , &#39;Last Name&#39;);返回结果为+———————————————-+| CONCAT_WS(‘,’,’First name’,NULL,’Last Name’) |+———————————————-+| First name,Last Name |+———————————————-+ 3. group_concat(str1,str2,...)——连接一个组的所有字符串，并以逗号分隔每一条数据使用表info作为示例，语句SELECT locus,id,journal FROM info WHERE locus IN(&#39;AB086827&#39;,&#39;AF040764&#39;);的返回结果为 +———-+—-+————————–+ | locus | id | journal | +———-+—-+————————–+ | AB086827 | 1 | Unpublished | | AB086827 | 2 | Submitted (20-JUN-2002) | | AF040764 | 23 | Unpublished | | AF040764 | 24 | Submitted (31-DEC-1997) | +———-+—-+————————–+ 使用语法及特点：GROUP_CONCAT([DISTINCT] expr [,expr ...] [ORDER BY {unsigned_integer | col_name | formula} [ASC | DESC] [,col ...]] [SEPARATOR str_val])在 MySQL 中，你可以得到表达式结合体的连结值。 通过使用 DISTINCT 可以排除重复值。如果希望对结果中的值进行排序，可以使用 ORDER BY 子句。SEPARATOR 是一个字符串值，它被用于插入到结果值中。缺省为一个逗号(“,”)，可以通过指定 SEPARATOR “” 完全地移除这个分隔符。 可以通过变量 group_concat_max_len 设置一个最大的长度。在运行时执行的句法如下： SET [SESSION | GLOBAL] group_concat_max_len = unsigned_integer;如果最大长度被设置，结果值被剪切到这个最大长度。如果分组的字符过长，可以对系统参数进行设置：SET @@global.group_concat_max_len=40000; 使用示例：语句SELECT locus,GROUP_CONCAT(id) FROM info WHERE locus IN(&#39;AB086827&#39;,&#39;AF040764&#39;) GROUP BY locus;的返回结果为 +———-+——————+ | locus | GROUP_CONCAT(id) | +———-+——————+ | AB086827 | 1,2 | | AF040764 | 23,24 | +———-+——————+ 语句SELECT locus,GROUP_CONCAT(distinct id ORDER BY id DESC SEPARATOR &#39;_&#39;) FROM info WHERE locus IN(&#39;AB086827&#39;,&#39;AF040764&#39;) GROUP BY locus;的返回结果为 +———-+———————————————————-+ | locus | GROUP_CONCAT(distinct id ORDER BY id DESC SEPARATOR ‘_’) | +———-+———————————————————-+ | AB086827 | 2_1 | | AF040764 | 24_23 | +———-+———————————————————-+ 语句SELECT locus,GROUP_CONCAT(concat_ws(&#39;, &#39;,id,journal) ORDER BY id DESC SEPARATOR &#39;. &#39;) FROM info WHERE locus IN(&#39;AB086827&#39;,&#39;AF040764&#39;) GROUP BY locus;的返回结果为 +———-+————————————————————————–+ | locus | GROUP_CONCAT(concat_ws(‘, ‘,id,journal) ORDER BY id DESC SEPARATOR ‘. ‘) | +———-+————————————————————————–+ | AB086827 | 2, Submitted (20-JUN-2002). 1, Unpublished | | AF040764 | 24, Submitted (31-DEC-1997) . 23, Unpublished | +———-+————————————————————————–+ 二. 几条常用的语句列出所有的数据库 select group_concat(schema_name) from information_schema.schemata 列出某个库当中所有的表 select group_concat(table_name) from information_schema.tables where table_schema=&#39;库名&#39; 列出某个表中的所有列 select group_concat(column_name) from information_schema.columns where table_schema=&#39;库名&#39; and table_name=&#39;表名&#39; 列出某个列中的所有数据 select group_concat(列名) from 库名.表名 三. 参考[1] Sql注入中连接字符串常用函数]]></content>
@@ -40,7 +51,7 @@
   <entry>
     <title><![CDATA[ubuntu16.04安装python3.7和docker]]></title>
     <url>%2Fubuntu16-04-python3-7-docker%2F</url>
-    <content type="text"><![CDATA[什么是docker 安装python3.7 搭建docker环境 一. 什么是dockerDocker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的Linux机器上，也可以实现虚拟化，容器是完全使用沙箱机制，相互之间不会有任何接口。 一个完整的Docker有以下几个部分组成： DockerClient客户端 Docker Daemon守护进程 Docker Image镜像 DockerContainer容器 二. 安装python3.7本次python3.7使用源码安装 1. 安装环境123sudo apt-get install zlib1g-dev libbz2-dev libssl-dev libncurses5-dev libsqlite3-dev libreadline-dev tk-dev libgdbm-dev libdb-dev libpcap-dev xz-utils libexpat1-dev liblzma-dev libffi-dev libc6-dev 2. 源码安装2.1下载源码包从官网下载最新版本源码包并解压 2.2 建立安装目录1sudo mkdir -p /usr/local/python3.7 2.3 编译安装进入源码包目录下，使用如下命令 123./configure --prefix=/usr/local/python3.7 --enable-optimizationsmakesudo make install 如果编译过程中出现如下问题 123ModuleNotFoundError: No module named &apos;_ctypes&apos;Makefile:1130: recipe for target &apos;install&apos; failedmake: *** [install] Error 可以使用如下方法解决 12345678sudo apt-get updatesudo apt-get upgradesudo apt-get dist-upgradesudo apt-get install build-essential python-dev python-setuptools python-pip python-smbussudo apt-get install build-essential libncursesw5-dev libgdbm-dev libc6-devsudo apt-get install zlib1g-dev libsqlite3-dev tk-devsudo apt-get install libssl-dev opensslsudo apt-get install libffi-dev 3 添加软连接1234#添加python3的软链接ln -s /usr/local/python3/bin/python3.7 /usr/bin/python3.7#添加 pip3 的软链接ln -s /usr/local/python3/bin/pip3.7 /usr/bin/pip3.7 4 检测版本12python3.7 -Vpip3.7 -V 二. 搭建docker环境1.安装docker1.1 安装1sudo curl -s https://get.docker.com/ | sh 如果提示没有curl，可以按照提示安装curl不使用apt install方式安装docker是因为，如果源上的docker不是最新的，无法安装最新版本的docker。 1.2 几个遇到的问题1) 123E: Failed to fetch https://download.docker.com/linux/ubuntu/dists/xenial/pool/stable/amd64/containerd.io_1.2.5-1_amd64.deb Operation too slow. Less than 10 bytes/sec transferred the last 120 secondsE: Unable to fetch some archives, maybe run apt-get update or try with --fix-missing? 这是网络问题，挂个梯子就行了 2) 1E: Sub-process /usr/bin/dpkg returned an error code (1) 使用如下命令解决 12sudo apt-get update --fix-missingsudo apt-get autoremove &amp;&amp; sudo apt-get clean &amp;&amp; sudo apt-get install -f 2. 安装docker-compose2.1 安装使用刚刚安装的python3.7自带的pip3安装 1pip3 install docker-compose --user 2.2 添加软连接安装完成后使用如下命令查看安装位置 1pip3 show docker-compose 显示如下结果 12345678910Name: docker-composeVersion: 1.24.0Summary: Multi-container orchestration for DockerHome-page: https://www.docker.com/Author: Docker, Inc.Author-email: NoneLicense: Apache License 2.0Location: /home/cheng/.local/lib/python3.7/site-packagesRequires: docopt, dockerpty, PyYAML, jsonschema, requests, docker, texttable, websocket-client, cached-property, sixRequired-by: Location一项即是docker-compose的安装路径，使用如下命令为docker-compose创建软连接 1sudo ln -s /home/cheng/.local/bin/docker-compose /usr/bin/ 3. docker使用3.1 添加加速使用DaoCloud为docker进行加速 1curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io 3.2 docker镜像操作1234docker search mysql //搜索docker pull 镜像名称 //下载docker images //查看本地已下载镜像docker rmi 镜像id //删除镜像 3.3 docker容器操作123456789101112docker run -d -p --name 容器名或镜像ID）-d 后台运行-p 随机分配端口-p 端口1（宿主机）:端口2（容器中）//端口转发docker ps //查看当前处于运行状态的容器docker start 容器ID或容器名 //开启容器docker stop 容器ID或容器名 //停止运行中的容器docker ps -a //查看停止的容器docker rm 容器ID或容器名 //删除容器docker exec -it 容器ID或容器名 /bin/bash //进入容器内部docker save 容器名/容器ID &gt; test.tar //导出容器docker load &lt; test.tar //导入容器]]></content>
+    <content type="text"><![CDATA[什么是docker 安装python3.7 搭建docker环境 一. 什么是dockerDocker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的Linux机器上，也可以实现虚拟化，容器是完全使用沙箱机制，相互之间不会有任何接口。 一个完整的Docker有以下几个部分组成： DockerClient客户端 Docker Daemon守护进程 Docker Image镜像 DockerContainer容器 二. 安装python3.7本次python3.7使用源码安装 1. 安装环境123sudo apt-get install zlib1g-dev libbz2-dev libssl-dev libncurses5-dev libsqlite3-dev libreadline-dev tk-dev libgdbm-dev libdb-dev libpcap-dev xz-utils libexpat1-dev liblzma-dev libffi-dev libc6-dev 2. 源码安装2.1下载源码包从官网下载最新版本源码包并解压 2.2 建立安装目录1sudo mkdir -p /usr/local/python3.7 2.3 编译安装进入源码包目录下，使用如下命令 123./configure --prefix=/usr/local/python3.7 --enable-optimizationsmakesudo make install 如果编译过程中出现如下问题 123ModuleNotFoundError: No module named &apos;_ctypes&apos;Makefile:1130: recipe for target &apos;install&apos; failedmake: *** [install] Error 可以使用如下方法解决 12345678sudo apt-get updatesudo apt-get upgradesudo apt-get dist-upgradesudo apt-get install build-essential python-dev python-setuptools python-pip python-smbussudo apt-get install build-essential libncursesw5-dev libgdbm-dev libc6-devsudo apt-get install zlib1g-dev libsqlite3-dev tk-devsudo apt-get install libssl-dev opensslsudo apt-get install libffi-dev 3 添加软连接1234#添加python3的软链接ln -s /usr/local/python3/bin/python3.7 /usr/bin/python3.7#添加 pip3 的软链接ln -s /usr/local/python3/bin/pip3.7 /usr/bin/pip3.7 4 检测版本12python3.7 -Vpip3.7 -V 二. 搭建docker环境1.安装docker1.1 安装1sudo curl -s https://get.docker.com/ | sh 如果提示没有curl，可以按照提示安装curl，不使用apt install方式安装docker是因为，如果源上的docker不是最新的，无法安装最新版本的docker。 1.2 几个遇到的问题1) 123E: Failed to fetch https://download.docker.com/linux/ubuntu/dists/xenial/pool/stable/amd64/containerd.io_1.2.5-1_amd64.deb Operation too slow. Less than 10 bytes/sec transferred the last 120 secondsE: Unable to fetch some archives, maybe run apt-get update or try with --fix-missing? 这是网络问题，挂个梯子就行了 2) 1E: Sub-process /usr/bin/dpkg returned an error code (1) 使用如下命令解决 12sudo apt-get update --fix-missingsudo apt-get autoremove &amp;&amp; sudo apt-get clean &amp;&amp; sudo apt-get install -f 2. 安装docker-compose2.1 安装使用刚刚安装的python3.7自带的pip3安装 1pip3 install docker-compose --user 2.2 添加软连接安装完成后使用如下命令查看安装位置 1pip3 show docker-compose 显示如下结果 12345678910Name: docker-composeVersion: 1.24.0Summary: Multi-container orchestration for DockerHome-page: https://www.docker.com/Author: Docker, Inc.Author-email: NoneLicense: Apache License 2.0Location: /home/cheng/.local/lib/python3.7/site-packagesRequires: docopt, dockerpty, PyYAML, jsonschema, requests, docker, texttable, websocket-client, cached-property, sixRequired-by: Location一项即是docker-compose的安装路径，使用如下命令为docker-compose创建软连接 1sudo ln -s /home/cheng/.local/bin/docker-compose /usr/bin/ 3. docker使用3.1 添加加速使用DaoCloud为docker进行加速 1curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io 3.2 docker镜像操作1234docker search mysql //搜索docker pull 镜像名称 //下载docker images //查看本地已下载镜像docker rmi 镜像id //删除镜像 3.3 docker容器操作123456789101112docker run -d -p --name 容器名或镜像ID）-d 后台运行-p 随机分配端口-p 端口1（宿主机）:端口2（容器中）//端口转发docker ps //查看当前处于运行状态的容器docker start 容器ID或容器名 //开启容器docker stop 容器ID或容器名 //停止运行中的容器docker ps -a //查看停止的容器docker rm 容器ID或容器名 //删除容器docker exec -it 容器ID或容器名 /bin/bash //进入容器内部docker save 容器名/容器ID &gt; test.tar //导出容器docker load &lt; test.tar //导入容器]]></content>
       <categories>
         <category>环境搭建</category>
       </categories>
@@ -73,8 +84,8 @@
         <category>攻击测试</category>
       </categories>
       <tags>
-        <tag>kali Linux</tag>
         <tag>攻击测试</tag>
+        <tag>kali Linux</tag>
         <tag>Ettercap</tag>
         <tag>Metasploit</tag>
         <tag>browser_autopwn2</tag>
@@ -102,8 +113,8 @@
         <category>环境搭建</category>
       </categories>
       <tags>
-        <tag>SQL注入</tag>
         <tag>环境搭建</tag>
+        <tag>SQL注入</tag>
         <tag>SQLi-Labs</tag>
       </tags>
   </entry>
@@ -127,10 +138,10 @@
         <category>工具使用</category>
       </categories>
       <tags>
+        <tag>kali Linux</tag>
         <tag>Social-Engineer-Toolkit</tag>
         <tag>钓鱼网站</tag>
         <tag>社工</tag>
-        <tag>kali Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -154,9 +165,9 @@
         <category>环境搭建</category>
       </categories>
       <tags>
-        <tag>kali Linux</tag>
         <tag>环境搭建</tag>
         <tag>Shellinabox</tag>
+        <tag>kali Linux</tag>
         <tag>Ngrok</tag>
       </tags>
   </entry>
@@ -168,8 +179,8 @@
         <category>攻击测试</category>
       </categories>
       <tags>
-        <tag>kali Linux</tag>
         <tag>攻击测试</tag>
+        <tag>kali Linux</tag>
         <tag>Ettercap</tag>
         <tag>中间人攻击</tag>
         <tag>DNS欺骗</tag>
