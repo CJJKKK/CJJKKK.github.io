@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[如何使用aria2]]></title>
     <url>%2Faria2-install%2F</url>
-    <content type="text"><![CDATA[aria2是一个非常好用的下载工具，但是对于多数人来说并不太容易去使用。这里简单说一下怎么安装，也免得自己忘了。 从GitHub上下载源码(https://github.com/aria2/aria2/releases)。下载完后，找个地方解压。其实这个时候，就已经可以使用了，网上说的需要在文件中添加配置文件之类的其实并不需要，只不过只能使用命令行，非常的不方便，所以我们需要搭建一个图形化的界面。 从GitHub上下载webui-aria2(https://github.com/ziahamza/webui-aria2)。同样，下载完成后解压，然后打开`docs`文件夹下的*index.html*，注意是使用web浏览器打开，就能够进入到webui管理界面了。 但是这个时候aria2并没有启动，我们需要手动启动他。在存放aria2的文件夹中打开cmd命令行，输入如下命令 1aria2c --enable-rpc --rpc-listen-all 这时，看到命令行中显示如下命令，说明服务已经启动了 123[NOTICE] IPv4 RPC: listening on TCP port 6800[NOTICE] IPv6 RPC: listening on TCP port 6800 回到web页面，点击添加就可以开始下载了。 在使用完成后，在命令行窗口使用组合键ctrl+c来关闭程序。]]></content>
+    <content type="text"><![CDATA[aria2是一个非常好用的下载工具，但是对于多数人来说并不太容易去使用。这里简单说一下怎么安装，也免得自己忘了。 从GitHub上下载源码。下载完后，找个地方解压。其实这个时候，就已经可以使用了，网上说的需要在文件中添加配置文件之类的其实并不需要，只不过只能使用命令行，非常的不方便，所以我们需要搭建一个图形化的界面。 从GitHub上下载webui-aria2。同样，下载完成后解压，然后打开docs文件夹下的index.html，注意是使用web浏览器打开，就能够进入到webui管理界面了。 但是这个时候aria2并没有启动，我们需要手动启动他。在存放aria2的文件夹中打开cmd命令行，输入如下命令 1aria2c --enable-rpc --rpc-listen-all 这时，看到命令行中显示如下命令，说明服务已经启动了 123[NOTICE] IPv4 RPC: listening on TCP port 6800[NOTICE] IPv6 RPC: listening on TCP port 6800 回到web页面，点击添加就可以开始下载了。 在使用完成后，在命令行窗口使用组合键ctrl+c来关闭程序。]]></content>
       <categories>
         <category>软件分享</category>
       </categories>
