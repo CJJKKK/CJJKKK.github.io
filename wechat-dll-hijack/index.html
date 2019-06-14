@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="Metasploit,漏洞复现,微信,backdoor-factory,">
+  <meta name="keywords" content="Metasploit,微信,backdoor-factory,DLL劫持,">
 
 
 
@@ -87,7 +87,7 @@
 
 
 <meta name="description" content="准备工作 复现过程    一. 准备工作1. 测试环境虚拟环境搭建：VMware Workstation 15 pro 网络模式：桥接模式 攻击机：kali Linux 2019.1 IP:192.168.43.143 靶机：Windows 7 ultimate sp1 x64 IP:192.168.43.109 微信版本：2.6.8">
-<meta name="keywords" content="Metasploit,漏洞复现,微信,backdoor-factory">
+<meta name="keywords" content="Metasploit,微信,backdoor-factory,DLL劫持">
 <meta property="og:type" content="article">
 <meta property="og:title" content="微信DLL劫持反弹shell">
 <meta property="og:url" content="https://cjjkkk.github.io/wechat-dll-hijack/index.html">
@@ -98,7 +98,7 @@
 <meta property="og:image" content="https://cjjkkk.github.io/image/wechat-dll-hijack/2.jpg">
 <meta property="og:image" content="https://cjjkkk.github.io/image/wechat-dll-hijack/3.jpg">
 <meta property="og:image" content="https://cjjkkk.github.io/image/wechat-dll-hijack/4.jpg">
-<meta property="og:updated_time" content="2019-06-14T07:05:09.447Z">
+<meta property="og:updated_time" content="2019-06-14T07:33:12.478Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微信DLL劫持反弹shell">
 <meta name="twitter:description" content="准备工作 复现过程    一. 准备工作1. 测试环境虚拟环境搭建：VMware Workstation 15 pro 网络模式：桥接模式 攻击机：kali Linux 2019.1 IP:192.168.43.143 靶机：Windows 7 ultimate sp1 x64 IP:192.168.43.109 微信版本：2.6.8">
@@ -349,8 +349,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/漏洞复现/" itemprop="url" rel="index">
-                    <span itemprop="name">漏洞复现</span>
+                  <a href="/categories/攻击测试/" itemprop="url" rel="index">
+                    <span itemprop="name">攻击测试</span>
                   </a>
                 </span>
 
@@ -380,7 +380,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  420
+                  631
                 </span>
               
 
@@ -437,6 +437,9 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">use exploit/multi/handler</span><br><span class="line">set payload windows/shell_reverse_tcp</span><br></pre></td></tr></table></figure>
 <p>设置好lhost和lport之后，使用exploit运行，监听shell。此时，在靶机中打开微信客户端，即接收到shell。</p>
 <p><img src="\image\wechat-dll-hijack\4.jpg" alt="4"></p>
+<p><br></p>
+<p>我的靶机里是开着Windows防火墙的，依然没有拦住，这还是说明杀毒软件是有必要的，有空着我去拿win10的靶机试试，看看defender能不能拦住。</p>
+<p>最后再补几句吧，这应该不算是漏洞吧，因为几乎所有程序都需要调用dll，所以这个东西顶多算个劫持，所以理论上所有的程序都可以被劫持，至于原理应也很简单，在调用dll时运行植入的脚本。其实这个用来攻击应该是比较简单的，比如说网上的系统镜像，把里面的一个dll改掉，基本不太容易被发现。当然了，以上这段话都是我猜的，没有什么依据，以后如果水平够了可能会研究研究吧。</p>
 
       
     </div>
@@ -533,11 +536,11 @@
           
             <a href="/tags/Metasploit/" rel="tag"><i class="fa fa-tag"></i> Metasploit</a>
           
-            <a href="/tags/漏洞复现/" rel="tag"><i class="fa fa-tag"></i> 漏洞复现</a>
-          
             <a href="/tags/微信/" rel="tag"><i class="fa fa-tag"></i> 微信</a>
           
             <a href="/tags/backdoor-factory/" rel="tag"><i class="fa fa-tag"></i> backdoor-factory</a>
+          
+            <a href="/tags/DLL劫持/" rel="tag"><i class="fa fa-tag"></i> DLL劫持</a>
           
         </div>
       
@@ -662,7 +665,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-count">53</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
