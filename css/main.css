@@ -1978,7 +1978,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ff4663;
+  background: #251287;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2520,13 +2520,6 @@ pre .javascript .function {
 .site-pv .busuanzi-value,
 .page-pv .busuanzi-value {
   margin: 0 5px;
-}
-.site-uv {
-  margin-right: 10px;
-}
-.site-uv::after {
-  content: "|";
-  padding-left: 10px;
 }
 .gt-header a,
 .gt-comments a,
@@ -3167,6 +3160,9 @@ pre .javascript .function {
 .site-title {
   font-size: 40px !important;
   font-family: 'Zitiming' !important;
+}
+.footer-inner {
+  color: #dcdcdc;
 }
 body {
   background: url("/image/background.jpg");
