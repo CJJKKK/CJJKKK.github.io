@@ -100,7 +100,7 @@
 <meta property="og:image" content="d:/github_blog/source/image/meterpreter-UACgetSystem/4.webp">
 <meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/wpkib3J60o29Fd5IWpLezsv38OjzK3gYMMUH0ajo9h6XN0Aw6lAEWicEtOFDnf9XxwRlPE7b8cpBpnbUDN9u4JhA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
 <meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/wpkib3J60o29Fd5IWpLezsv38OjzK3gYMKOe7guN6icaORbH4K6nGSN6ibua1PnibCPRia8n6hIT4tpaLxKBAESnRlw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
-<meta property="og:updated_time" content="2019-07-29T06:20:24.384Z">
+<meta property="og:updated_time" content="2019-07-29T06:23:06.748Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Metasploit生成木马文件获取shell和UAC提权操作">
 <meta name="twitter:description" content="前言 攻击环境 获取shell UAC提权    一. 前言前段时间有做过一次内核提权的尝试，不过没有成功，主要还是权限控制的比较严格，并且该打的补丁都打了。但是方法还是有用的，还有就是思路流程总结一下。">
@@ -459,6 +459,8 @@
 <h3 id="4-5-Windows升级UAC保护绕过（COM-Handler劫持绕过）"><a href="#4-5-Windows升级UAC保护绕过（COM-Handler劫持绕过）" class="headerlink" title="4.5 Windows升级UAC保护绕过（COM Handler劫持绕过）"></a>4.5 Windows升级UAC保护绕过（COM Handler劫持绕过）</h3><p>此模块将通过在HKCU配置单元中创建COM处理程序注册表项来绕过Windows UAC。加载某些高完整性进程时，会引用这些注册表项，从而导致进程加载用户控制的DLL。这些DLL包含导致会话升级的payload。在payload调用后清除注册表项修改。此模块要求payload的体系结构与OS匹配，但当前的低权限Meterpreter会话的体系结构并不相同。如果指定EXE :: Custom，你的DLL应该在单独的进程中启动payload后调用ExitProcess（）。此模块通过目标上的cmd.exe调用目标二进制文件。因此，如果限制cmd.exe访问，则此模块将无法正常运行。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; use exploit/windows/local/bypassuac_comhijack</span><br><span class="line">msf exploit(windows/local/bypassuac_comhijack) &gt; set session 1</span><br><span class="line">msf exploit(windows/local/bypassuac_comhijack) &gt; exploit</span><br></pre></td></tr></table></figure>
 <p><img src="https://mmbiz.qpic.cn/mmbiz_png/wpkib3J60o29Fd5IWpLezsv38OjzK3gYMKOe7guN6icaORbH4K6nGSN6ibua1PnibCPRia8n6hIT4tpaLxKBAESnRlw/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img"></p>
+<p><br></p>
+<p>参考：<a href="https://mp.weixin.qq.com/s?__biz=MzI0MDY1MDU4MQ==&amp;mid=2247489975&amp;idx=2&amp;sn=31e8c3ff4a277f3e9f41de2f4b40dc3d&amp;chksm=e916c98dde61409b4a819cb1b38e377d0283853d95abb69a76bd1ff49e53579a8589baacd3e5&amp;mpshare=1&amp;scene=23&amp;srcid=##" target="_blank" rel="noopener">利用metasploit绕过UAC的5种方式</a></p>
 
       
     </div>
