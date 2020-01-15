@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[Lua语言中的模块调用]]></title>
     <url>%2Frequire-in-lua%2F</url>
-    <content type="text"><![CDATA[在Lua语言中，可以使用require函数来加载模块和运行库，用于调用其他文件中的方法。 0x01 require函数的使用方法123456789101112131415161718192021-- 文件名为 test_module.lua-- 定义一个名为 module 的模块module = &#123;&#125;-- 定义一个常量module.constant = "这是一个常量"-- 定义一个函数function module.func1() io.write("这是一个公有函数！\n")endlocal function func2() print("这是一个私有函数！")endfunction module.func3() func2()endreturn module 在文件中使用require(&quot;&lt;文件名&gt;&quot;)即可调用另一个Lua文件，同时引用其内部的模块 1234567-- test_require.lua 文件-- module 模块为上文提到到 test_module.luarequire("test_module")print(module.constant)module.func3() 还有另一种写法 123456-- 文件名为 test_module.lualocal _M = &#123;&#125;function _M.test() ngx.say("hello test!")endreturn _M 123-- test_require.lua 文件local test = require("test_module") test:test() 这两种写法均可使用require调用文件。 require使用的路径是一个模式列表，每一个模式指明一种由虚文件名转化成是文件的名的方法 0x02 require函数的加载方式在lua5.3的参考手册中如下 加载一个模块。这个函数首先查找package.loaded表，检测 modname 是否被加载过。如果被加载过，require返回 package.loaded[modname]中保存的值。否则，它试着为模块寻找 加载器 。 require遵循package.searchers序列的指引来查找加载器。如果改变这个序列，我们可以改变require如何查找一个模块。下列说明基于package.searchers的默认配置。 首先require查找package.preload[modname]。 如果这里有一个值，这个值（必须是一个函数）就是那个加载器。 否则require使用Lua加载器去查找package.path的路径。如果查找失败，接着使用 C 加载器去查找package.cpath的路径。 如果都失败了，再尝试 一体化 加载器。 每次找到一个加载器，require 都用两个参数调用加载器： modname 和一个在获取加载器过程中得到的参数。 （如果通过查找文件得到的加载器，这个额外参数是文件名。） 如果加载器返回非空值， require 将这个值赋给 package.loaded[modname]。 如果加载器没能返回一个非空值用于赋给 package.loaded[modname]， require 会在那里设入 true 。 无论是什么情况，require 都会返回 package.loaded[modname] 的最终值。 如果在加载或运行模块时有错误， 或是无法为模块找到加载器，require都会抛出错误。 也就是说，使用require函数加载模块时，默认会按照package.searchers方法来加载模块：首先会现在已有的模块中搜索，也就是package.preload这个表中搜索是否存在要加载的模块；然后会查找Lua库的加载库，也就是package.path；其次是加载C库的加载库package.cpath；最后会使用一个一体化加载器，可以C路径中查找指定模块的跟名字，然后查找子模块的加载函数。 具体的处理流程如下 1require(modelname) a. 首先在package.loaded查找modelname,如果该模块已经存在，就直接返回它的值; b. 在package.preload查找modelname, 如果preload存在，那么就把它作为loader，调用loader(L); c. 根据package.path的模式查找lua库modelname，这个库是通过module函数定义的，对于顶层的lua库，文件名和库名是一样的而且不需要调用显式地在lua文件中调用module函数(在ll_require函数中可以看到处理方式)，也就是说lua会根据lua文件直接完成一个loader的初始化过程; d. 根据package.cpath查找c库，这个库是符合lua的一些规范的(export具有一定特征的函数接口)，lua先已动态的方式加载该c库，然后在库中查找并调用相应名字的接口，例如*luaopen_hello_world*; e. 以第一个&quot;.&quot;为分割，将模块名划分为:(main, sub)的形式，根据package.cpath`查找main，如果存在，就加载该库并查询相应的接口:luaopen_main_sub，例如：先查找hello库，并查询luaopen_hello_world接口 f. 得到loader后，用modname作为唯一的参数调用该loader函数。当然参数是通过lua的栈传递的，所以loader的原型必须符合lua的规范:int LUA_FUNC(lua_State *L) ll_require会将这个loader的返回值赋给package.loaded[modelname],如果loader不返回值同时package.loaded[modelname]不存在时,ll_require就会把package.loaded[modelname]设为true。最后ll_reuqire把package.loaded[modelname]返回给调用者。 require路径是一个模式列表，每一个模式指明一种由虚文件名（参数）转成实文件名的方法，每一个模式是一个包含可选的问号的文件名。匹配时，Lua会首先将问号用虚文件名替换，然后查找文件是否存在，如果不存在的话就换下一个模式。 1234567?;?.lua;c:\windows\?;/usr/local/lua/?/?.lua当调用test时会尝试打开这些文件testtest.luac:\windows\test/usr/local/lua/test/test.lua 为了确定路径，Lua首先检查全局变量LUA_PATH是否为一个字符串，如果是则认为这个串就是路径；否则require检查环境变量LUA_PATH的值，如果两个都失败；require使用固定的路径（典型的“?;?.lua”） require的另一个功能是避免重复加载同一个文件两次。Lua保留一张所有已经加载的文件的列表（使用table保存）。如果一个加载的文件在表中存在, 则require简单的返回；表中保留加载的文件的虚名，而不是实文件名。所以如果你使用不同的虚文件名require同一个文件两次，将会加载两次该文件。比如require &quot;foo&quot;和require &quot;foo.lua&quot;，路径为”?;?.lua”将会加载foo.lua两次。我们也可以通过全局变量 _LOADED访问文件名列表，这样我们就可以判断文件是否被加载过；同样我们也可以使用一点小技巧让require加载一个文件两次。比如，require &quot;foo&quot;之后 _LOADED[“foo”]将不为nil，我们可以将其赋值为nil，require &quot;foo.lua&quot;将会再次加载该文件。 一个路径中的模式也可以不包含问号而只是一个固定的路径，比如： 1?;?.lua;/usr/local/default.lua 这种情况下，require没有匹配的时候就会使用这个固定的文件（当然这个固定的路径必须放在模式列表的最后才有意义）。在require运行一个chunk以前，它定义了一个全局变量 _REQUIREDNAME用来保存被required的虚文件的文件名。我们可以通过使用这个技巧扩展require的功能。举个极端的例子，我们可以把路径设为&quot;/usr/local/lua/newrequire.lua&quot;，这样以后每次调用require都会运行newrequire.lua，这种情况下可以通过使用 _REQUIREDNAME的值去实际加载required的文件。]]></content>
+    <content type="text"><![CDATA[在Lua语言中，可以使用require函数来加载模块和运行库，用于调用其他文件中的方法。 0x01 require函数的使用方法123456789101112131415161718192021-- 文件名为 test_module.lua-- 定义一个名为 module 的模块module = &#123;&#125;-- 定义一个常量module.constant = "这是一个常量"-- 定义一个函数function module.func1() io.write("这是一个公有函数！\n")endlocal function func2() print("这是一个私有函数！")endfunction module.func3() func2()endreturn module 在文件中使用require(&quot;&lt;文件名&gt;&quot;)即可调用另一个Lua文件，同时引用其内部的模块 1234567-- test_require.lua 文件-- module 模块为上文提到到 test_module.luarequire("test_module")print(module.constant)module.func3() 还有另一种写法 123456-- 文件名为 test_module.lualocal _M = &#123;&#125;function _M.test() ngx.say("hello test!")endreturn _M 123-- test_require.lua 文件local test = require("test_module") test:test() 这两种写法均可使用require调用文件。 require使用的路径是一个模式列表，每一个模式指明一种由虚文件名转化成是文件的名的方法 0x02 require函数的加载方式在lua5.3的参考手册中如下 加载一个模块。这个函数首先查找package.loaded表，检测 modelname 是否被加载过。如果被加载过，require 返回 package.loaded[modname]中保存的值。否则，它试着为模块寻找 加载器 。 require 遵循package.searchers序列的指引来查找加载器。如果改变这个序列，我们可以改变 require 如何查找一个模块。下列说明基于package.searchers的默认配置。 首先 require 查找package.preload[modname]。 如果这里有一个值，这个值（必须是一个函数）就是那个加载器。 否则require使用Lua加载器去查找package.path的路径。如果查找失败，接着使用 C 加载器去查找package.cpath的路径。 如果都失败了，再尝试 一体化 加载器。 每次找到一个加载器，require 都用两个参数调用加载器： modelname 和一个在获取加载器过程中得到的参数。 （如果通过查找文件得到的加载器，这个额外参数是文件名。） 如果加载器返回非空值， require 将这个值赋给 package.loaded[modname]。 如果加载器没能返回一个非空值用于赋给 package.loaded[modname]， require 会在那里设入 true 。 无论是什么情况，require 都会返回 package.loaded[modname] 的最终值。 如果在加载或运行模块时有错误， 或是无法为模块找到加载器，require 都会抛出错误。 也就是说，使用 require 函数加载模块时，默认会按照package.searchers方法来加载模块：首先会现在已有的模块中搜索，也就是package.preload这个表中搜索是否存在要加载的模块；然后会查找Lua库的加载库，也就是package.path；其次是加载C库的加载库package.cpath；最后会使用一个一体化加载器，可以C路径中查找指定模块的跟名字，然后查找子模块的加载函数。 具体的处理流程如下 1require(modelname) a. 首先在package.loaded查找modelname,如果该模块已经存在，就直接返回它的值; b. 在package.preload查找modelname, 如果preload存在，那么就把它作为loader，调用loader(L); c. 根据package.path的模式查找lua库modelname，这个库是通过module函数定义的，对于顶层的lua库，文件名和库名是一样的而且不需要调用显式地在lua文件中调用module函数(在ll_require函数中可以看到处理方式)，也就是说lua会根据lua文件直接完成一个loader的初始化过程; d. 根据package.cpath查找c库，这个库是符合lua的一些规范的(export具有一定特征的函数接口)，lua先已动态的方式加载该c库，然后在库中查找并调用相应名字的接口，例如luaopen_hello_world; e. 以第一个”.”为分割，将模块名划分为:(main, sub)的形式，根据package.cpath查找main，如果存在，就加载该库并查询相应的接口:luaopen_main_sub，例如：先查找hello库，并查询luaopen_hello_world接口 f. 得到loader后，用modelname作为唯一的参数调用该loader函数。当然参数是通过lua的栈传递的，所以loader的原型必须符合lua的规范:int LUA_FUNC(lua_State *L) ll_require会将这个loader的返回值赋给package.loaded[modelname],如果loader不返回值同时package.loaded[modelname]不存在时,ll_require就会把package.loaded[modelname]设为true。最后ll_reuqire把package.loaded[modelname]返回给调用者。 require路径是一个模式列表，每一个模式指明一种由虚文件名（参数）转成实文件名的方法，每一个模式是一个包含可选的问号的文件名。匹配时，Lua会首先将问号用虚文件名替换，然后查找文件是否存在，如果不存在的话就换下一个模式。 1234567?;?.lua;c:\windows\?;/usr/local/lua/?/?.lua当调用test时会尝试打开这些文件testtest.luac:\windows\test/usr/local/lua/test/test.lua 为了确定路径，Lua首先检查全局变量LUA_PATH是否为一个字符串，如果是则认为这个串就是路径；否则require检查环境变量LUA_PATH的值，如果两个都失败；require使用固定的路径（典型的“?;?.lua”） require的另一个功能是避免重复加载同一个文件两次。Lua保留一张所有已经加载的文件的列表（使用table保存）。如果一个加载的文件在表中存在, 则require简单的返回；表中保留加载的文件的虚名，而不是实文件名。所以如果你使用不同的虚文件名require同一个文件两次，将会加载两次该文件。比如require &quot;foo&quot;和require &quot;foo.lua&quot;，路径为”?;?.lua”将会加载foo.lua两次。我们也可以通过全局变量 _LOADED访问文件名列表，这样我们就可以判断文件是否被加载过；同样我们也可以使用一点小技巧让require加载一个文件两次。比如，require &quot;foo&quot;之后 _LOADED[“foo”]将不为nil，我们可以将其赋值为nil，require &quot;foo.lua&quot;将会再次加载该文件。 一个路径中的模式也可以不包含问号而只是一个固定的路径，比如： 1?;?.lua;/usr/local/default.lua 这种情况下，require没有匹配的时候就会使用这个固定的文件（当然这个固定的路径必须放在模式列表的最后才有意义）。在require运行一个chunk以前，它定义了一个全局变量 _REQUIREDNAME用来保存被required的虚文件的文件名。我们可以通过使用这个技巧扩展require的功能。举个极端的例子，我们可以把路径设为&quot;/usr/local/lua/newrequire.lua&quot;，这样以后每次调用require都会运行newrequire.lua，这种情况下可以通过使用 _REQUIREDNAME的值去实际加载required的文件。]]></content>
       <categories>
         <category>lua</category>
       </categories>
@@ -59,10 +59,10 @@
         <category>攻击测试</category>
       </categories>
       <tags>
-        <tag>Metasploit</tag>
         <tag>kali Linux</tag>
         <tag>攻击测试</tag>
         <tag>木马攻击</tag>
+        <tag>Metasploit</tag>
         <tag>UAC提权</tag>
       </tags>
   </entry>
@@ -177,9 +177,9 @@
         <category>攻击测试</category>
       </categories>
       <tags>
-        <tag>Metasploit</tag>
         <tag>kali Linux</tag>
         <tag>攻击测试</tag>
+        <tag>Metasploit</tag>
         <tag>Ettercap</tag>
         <tag>browser_autopwn2</tag>
       </tags>
@@ -231,10 +231,10 @@
         <category>工具使用</category>
       </categories>
       <tags>
-        <tag>kali Linux</tag>
         <tag>Social-Engineer-Toolkit</tag>
         <tag>钓鱼网站</tag>
         <tag>社工</tag>
+        <tag>kali Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -258,9 +258,9 @@
         <category>环境搭建</category>
       </categories>
       <tags>
+        <tag>kali Linux</tag>
         <tag>环境搭建</tag>
         <tag>Shellinabox</tag>
-        <tag>kali Linux</tag>
         <tag>Ngrok</tag>
       </tags>
   </entry>

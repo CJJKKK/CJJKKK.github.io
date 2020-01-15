@@ -94,7 +94,7 @@
 <meta property="og:site_name" content="Jacky Cheng">
 <meta property="og:description" content="在Lua语言中，可以使用require函数来加载模块和运行库，用于调用其他文件中的方法。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-01-15T07:28:03.360Z">
+<meta property="og:updated_time" content="2020-01-15T10:20:02.322Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Lua语言中的模块调用">
 <meta name="twitter:description" content="在Lua语言中，可以使用require函数来加载模块和运行库，用于调用其他文件中的方法。">
@@ -418,20 +418,23 @@
 <p><code>require</code>使用的路径是一个模式列表，每一个模式指明一种由虚文件名转化成是文件的名的方法</p>
 <h1 id="0x02-require函数的加载方式"><a href="#0x02-require函数的加载方式" class="headerlink" title="0x02 require函数的加载方式"></a>0x02 require函数的加载方式</h1><p>在lua5.3的参考手册中如下</p>
 <blockquote>
-<p>加载一个模块。这个函数首先查找<code>package.loaded</code>表，检测 <code>modname</code> 是否被加载过。如果被加载过，<code>require</code>返回 <code>package.loaded[modname]</code>中保存的值。否则，它试着为模块寻找 <em>加载器</em> 。</p>
-<p><code>require</code>遵循<code>package.searchers</code>序列的指引来查找加载器。如果改变这个序列，我们可以改变<code>require</code>如何查找一个模块。下列说明基于<code>package.searchers</code>的默认配置。</p>
-<p>首先<code>require</code>查找<code>package.preload[modname]</code>。 如果这里有一个值，这个值（必须是一个函数）就是那个加载器。 否则<code>require</code>使用Lua加载器去查找<code>package.path</code>的路径。如果查找失败，接着使用 C 加载器去查找<code>package.cpath</code>的路径。 如果都失败了，再尝试 <em>一体化</em> 加载器。</p>
-<p>每次找到一个加载器，<code>require</code> 都用两个参数调用加载器： <code>modname</code> 和一个在获取加载器过程中得到的参数。 （如果通过查找文件得到的加载器，这个额外参数是文件名。） 如果加载器返回非空值， <code>require</code> 将这个值赋给 <code>package.loaded[modname]</code>。 如果加载器没能返回一个非空值用于赋给 <code>package.loaded[modname]</code>， <code>require</code> 会在那里设入 <strong>true</strong> 。 无论是什么情况，<code>require</code> 都会返回 <code>package.loaded[modname]</code> 的最终值。</p>
-<p>如果在加载或运行模块时有错误， 或是无法为模块找到加载器，<code>require</code>都会抛出错误。</p>
+<p>加载一个模块。这个函数首先查找<code>package.loaded</code>表，检测 <em>modelname</em> 是否被加载过。如果被加载过，require 返回 <code>package.loaded[modname]</code>中保存的值。否则，它试着为模块寻找 <em>加载器</em> 。</p>
+<p>require 遵循<code>package.searchers</code>序列的指引来查找加载器。如果改变这个序列，我们可以改变 require 如何查找一个模块。下列说明基于<code>package.searchers</code>的默认配置。</p>
+<p>首先 require 查找<code>package.preload[modname]</code>。 如果这里有一个值，这个值（必须是一个函数）就是那个加载器。 否则require使用Lua加载器去查找<code>package.path</code>的路径。如果查找失败，接着使用 C 加载器去查找<code>package.cpath</code>的路径。 如果都失败了，再尝试 <em>一体化</em> 加载器。</p>
+<p>每次找到一个加载器，require 都用两个参数调用加载器： <em>modelname</em> 和一个在获取加载器过程中得到的参数。 （如果通过查找文件得到的加载器，这个额外参数是文件名。） 如果加载器返回非空值， require 将这个值赋给 <code>package.loaded[modname]</code>。 如果加载器没能返回一个非空值用于赋给 <code>package.loaded[modname]</code>， require 会在那里设入 <strong>true</strong> 。 无论是什么情况，require 都会返回 <code>package.loaded[modname]</code> 的最终值。</p>
+<p>如果在加载或运行模块时有错误， 或是无法为模块找到加载器，require 都会抛出错误。</p>
 </blockquote>
-<p>也就是说，使用<code>require</code>函数加载模块时，默认会按照<code>package.searchers</code>方法来加载模块：首先会现在已有的模块中搜索，也就是<code>package.preload</code>这个表中搜索是否存在要加载的模块；然后会查找Lua库的加载库，也就是<code>package.path</code>；其次是加载C库的加载库<code>package.cpath</code>；最后会使用一个<em>一体化加载器</em>，可以C路径中查找指定模块的跟名字，然后查找子模块的加载函数。</p>
+<p>也就是说，使用 require 函数加载模块时，默认会按照<code>package.searchers</code>方法来加载模块：首先会现在已有的模块中搜索，也就是<code>package.preload</code>这个表中搜索是否存在要加载的模块；然后会查找Lua库的加载库，也就是<code>package.path</code>；其次是加载C库的加载库<code>package.cpath</code>；最后会使用一个<em>一体化加载器</em>，可以C路径中查找指定模块的跟名字，然后查找子模块的加载函数。</p>
 <p>具体的处理流程如下</p>
 <figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(modelname)</span><br></pre></td></tr></table></figure>
-<p>a. 首先在<code></code>package.loaded<code>查找modelname,如果该模块已经存在，就直接返回它的值;
-       b. 在</code>package.preload<code>查找modelname, 如果preload存在，那么就把它作为loader，调用loader(L);
-       c. 根据</code>package.path<code>的模式查找lua库modelname，这个库是通过module函数定义的，对于顶层的lua库，文件名和库名是一样的而且不需要调用显式地在lua文件中调用module函数(在ll_require函数中可以看到处理方式)，也就是说lua会根据lua文件直接完成一个loader的初始化过程;
-       d. 根据</code>package.cpath<code>查找c库，这个库是符合lua的一些规范的(export具有一定特征的函数接口)，lua先已动态的方式加载该c库，然后在库中查找并调用相应名字的接口，例如*luaopen_hello_world*;
-       e. 以第一个&quot;.&quot;为分割，将模块名划分为:(main, sub)的形式，根据</code>package.cpath`查找main，如果存在，就加载该库并查询相应的接口:<em>luaopen_main_sub</em>，例如：先查找hello库，并查询luaopen_hello_world接口<br>       f. 得到loader后，用modname作为唯一的参数调用该loader函数。当然参数是通过lua的栈传递的，所以loader的原型必须符合lua的规范:int LUA_FUNC(lua_State *L)</p>
+<ul>
+<li>a. 首先在<code>package.loaded</code>查找modelname,如果该模块已经存在，就直接返回它的值;</li>
+<li>b. 在<code>package.preload</code>查找modelname, 如果preload存在，那么就把它作为loader，调用loader(L);</li>
+<li>c. 根据<code>package.path</code>的模式查找lua库modelname，这个库是通过module函数定义的，对于顶层的lua库，文件名和库名是一样的而且不需要调用显式地在lua文件中调用module函数(在<code>ll_require</code>函数中可以看到处理方式)，也就是说lua会根据lua文件直接完成一个loader的初始化过程;</li>
+<li>d. 根据<code>package.cpath</code>查找c库，这个库是符合lua的一些规范的(export具有一定特征的函数接口)，lua先已动态的方式加载该c库，然后在库中查找并调用相应名字的接口，例如<em>luaopen_hello_world</em>;</li>
+<li>e. 以第一个”.”为分割，将模块名划分为:(main, sub)的形式，根据<code>package.cpath</code>查找main，如果存在，就加载该库并查询相应的接口:<em>luaopen_main_sub</em>，例如：先查找hello库，并查询<em>luaopen_hello_world</em>接口</li>
+<li>f. 得到loader后，用modelname作为唯一的参数调用该loader函数。当然参数是通过lua的栈传递的，所以loader的原型必须符合lua的规范:<code>int LUA_FUNC(lua_State *L)</code></li>
+</ul>
 <p>ll_require会将这个loader的返回值赋给<code>package.loaded[modelname]</code>,如果loader不返回值同时<code>package.loaded[modelname]</code>不存在时,<em>ll_require</em>就会把<code>package.loaded[modelname]</code>设为true。最后ll_reuqire把<code>package.loaded[modelname]</code>返回给调用者。</p>
 <p><br></p>
 <p><code>require</code>路径是一个模式列表，每一个模式指明一种由虚文件名（参数）转成实文件名的方法，每一个模式是一个包含可选的问号的文件名。匹配时，Lua会首先将问号用虚文件名替换，然后查找文件是否存在，如果不存在的话就换下一个模式。</p>
@@ -472,7 +475,7 @@
   <p><span>本文标题:</span><a href="/require-in-lua/">Lua语言中的模块调用</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Jacky Cheng 的个人博客">Jacky Cheng</a></p>
   <p><span>发布时间:</span>2020年01月10日 - 16:01</p>
-  <p><span>最后更新:</span>2020年01月15日 - 15:01</p>
+  <p><span>最后更新:</span>2020年01月15日 - 18:01</p>
   <p><span>原始链接:</span><a href="/require-in-lua/" title="Lua语言中的模块调用">https://cjjkkk.github.io/require-in-lua/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://cjjkkk.github.io/require-in-lua/" aria-label="复制成功！"></i></span>
   </p>
