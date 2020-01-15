@@ -206,8 +206,8 @@
         <category>环境搭建</category>
       </categories>
       <tags>
-        <tag>SQL注入</tag>
         <tag>环境搭建</tag>
+        <tag>SQL注入</tag>
         <tag>SQLi-Labs</tag>
       </tags>
   </entry>
@@ -231,10 +231,10 @@
         <category>工具使用</category>
       </categories>
       <tags>
+        <tag>kali Linux</tag>
         <tag>Social-Engineer-Toolkit</tag>
         <tag>钓鱼网站</tag>
         <tag>社工</tag>
-        <tag>kali Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -258,9 +258,9 @@
         <category>环境搭建</category>
       </categories>
       <tags>
-        <tag>kali Linux</tag>
         <tag>环境搭建</tag>
         <tag>Shellinabox</tag>
+        <tag>kali Linux</tag>
         <tag>Ngrok</tag>
       </tags>
   </entry>
