@@ -1978,7 +1978,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #7f18d9;
+  background: #756ac3;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3166,7 +3166,7 @@ pre .javascript .function {
 }
 @font-face {
   font-family: zhongwenziti;
-  src: url("/fonts/zh-fan.ttf");
+  src: url("/fonts/zh-fan.TTF");
 }
 body {
   background: url("/image/background.jpg");
