@@ -8,8 +8,8 @@
         <category>漏洞复现</category>
       </categories>
       <tags>
-        <tag>漏洞复现</tag>
         <tag>CVE-2020-7471</tag>
+        <tag>漏洞复现</tag>
         <tag>django</tag>
         <tag>postgres</tag>
       </tags>
@@ -73,10 +73,10 @@
         <category>漏洞复现</category>
       </categories>
       <tags>
+        <tag>漏洞复现</tag>
         <tag>Metasploit</tag>
         <tag>CVE-2019-0708</tag>
         <tag>RDP</tag>
-        <tag>漏洞复现</tag>
       </tags>
   </entry>
   <entry>
@@ -87,10 +87,10 @@
         <category>攻击测试</category>
       </categories>
       <tags>
-        <tag>kali Linux</tag>
         <tag>Metasploit</tag>
         <tag>攻击测试</tag>
         <tag>木马攻击</tag>
+        <tag>kali Linux</tag>
         <tag>UAC提权</tag>
       </tags>
   </entry>
@@ -205,9 +205,9 @@
         <category>攻击测试</category>
       </categories>
       <tags>
-        <tag>kali Linux</tag>
         <tag>Metasploit</tag>
         <tag>攻击测试</tag>
+        <tag>kali Linux</tag>
         <tag>Ettercap</tag>
         <tag>browser_autopwn2</tag>
       </tags>
@@ -300,8 +300,8 @@
         <category>攻击测试</category>
       </categories>
       <tags>
-        <tag>kali Linux</tag>
         <tag>攻击测试</tag>
+        <tag>kali Linux</tag>
         <tag>Ettercap</tag>
         <tag>中间人攻击</tag>
         <tag>DNS欺骗</tag>
@@ -353,8 +353,8 @@
         <category>漏洞复现</category>
       </categories>
       <tags>
-        <tag>Metasploit</tag>
         <tag>漏洞复现</tag>
+        <tag>Metasploit</tag>
         <tag>CVE-2018-20250</tag>
         <tag>WinRAR目录穿越漏洞</tag>
       </tags>
@@ -367,8 +367,8 @@
         <category>漏洞复现</category>
       </categories>
       <tags>
-        <tag>Metasploit</tag>
         <tag>漏洞复现</tag>
+        <tag>Metasploit</tag>
         <tag>Nmap</tag>
         <tag>ms17-010</tag>
         <tag>永恒之蓝</tag>
