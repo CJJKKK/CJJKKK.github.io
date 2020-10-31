@@ -88,9 +88,9 @@
       </categories>
       <tags>
         <tag>Metasploit</tag>
-        <tag>kali Linux</tag>
         <tag>攻击测试</tag>
         <tag>木马攻击</tag>
+        <tag>kali Linux</tag>
         <tag>UAC提权</tag>
       </tags>
   </entry>
@@ -206,8 +206,8 @@
       </categories>
       <tags>
         <tag>Metasploit</tag>
-        <tag>kali Linux</tag>
         <tag>攻击测试</tag>
+        <tag>kali Linux</tag>
         <tag>Ettercap</tag>
         <tag>browser_autopwn2</tag>
       </tags>
@@ -300,8 +300,8 @@
         <category>攻击测试</category>
       </categories>
       <tags>
-        <tag>kali Linux</tag>
         <tag>攻击测试</tag>
+        <tag>kali Linux</tag>
         <tag>Ettercap</tag>
         <tag>中间人攻击</tag>
         <tag>DNS欺骗</tag>

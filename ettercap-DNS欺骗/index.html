@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="kali Linux,攻击测试,Ettercap,中间人攻击,DNS欺骗,">
+  <meta name="keywords" content="攻击测试,kali Linux,Ettercap,中间人攻击,DNS欺骗,">
 
 
 
@@ -87,34 +87,34 @@
 
 
 <meta name="description" content="前言 攻击过程 其他    一. 前言1. 什么是中间人攻击中间人攻击（Man-in-the-middle attack，缩写：MITM）是指攻击者与通讯的两端分别建立独立的联系，并交换其所收到的数据，使通讯的两端认为他们正在通过一个私密的连接与对方直接对话，但事实上整个会话都被攻击者完全控制。在中间人攻击中，攻击者可以拦截通讯双方的通话并插入新的内容。在许多情况下这是很简单的（例如，在一个未">
-<meta name="keywords" content="kali Linux,攻击测试,Ettercap,中间人攻击,DNS欺骗">
+<meta name="keywords" content="攻击测试,kali Linux,Ettercap,中间人攻击,DNS欺骗">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用Ettercap实现DNS欺骗的简单测试">
-<meta property="og:url" content="https://cjjkkk.github.io/ettercap-DNS欺骗/index.html">
+<meta property="og:url" content="http://yoursite.com/ettercap-DNS欺骗/index.html">
 <meta property="og:site_name" content="Jackyal Chee">
 <meta property="og:description" content="前言 攻击过程 其他    一. 前言1. 什么是中间人攻击中间人攻击（Man-in-the-middle attack，缩写：MITM）是指攻击者与通讯的两端分别建立独立的联系，并交换其所收到的数据，使通讯的两端认为他们正在通过一个私密的连接与对方直接对话，但事实上整个会话都被攻击者完全控制。在中间人攻击中，攻击者可以拦截通讯双方的通话并插入新的内容。在许多情况下这是很简单的（例如，在一个未">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://cjjkkk.github.io/image/ettercap-DNS/DNS1.jpg">
-<meta property="og:image" content="https://cjjkkk.github.io/image/ettercap-DNS/DNS2.jpg">
-<meta property="og:image" content="https://cjjkkk.github.io/image/ettercap-DNS/apache.jpg">
-<meta property="og:image" content="https://cjjkkk.github.io/image/ettercap-DNS/ettercap_dns.jpg">
-<meta property="og:image" content="https://cjjkkk.github.io/image/ettercap-DNS/ettercap1.jpg">
-<meta property="og:image" content="https://cjjkkk.github.io/image/ettercap-DNS/ettercap2.jpg">
-<meta property="og:image" content="https://cjjkkk.github.io/image/ettercap-DNS/ettercap3.jpg">
-<meta property="og:image" content="https://cjjkkk.github.io/image/ettercap-DNS/ettercap4.jpg">
-<meta property="og:image" content="https://cjjkkk.github.io/image/ettercap-DNS/ettercap5.jpg">
-<meta property="og:image" content="https://cjjkkk.github.io/image/ettercap-DNS/ettercap6.jpg">
-<meta property="og:image" content="https://cjjkkk.github.io/image/ettercap-DNS/ettercap7.jpg">
-<meta property="og:image" content="https://cjjkkk.github.io/image/ettercap-DNS/ettercap8.jpg">
-<meta property="og:image" content="https://cjjkkk.github.io/image/ettercap-DNS/ettercap9.jpg">
-<meta property="og:image" content="https://cjjkkk.github.io/image/ettercap-DNS/ettercap10.jpg">
-<meta property="og:image" content="https://cjjkkk.github.io/image/ettercap-DNS/ettercap11.jpg">
-<meta property="og:image" content="https://cjjkkk.github.io/image/ettercap-DNS/test_page.jpg">
+<meta property="og:image" content="http://yoursite.com/image/ettercap-DNS/DNS1.jpg">
+<meta property="og:image" content="http://yoursite.com/image/ettercap-DNS/DNS2.jpg">
+<meta property="og:image" content="http://yoursite.com/image/ettercap-DNS/apache.jpg">
+<meta property="og:image" content="http://yoursite.com/image/ettercap-DNS/ettercap_dns.jpg">
+<meta property="og:image" content="http://yoursite.com/image/ettercap-DNS/ettercap1.jpg">
+<meta property="og:image" content="http://yoursite.com/image/ettercap-DNS/ettercap2.jpg">
+<meta property="og:image" content="http://yoursite.com/image/ettercap-DNS/ettercap3.jpg">
+<meta property="og:image" content="http://yoursite.com/image/ettercap-DNS/ettercap4.jpg">
+<meta property="og:image" content="http://yoursite.com/image/ettercap-DNS/ettercap5.jpg">
+<meta property="og:image" content="http://yoursite.com/image/ettercap-DNS/ettercap6.jpg">
+<meta property="og:image" content="http://yoursite.com/image/ettercap-DNS/ettercap7.jpg">
+<meta property="og:image" content="http://yoursite.com/image/ettercap-DNS/ettercap8.jpg">
+<meta property="og:image" content="http://yoursite.com/image/ettercap-DNS/ettercap9.jpg">
+<meta property="og:image" content="http://yoursite.com/image/ettercap-DNS/ettercap10.jpg">
+<meta property="og:image" content="http://yoursite.com/image/ettercap-DNS/ettercap11.jpg">
+<meta property="og:image" content="http://yoursite.com/image/ettercap-DNS/test_page.jpg">
 <meta property="og:updated_time" content="2019-09-09T04:06:22.976Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用Ettercap实现DNS欺骗的简单测试">
 <meta name="twitter:description" content="前言 攻击过程 其他    一. 前言1. 什么是中间人攻击中间人攻击（Man-in-the-middle attack，缩写：MITM）是指攻击者与通讯的两端分别建立独立的联系，并交换其所收到的数据，使通讯的两端认为他们正在通过一个私密的连接与对方直接对话，但事实上整个会话都被攻击者完全控制。在中间人攻击中，攻击者可以拦截通讯双方的通话并插入新的内容。在许多情况下这是很简单的（例如，在一个未">
-<meta name="twitter:image" content="https://cjjkkk.github.io/image/ettercap-DNS/DNS1.jpg">
+<meta name="twitter:image" content="http://yoursite.com/image/ettercap-DNS/DNS1.jpg">
 
 
 
@@ -144,7 +144,7 @@
 
 
 
-  <link rel="canonical" href="https://cjjkkk.github.io/ettercap-DNS欺骗/">
+  <link rel="canonical" href="http://yoursite.com/ettercap-DNS欺骗/">
 
 
 
@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://cjjkkk.github.io/ettercap-DNS欺骗/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/ettercap-DNS欺骗/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="J2ck7a1 Ch33">
@@ -518,8 +518,8 @@
   <p><span>文章作者:</span><a href="/" title="访问 J2ck7a1 Ch33 的个人博客">J2ck7a1 Ch33</a></p>
   <p><span>发布时间:</span>2019年03月21日 - 17:03</p>
   <p><span>最后更新:</span>2019年09月09日 - 12:09</p>
-  <p><span>原始链接:</span><a href="/ettercap-DNS欺骗/" title="使用Ettercap实现DNS欺骗的简单测试">https://cjjkkk.github.io/ettercap-DNS欺骗/</a>
-    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://cjjkkk.github.io/ettercap-DNS欺骗/" aria-label="复制成功！"></i></span>
+  <p><span>原始链接:</span><a href="/ettercap-DNS欺骗/" title="使用Ettercap实现DNS欺骗的简单测试">http://yoursite.com/ettercap-DNS欺骗/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://yoursite.com/ettercap-DNS欺骗/" aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
 </div>
@@ -580,9 +580,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/kali-Linux/" rel="tag"><i class="fa fa-tag"></i> kali Linux</a>
-          
             <a href="/tags/攻击测试/" rel="tag"><i class="fa fa-tag"></i> 攻击测试</a>
+          
+            <a href="/tags/kali-Linux/" rel="tag"><i class="fa fa-tag"></i> kali Linux</a>
           
             <a href="/tags/Ettercap/" rel="tag"><i class="fa fa-tag"></i> Ettercap</a>
           
