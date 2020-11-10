@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Volatility,应急响应,内存取证,Windows,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="简介 安装与基础命令 一个例题   一.简介Volatility是一个用于事件响应和恶意软件分析的开源内存取证框架。它是用Python编写的，支持Microsoft Windows，macOS和Linux，volatility框架是一个完全开放的工具集合，在GNU通用许可证下用Python实现，用于从易失性存储器（RAM）样本总提取数字镜像。提取技术完全独立于被取证的系统而执行，但可以查看到系">
+<meta name="keywords" content="Volatility,应急响应,内存取证,Windows">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Volatility-Windows内存分析">
+<meta property="og:url" content="http://yoursite.com/Volatility-WindowsMemoryForensicsAnalysis/index.html">
+<meta property="og:site_name" content="Jackyal Chee">
+<meta property="og:description" content="简介 安装与基础命令 一个例题   一.简介Volatility是一个用于事件响应和恶意软件分析的开源内存取证框架。它是用Python编写的，支持Microsoft Windows，macOS和Linux，volatility框架是一个完全开放的工具集合，在GNU通用许可证下用Python实现，用于从易失性存储器（RAM）样本总提取数字镜像。提取技术完全独立于被取证的系统而执行，但可以查看到系">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/image/Volatility-WindowsMemoryForensicsAnalysis/imageinfo.png">
+<meta property="og:image" content="http://yoursite.com/image/Volatility-WindowsMemoryForensicsAnalysis/pslist.png">
+<meta property="og:image" content="http://yoursite.com/image/Volatility-WindowsMemoryForensicsAnalysis/notepad.png">
+<meta property="og:image" content="http://yoursite.com/image/Volatility-WindowsMemoryForensicsAnalysis/base16.png">
+<meta property="og:image" content="http://yoursite.com/image/Volatility-WindowsMemoryForensicsAnalysis/ophcrack.png">
+<meta property="og:image" content="http://yoursite.com/image/Volatility-WindowsMemoryForensicsAnalysis/connscan.png">
+<meta property="og:image" content="http://yoursite.com/image/Volatility-WindowsMemoryForensicsAnalysis/nc.png">
+<meta property="og:image" content="http://yoursite.com/image/Volatility-WindowsMemoryForensicsAnalysis/cmdscan.png">
+<meta property="og:image" content="http://yoursite.com/image/Volatility-WindowsMemoryForensicsAnalysis/memdump.png">
+<meta property="og:image" content="http://yoursite.com/image/Volatility-WindowsMemoryForensicsAnalysis/binwalk.png">
+<meta property="og:image" content="http://yoursite.com/image/Volatility-WindowsMemoryForensicsAnalysis/unzip.png">
+<meta property="og:updated_time" content="2020-11-10T05:39:52.385Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Volatility-Windows内存分析">
+<meta name="twitter:description" content="简介 安装与基础命令 一个例题   一.简介Volatility是一个用于事件响应和恶意软件分析的开源内存取证框架。它是用Python编写的，支持Microsoft Windows，macOS和Linux，volatility框架是一个完全开放的工具集合，在GNU通用许可证下用Python实现，用于从易失性存储器（RAM）样本总提取数字镜像。提取技术完全独立于被取证的系统而执行，但可以查看到系">
+<meta name="twitter:image" content="http://yoursite.com/image/Volatility-WindowsMemoryForensicsAnalysis/imageinfo.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/Volatility-WindowsMemoryForensicsAnalysis/">
+
+
+
+
+
+  <title>Volatility-Windows内存分析 | Jackyal Chee</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Jackyal Chee</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/Volatility-WindowsMemoryForensicsAnalysis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="J2ck7a1 Ch33">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/image/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jackyal Chee">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Volatility-Windows内存分析</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-11-10T10:11:13+08:00">
+                2020-11-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/应急响应/" itemprop="url" rel="index">
+                    <span itemprop="name">应急响应</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 阅读数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.3k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<ul>
+<li>简介</li>
+<li>安装与基础命令</li>
+<li>一个例题</li>
+</ul>
+</blockquote>
+<h2 id="一-简介"><a href="#一-简介" class="headerlink" title="一.简介"></a>一.简介</h2><p>Volatility是一个用于事件响应和恶意软件分析的开源内存取证框架。它是用Python编写的，支持Microsoft Windows，macOS和Linux，volatility框架是一个完全开放的工具集合，在GNU通用许可证下用Python实现，用于从易失性存储器（RAM）样本总提取数字镜像。提取技术完全独立于被取证的系统而执行，但可以查看到系统运行时的状态信息。该框架旨在向人们介绍从内存样本中提取的数字镜像相关的技术，并为进一步研究该领域提供一个平台，它可以分析 .raw、.vmem、.img后缀的文件。</p>
+<hr>
+<a id="more"></a>
+<p><br></p>
+<h2 id="二-安装与基础命令"><a href="#二-安装与基础命令" class="headerlink" title="二.安装与基础命令"></a>二.安装与基础命令</h2><h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1.安装"></a>1.安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/volatilityfoundation/volatility.git</span><br></pre></td></tr></table></figure>
+<p>Volatility使用python2运行，需要的python模块如下</p>
+<blockquote>
+<p><strong>Distorm3:</strong>反编译库</p>
+<p><strong>Yara:</strong>恶意软件分类工具</p>
+<p><strong>PyCrypto:</strong>加密工具集</p>
+<p><strong>PIL:</strong>图片处理库</p>
+<p><strong>OpenPyxl:</strong>读写excel文件</p>
+<p><strong>ujson:</strong>JSON解析</p>
+</blockquote>
+<h3 id="2-基础命令"><a href="#2-基础命令" class="headerlink" title="2.基础命令"></a>2.基础命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python vol.py -f [image] ‐-profile=[profile][plugin]</span><br></pre></td></tr></table></figure>
+<p>其中 <code>-f</code> 后面加的是要取证的文件， <code>--profile</code> 后加的是工具识别出的系统版本， <code>[plugin]</code> 是指使用的插件，其中默认存在一些插件，另外还可以自己下载一些插件扩充。</p>
+<p>可以使用 <code>-h</code> 参数获取使用方法和插件介绍，这里只列举几个常用到的</p>
+<blockquote>
+<p>imageinfo：显示目标镜像的摘要信息，这常常是第一步，获取内存的操作系统类型及版本，之后可以在 –profile 中带上对应的操作系统，后续操作都要带上这一参数</p>
+<p>pslist：该插件列举出系统进程，但它不能检测到隐藏或者解链的进程，psscan可以</p>
+<p>notepad：查看当前展示的 notepad 文本</p>
+<p>editbox：显示有关编辑控件的信息</p>
+<p>screenshot：保存基于GDI窗口的伪截屏</p>
+<p>psscan：可以找到先前已终止(不活动)的进程以及被rootkit隐藏或解链的进程</p>
+<p>pstree：以树的形式查看进程列表，和pslist一样，也无法检测隐藏或解链的进程</p>
+<p>mendump：提取出指定进程，常用foremost 来分离里面的文件(历年美亚杯有此题)</p>
+<p>filescan：扫描所有的文件列表</p>
+<p>hashdump：查看当前操作系统中的 password hash，例如 Windows 的 SAM 文件内容(实际中没有mimikatz效果好)</p>
+<p>svcscan：扫描 Windows 的服务</p>
+<p>connscan：查看网络连接</p>
+<p>cmdscan：可用于查看终端记录</p>
+<p>dlllist: 列出某一进程加载的所有dll文件</p>
+<p>dumpfiles：导出某一文件(指定虚拟地址)</p>
+<p>hivelist: 列出所有的注册表项及其虚拟地址和物理地址</p>
+<p>timeliner: 将所有操作系统事件以时间线的方式展开</p>
+</blockquote>
+<p><br></p>
+<h2 id="三-一个例题"><a href="#三-一个例题" class="headerlink" title="三.一个例题"></a>三.一个例题</h2><p>内存取证三项</p>
+<blockquote>
+<p>描述：一天下午小白出去吃饭，临走之前还不忘锁了电脑，这时同寝室的小黑想搞点事情，懂点黑客和社工知识的小黑经过多次尝试获得了密码成功进入电脑，于是便悄悄在电脑上动起手脚了，便在桌面上写着什么，想给小白一个惊喜，同时还传送着小白的机密文件，正巧这时小白刚好回来，两人都吓了一跳，小黑也不管自己在电脑上留下的操作急忙离开电脑，故作淡定的说：“我就是随便看看”。 </p>
+<p>1.小黑写的啥，据说是flag？</p>
+<p>2.那么问题来了，小白的密码是啥？</p>
+<p>3.小黑发送的机密文件里面到底是什么？ </p>
+</blockquote>
+<p>查看镜像信息python27 vol.py -f ..\内存取证三项\1.raw imageinfo</p>
+<p><img src="\image\Volatility-WindowsMemoryForensicsAnalysis\imageinfo.png" alt="imageinfo"></p>
+<p>可以看到系统是WinXPSP2x86，使用<code>--profile</code>命令指定系统版本</p>
+<p>查看进程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python27 vol.py -f ..\内存取证三项\1.raw --profile=WinXPSP2x86 pslist</span><br></pre></td></tr></table></figure>
+<p><img src="\image\Volatility-WindowsMemoryForensicsAnalysis\pslist.png" alt="pslist"></p>
+<p>可以看到系统进程中有一个notepad.exe，根据题目，猜测里面包含第一个flag</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python27 vol.py -f ..\内存取证三项\1.raw --profile=WinXPSP2x86 notepad</span><br></pre></td></tr></table></figure>
+<p><img src="\image\Volatility-WindowsMemoryForensicsAnalysis\notepad.png" alt="notepad"></p>
+<p>获取到密文666C61677B57336C6563306D655F376F5F466F72336E356963737D</p>
+<p>试了几次，用的base16编码，第一个flag</p>
+<p><img src="\image\Volatility-WindowsMemoryForensicsAnalysis\base16.png" alt="base16"></p>
+<p>第二个flag，去查找电脑的密码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python27 vol.py -f ..\内存取证三项\1.raw --profile=WinXPSP2x86 hashdump</span><br></pre></td></tr></table></figure>
+<p><code>Administrator:500:1e27e87bd14ec8af43714428b303e3e4:1e581aafa474dfadfdf83fc31e4fd4ea:::</code></p>
+<p>密文可以使用ophcrack或者其他软件爆破，这里彩虹表比较少，没有完全爆破出来，后面有提示能猜出来是19950101</p>
+<p><img src="\image\Volatility-WindowsMemoryForensicsAnalysis\ophcrack.png" alt="ophcrack"></p>
+<p>查看网络连接状况</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python27 vol.py -f ..\内存取证三项\1.raw --profile=WinXPSP2x86 connscan</span><br></pre></td></tr></table></figure>
+<p><img src="\image\Volatility-WindowsMemoryForensicsAnalysis\connscan.png" alt="connscan"></p>
+<p>发现一个2333端口的访问请求，看一下pid对应的进程</p>
+<p><img src="\image\Volatility-WindowsMemoryForensicsAnalysis\nc.png" alt="nc"></p>
+<p>此外还有cmd.exe，猜测是使用cmd命令连接nc，可以通过cmd命令行来查看执行了什么命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python27 vol.py -f ..\内存取证三项\1.raw --profile=WinXPSP2x86 cmdscan</span><br></pre></td></tr></table></figure>
+<p><img src="\image\Volatility-WindowsMemoryForensicsAnalysis\cmdscan.png" alt="cmdscan"></p>
+<p>可以看到获取了一个 P@ssW0rd_is_y0ur_bir7hd4y.zip的压缩文件，将文件导出</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python27 vol.py -f ..\内存取证三项\1.raw --profile=WinXPSP2x86 memdump -p 120 --dump-dir=dump</span><br></pre></td></tr></table></figure>
+<p><img src="\image\Volatility-WindowsMemoryForensicsAnalysis\memdump.png" alt="memdump"></p>
+<p>使用binwalk对提取出来的dmp文件进行分析，发现存在P@ssW0rd_is_y0ur_bir7hd4y.txt，现在只需要提取出这个txt文件，使用foremost提取出文件，得到6个zip</p>
+<p><img src="\image\Volatility-WindowsMemoryForensicsAnalysis\binwalk.png" alt="binwalk"></p>
+<p>解压生成的压缩包，发现需要密码，密码根据提示可以猜出是19950101，解压获得flag</p>
+<p><img src="\image\Volatility-WindowsMemoryForensicsAnalysis\unzip.png" alt="unzip"></p>
+<p><br></p>
+<p><strong>参考</strong></p>
+<blockquote>
+<p><a href="https://bbs.ichunqiu.com/forum.php?mod=forumdisplay&amp;fid=59&amp;filter=typeid&amp;typeid=87" target="_blank" rel="noopener">[内网攻防]</a><a href="https://bbs.ichunqiu.com/thread-59102-1-1.html" target="_blank" rel="noopener">电子取证(Forensics)-Windows取证基础</a></p>
+<p><a href="https://www.cnblogs.com/sesefadou/p/11804566.html" target="_blank" rel="noopener">Volatility取证使用笔记</a></p>
+<p><a href="https://github.com/volatilityfoundation/volatility" target="_blank" rel="noopener">volatility</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+    	<br>
+    	<br>
+        <div style="text-align:center;color: #000000;font-size:14px;">-------------本文结束<i class="fa fa-gift"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/Volatility-WindowsMemoryForensicsAnalysis/">Volatility-Windows内存分析</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 J2ck7a1 Ch33 的个人博客">J2ck7a1 Ch33</a></p>
+  <p><span>发布时间:</span>2020年11月10日 - 10:11</p>
+  <p><span>最后更新:</span>2020年11月10日 - 13:11</p>
+  <p><span>原始链接:</span><a href="/Volatility-WindowsMemoryForensicsAnalysis/" title="Volatility-Windows内存分析">http://yoursite.com/Volatility-WindowsMemoryForensicsAnalysis/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://yoursite.com/Volatility-WindowsMemoryForensicsAnalysis/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+	  $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+	    });
+    });  
+</script>
+<br>
+
+      
+    </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>想喝快乐水</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/image/wechatpay.jpg" alt="J2ck7a1 Ch33 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/image/alipay.jpg" alt="J2ck7a1 Ch33 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Volatility/" rel="tag"><i class="fa fa-tag"></i> Volatility</a>
+          
+            <a href="/tags/应急响应/" rel="tag"><i class="fa fa-tag"></i> 应急响应</a>
+          
+            <a href="/tags/内存取证/" rel="tag"><i class="fa fa-tag"></i> 内存取证</a>
+          
+            <a href="/tags/Windows/" rel="tag"><i class="fa fa-tag"></i> Windows</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/CVE-2020-7471/" rel="next" title="CVE-2020-7471漏洞复现及简单分析">
+                <i class="fa fa-chevron-left"></i> CVE-2020-7471漏洞复现及简单分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div id="gitalk-container">
+  </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/image/avatar.jpg" alt="J2ck7a1 Ch33">
+            
+              <p class="site-author-name" itemprop="name">J2ck7a1 Ch33</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">74</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          <br>
+<div id="念诗" style="text-align:center;">
+	<p style="font-family: zhongwenziti;" size="20px">
+		苟利国家生死以<br>岂因祸福避趋之
+	</p>
+</div>
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-简介"><span class="nav-text">一.简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-安装与基础命令"><span class="nav-text">二.安装与基础命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-安装"><span class="nav-text">1.安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-基础命令"><span class="nav-text">2.基础命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-一个例题"><span class="nav-text">三.一个例题</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">J2ck7a1 Ch33</span>
+
+  
+</div>
+
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 本站访问
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+
+    
+      <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;"></canvas> 
+      <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+      <script type="text/javascript" src="/js/src/fireworks.js"></script>
+    
+
+
+    <!--崩溃欺骗-->
+    <script type="text/javascript" src="/js/src/crash_cheat.js"></script>
+
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'ee53cc5de9d57711e0cb',
+          clientSecret: '46a58ced62224ebedbadafff96c5860f097e9d66',
+          repo: 'CJJKKK.github.io',
+          owner: 'CJJKKK',
+          admin: ['CJJKKK'],
+          id: location.pathname,
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')           
+       </script>
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false}});</script></body>
+</html>

